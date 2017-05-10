@@ -1,3 +1,5 @@
+import {btoa} from 'btoa';
+
 export const USER_DATA = 'USER_DATA';
 export const userData = (name,email) => ({
   type: USER_DATA,
@@ -14,39 +16,64 @@ export const NewuserCreated = () => ({
   type: NEW_USER_CREATED,
 })
 
-// creating an async action to post a new user 
+export const INCORRECT_EMAIL_PASSWORD = 'INCORRECT_EMAIL_PASSWORD';
+export const incorrectEmailOrPassword = () => ({
+  type: INCORRECT_EMAIL_PASSWORD,
+})
 
+export const USER_LOGIN = 'USER_LOGIN';
+export const userLogin = (name) => ({
+  type: USER_LOGIN,
+  name
+})
 
+// creating an async action to post a new user
+
+export const loginUser = (email, password, navigator) => dispatch => {
+  const base64 = window.btoa(`${email.toLowerCase()}:${password}`)
+  return fetch(`https://sdsserver.herokuapp.com/api/users/${email}`, {
+    headers: {
+        "Authorization": "Basic " + base64,
+    }
+  })
+  .then(response => {
+    console.log(response);
+    return response.json();
+  })
+  .then(json => {
+    console.log(json);
+    dispatch(userLogin(json.name));
+    navigator.push({
+      id:"homeloggedin",
+    });
+  })
+  .catch(err => {
+    console.log(err);
+    dispatch(incorrectEmailOrPassword());
+  })
+}
 
 export const fetchUser = (name,email,password) => dispatch => {
     console.log("fetching user data...");
-    fetch(`https://sdsserver.herokuapp.com/api/users/${email}`) 
+    fetch('https://sdsserver.herokuapp.com/api/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({name,email,password})
+    })
     .then(response => response.json())
     .then(json => {
-    	console.log(json)
-    	console.log(json.message)
-	    if (json.message == "Email not found in database") {
-	      	console.log(`....Sorry, no document in DB relates to ${email}`);
-	      	console.log('...soo,going to post a new user to the DB now ...');
-	    	fetch('https://sdsserver.herokuapp.com/api/users', {
-        		method: 'POST',
-        		headers: {
-            	'Content-Type': 'application/json'
-        		},
-        		body: JSON.stringify({name,email,password})
-    		})
-    		.then(response => response.json())
-    		.then(json => {
-    			console.log('...I have posted this user')
-      			console.log(json)
-      			dispatch(userData(json.name,json.email))
-      			dispatch(NewuserCreated())
-      		})
-	    }
-      	else if (json !== null){
-      		console.log(`User ${email} was found in the USER DB`)
-      		console.log(json)
-      	dispatch(EmailInDbToggle())
-      	}
+      if (json.message === "email already taken") {
+        dispatch(EmailInDbToggle());
+      } else {
+        console.log('...I have posted this user')
+          console.log(json)
+          dispatch(userData(json.name,json.email))
+          dispatch(NewuserCreated())
+      }
+    })
+    .catch(err => {
+      console.log(err);
     })
 }

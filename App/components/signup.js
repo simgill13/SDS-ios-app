@@ -31,23 +31,20 @@ import EmailError from './emailerror';
       id:"home",
     })
   }
-  
+
    loginhome(){
     this.props.navigator.push({
       id:"homeloggedin",
     })
   }
-  
+
   formSubmit(e){
     let name = this.state.name;
     let email = this.state.email;
     let password = this.state.password;
-    console.log(name)
-    console.log(email)
-    console.log(password)
    this.props.dispatch(fetchUser(name,email,password));
   }
-    
+
 
   render(){
 
@@ -71,7 +68,7 @@ import EmailError from './emailerror';
             <Title>Sign Up</Title>
           </Body>
           <Right>
-            <Button transparent>       
+            <Button transparent>
             </Button>
           </Right>
         </Header>
@@ -89,8 +86,8 @@ import EmailError from './emailerror';
               <Label>Password</Label>
               <Input onChangeText={(password) => this.setState({password})} />
             </Item>
-            <Button onPress={(c) => {this.formSubmit(c)}} >
-              <Text>Sign me up </Text> 
+            <Button onPress={(e) => {this.formSubmit(e)}} >
+              <Text>Sign me up </Text>
             </Button>
             {errorMessage}
 
