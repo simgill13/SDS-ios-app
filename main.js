@@ -6,6 +6,8 @@ import {AppRegistry,Text,View,Navigator} from 'react-native';
 import { StyleSheet } from 'react-native';
 
 import Home from './App/components/home';
+import SignUp from './App/components/signup';
+import Login from './App/components/login';
 
 
 
@@ -16,6 +18,10 @@ class App extends React.Component {
     switch(route.id){
       case 'home':
         return(<Home navigator={navigator} title="home"/>)
+      case 'signup':
+        return(<SignUp navigator={navigator} title="signup"/>)
+      case 'login':
+        return(<Login navigator={navigator} title="login"/>)
     }
   }
   render(){
