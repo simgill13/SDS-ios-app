@@ -1,4 +1,5 @@
 import {btoa} from 'btoa';
+import base64 from 'base-64';
 
 export const USER_DATA = 'USER_DATA';
 export const userData = (name,email) => ({
@@ -30,10 +31,11 @@ export const userLogin = (name) => ({
 // creating an async action to post a new user
 
 export const loginUser = (email, password, navigator) => dispatch => {
-  const base64 = window.btoa(`${email.toLowerCase()}:${password}`)
+  const encodedLoginInfo = base64.encode(`${email.toLowerCase()}:${password}`)
+  console.log(encodedLoginInfo)
   return fetch(`https://sdsserver.herokuapp.com/api/users/${email}`, {
     headers: {
-        "Authorization": "Basic " + base64,
+        "Authorization": "Basic " + encodedLoginInfo,
     }
   })
   .then(response => {

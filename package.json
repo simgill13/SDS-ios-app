@@ -6,6 +6,7 @@
   "private": true,
   "main": "main.js",
   "dependencies": {
+    "base-64": "^0.1.0",
     "btoa": "^1.1.2",
     "expo": "16.0.0",
     "native-base": "^2.1.2",
