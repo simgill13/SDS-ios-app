@@ -17,7 +17,7 @@ constructor(props) {
 
    
 renderSelectedTab() {
-  console.log('imhere')
+ 
    switch (this.state.tab) {
      case 'ourchat':
        return (<OurChat navigator={this.props.navigator}/>);
@@ -31,7 +31,9 @@ renderSelectedTab() {
         return(
    
 <Container>
+
 {this.renderSelectedTab()}
+<Text> {this.props.name} is signed up and loged in </Text>
                 <Content />
                 <Footer >
                     <FooterTab>
@@ -63,11 +65,7 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = (state) => ({
-MainContainer:{
-flex:1
-},
-
-
+name:state.name,
 });
 
 

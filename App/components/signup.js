@@ -4,7 +4,8 @@ import {StyleSheet,Navigator} from 'react-native';
 import {Container,Header,Content, Left, Right,Button,Icon,Body,Title,View,ListItem,Text, CheckBox,Footer,FooterTab,
         CardItem,Card,Form,Item,Label,Input} from 'native-base';
 
-
+import {fetchUser} from '../actions/action';
+import EmailError from './emailerror';
 
 
 
@@ -17,9 +18,12 @@ import {Container,Header,Content, Left, Right,Button,Icon,Body,Title,View,ListIt
       name: '',
       email:'',
       password:'',
+
     };
     this.formSubmit=this.formSubmit.bind(this)
   }
+
+
 
   back(){
     console.log(this.props.navigator)
@@ -36,14 +40,20 @@ import {Container,Header,Content, Left, Right,Button,Icon,Body,Title,View,ListIt
     console.log(name)
     console.log(email)
     console.log(password)
-   //dispatch action and go to loged in page
-   this.props.navigator.push({
-      id:"homeloggedin",
-    })
+   this.props.dispatch(fetchUser(name,email,password));
   }
     
 
   render(){
+
+    let errorMessage;
+      if (this.props.emailInDb === true) {
+        errorMessage=<EmailError/>;
+      }
+
+      if (this.props.newUserCreated === true) {
+        console.log(' run method')
+      }
     return (
       <Container>
         <Header>
@@ -77,6 +87,8 @@ import {Container,Header,Content, Left, Right,Button,Icon,Body,Title,View,ListIt
             <Button onPress={(c) => {this.formSubmit(c)}} >
               <Text>Sign me up </Text> 
             </Button>
+            {errorMessage}
+
           </Form>
         </Content>
       </Container>
@@ -86,6 +98,8 @@ import {Container,Header,Content, Left, Right,Button,Icon,Body,Title,View,ListIt
 
 
 const mapStateToProps = (state) => ({
+  emailInDb:state.emailInDb,
+  newUserCreated:state.newUserCreated
 
 });
 
