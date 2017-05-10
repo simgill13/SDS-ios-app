@@ -21,17 +21,22 @@ import EmailError from './emailerror';
 
     };
     this.formSubmit=this.formSubmit.bind(this)
+    this.loginhome=this.loginhome.bind(this)
   }
 
 
 
   back(){
-    console.log(this.props.navigator)
     this.props.navigator.push({
       id:"home",
     })
   }
   
+   loginhome(){
+    this.props.navigator.push({
+      id:"homeloggedin",
+    })
+  }
   
   formSubmit(e){
     let name = this.state.name;
@@ -52,7 +57,7 @@ import EmailError from './emailerror';
       }
 
       if (this.props.newUserCreated === true) {
-        console.log(' run method')
+        this.loginhome();
       }
     return (
       <Container>
