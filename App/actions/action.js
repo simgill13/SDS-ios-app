@@ -1,4 +1,3 @@
-import {btoa} from 'btoa';
 import base64 from 'base-64';
 
 export const USER_DATA = 'USER_DATA';
