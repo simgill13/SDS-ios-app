@@ -8,6 +8,8 @@ import { StyleSheet } from 'react-native';
 import Home from './App/components/home';
 import SignUp from './App/components/signup';
 import Login from './App/components/login';
+import HomeLoggedIn from './App/components/homeLoggedIn';
+import OurChat from './App/components/homeLoggedIn';
 
 
 
@@ -22,6 +24,9 @@ class App extends React.Component {
         return(<SignUp navigator={navigator} title="signup"/>)
       case 'login':
         return(<Login navigator={navigator} title="login"/>)
+      case 'homeloggedin':
+        return(<HomeLoggedIn navigator={navigator} title="homeloggedin"/>)
+      
     }
   }
   render(){

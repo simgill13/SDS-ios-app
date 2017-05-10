@@ -37,6 +37,9 @@ import {Container,Header,Content, Left, Right,Button,Icon,Body,Title,View,ListIt
     console.log(email)
     console.log(password)
    //dispatch action and go to loged in page
+   this.props.navigator.push({
+      id:"homeloggedin",
+    })
   }
     
 
