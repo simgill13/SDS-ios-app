@@ -43,48 +43,44 @@ class Home extends Component{
 	    return(
 				<LinearGradient colors={['#FB2B69', '#FF5B37']}
 					style={styles.linearGradient}>
-					          <View style={styles.row} />
-					<View style={styles.container}>
-
-						<View style={styles.headlineWrap}>
-							<Text style={styles.subhead}>
-								Stop, Drop
-							</Text>
-							<Text style={styles.small}>
-								&
-							</Text>
-							<Text style={styles.headline}>
-								Selfie
-							</Text>
-						</View>
-						<View style={styles.container} />
-						<View style={styles.inputWrap}>
-							<TouchableHighlight
-								style={styles.button}
-								title="Sign Up"
-								onPress={() => {this.signup()}}
-								underlayColor="transparent"
-								activeOpacity={0.6}>
-									<View >
-										<Text style={styles.buttonText}> Sign Up </Text>
-									</View>
-							</TouchableHighlight>
-						</View>
-						<View style={styles.inputWrap}>
-							<TouchableHighlight
-								style={styles.button}
-								title="Log In"
-								onPress={() => {this.login()}}
-								underlayColor="transparent"
-								activeOpacity={0.6}>
-									<View >
-										<Text style={styles.buttonText}> Log In </Text>
-									</View>
-							</TouchableHighlight>
-						</View>
-
+					<View style={styles.headlineWrap}>
+						<Text style={styles.subhead}>
+						Stop, Drop
+						</Text>
+						<Text style={styles.small}>
+						&
+						</Text>
+						<Text style={styles.headline}>
+						Selfie
+						</Text>
 					</View>
-					<View style={styles.container} />
+
+
+					<View style={styles.inputWrap}>
+						<TouchableHighlight
+							style={styles.button}
+							onPress={() => {this.signup()}}
+							underlayColor="transparent"
+							activeOpacity={0.6}
+							>
+								<Text style={styles.buttonText}> Sign Up</Text>
+						</TouchableHighlight>
+					</View>
+					<View style={styles.inputWrap}>
+						<TouchableHighlight
+							title="Log In"
+							style={styles.button}
+							onPress={() => {this.login()}}
+							underlayColor="transparent"
+							activeOpacity={0.6}
+							>
+								<Text style={styles.buttonText}> Log In</Text>
+						</TouchableHighlight>
+					</View>
+
+
+
+
 				</LinearGradient>
 	    )
     }
@@ -101,8 +97,8 @@ const styles = StyleSheet.create({
   },
   linearGradient: {
     flex: 1,
-    paddingLeft: 15,
-    paddingRight: 15,
+    paddingLeft: 30,
+    paddingRight: 30,
     },
   header: {
       marginTop: 20,
@@ -123,7 +119,7 @@ const styles = StyleSheet.create({
 	headlineWrap:{
 		alignItems: 'center',
 		flexDirection: 'column',
-		marginVertical: 10,
+		marginVertical: 60,
 		backgroundColor: 'transparent',
 		padding: 30
 	},
@@ -152,8 +148,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10
   },
 	button:{
-		backgroundColor: "rgba(255,255,255,.3)",
 		flex:1,
+		backgroundColor: "rgba(255,255,255,.3)",
 		borderColor: '#ffffff',
 		margin: 5,
 		borderRadius: 12,
