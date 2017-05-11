@@ -30,6 +30,7 @@ export const userLogin = (name) => ({
 // creating an async action to post a new user
 
 export const loginUser = (email, password, navigator) => dispatch => {
+  console.log(email);
   const encodedLoginInfo = base64.encode(`${email.toLowerCase()}:${password}`)
   console.log(encodedLoginInfo)
   return fetch(`https://sdsserver.herokuapp.com/api/users/${email}`, {

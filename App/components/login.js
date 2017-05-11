@@ -25,7 +25,7 @@ class Login extends Component{
   constructor(props){
     super(props)
     this.state = {
-      Email: '',
+      email: '',
       password: '',
     }
   }
@@ -87,7 +87,7 @@ class Login extends Component{
           <View style={styles.inputWrap}>
             <TextInput
               placeholder="Username"
-              onChangeText={(name) => this.setState({name})}
+              onChangeText={(email) => this.setState({email})}
               style={styles.textInput}>
             </TextInput>
           </View>
