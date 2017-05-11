@@ -55,7 +55,6 @@ class Home extends Component{
 						</Text>
 					</View>
 
-
 					<View style={styles.inputWrap}>
 						<TouchableHighlight
 							style={styles.button}
@@ -78,9 +77,6 @@ class Home extends Component{
 						</TouchableHighlight>
 					</View>
 
-
-
-
 				</LinearGradient>
 	    )
     }
@@ -97,8 +93,8 @@ const styles = StyleSheet.create({
   },
   linearGradient: {
     flex: 1,
-    paddingLeft: 30,
-    paddingRight: 30,
+    paddingLeft: 25,
+    paddingRight: 25,
     },
   header: {
       marginTop: 20,
