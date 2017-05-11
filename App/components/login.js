@@ -1,10 +1,20 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import SocialLogin from 'react-social-login';
-import {StyleSheet,Linking} from 'react-native';
-import {Container,Header,Content, Left, Right,Button,Icon,Body,Title,View,ListItem,Text,
-        CheckBox,Footer,FooterTab,CardItem,Card,Form,Item,Label,Input
- } from 'native-base';
+
+import {
+  StyleSheet,
+  Linking,
+  Navigator,
+  Text,
+  TextInput,
+  TouchableHighlight,
+  TouchableOpacity,
+  View
+} from 'react-native';
+import { Components } from 'expo';
+const { LinearGradient } = Components;
+import { Ionicons } from '@expo/vector-icons';
 
 import {loginUser} from '../actions/action';
 import EmailError from './emailerror';
@@ -53,46 +63,137 @@ class Login extends Component{
       // }
 
     return (
-      <Container>
-        <Header>
-          <Left>
-            <Button onPress={() => {this.back()}} transparent>
-              <Icon name='arrow-back' />
-            </Button>
-          </Left>
-          <Body>
-            <Title>Log In</Title>
-          </Body>
-          <Right>
-            <Button transparent>
-            </Button>
-          </Right>
-        </Header>
+      <LinearGradient colors={['#FB2B69', '#FF5B37']} style={styles.linearGradient}>
+          <View style={styles.header}>
+            <TouchableHighlight
+              onPress={() => {this.back()}}
+              underlayColor="transparent"
+              activeOpacity={0.7}>
+              <View style={styles.row}>
+                <Ionicons name="md-arrow-dropleft" size={32} color="white" />
+                <Text style={styles.back}> BACK </Text>
+              </View>
+            </TouchableHighlight>
+          </View>
 
-        <Container>
-          <Content>
-            <Form>
-              <Item stackedLabel>
-                <Label>Email</Label>
-                <Input onChangeText={(email) => this.setState({email})} />
-              </Item>
-              <Item stackedLabel last>
-                <Label>Password</Label>
-                <Input onChangeText={(password) => this.setState({password})}/>
-              </Item>
-            </Form>
-            <Button onPress={(e) => {this.formSubmit(e)}} block info>
-              <Text>Log In </Text>
-            </Button>
-          </Content>
-        </Container>
-    </Container>
+          <View style={styles.container}>
+            <Text style={styles.headline}>
+              Login
+            </Text>
+          </View>
+
+          <View style={styles.row} />
+
+          <View style={styles.inputWrap}>
+            <TextInput
+              placeholder="Username"
+              onChangeText={(name) => this.setState({name})}
+              style={styles.textInput}>
+            </TextInput>
+          </View>
+
+          <View style={styles.inputWrap}>
+            <TextInput
+              placeholder="Password"
+              secureTextEntry
+              onChangeText={(password) => this.setState({password})}
+              style={styles.textInput}>
+            </TextInput>
+          </View>
+          <View style={styles.inputWrap}>
+            <TouchableHighlight
+              style={styles.button}
+              onPress={(c) => {this.formSubmit(c)}}
+              underlayColor="transparent"
+              activeOpacity={0.7}>
+                <View >
+                  <Text style={styles.buttonText}> Lets Go! </Text>
+                </View>
+            </TouchableHighlight>
+          </View>
+
+          <View style={styles.container} />
+
+      </LinearGradient>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
   incorrectEmailOrPassword: state.incorrectEmailOrPassword,
+});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    flexDirection: 'column',
+    backgroundColor: 'transparent',
+  },
+  linearGradient: {
+    flex: 1,
+    paddingLeft: 15,
+    paddingRight: 15,
+    },
+  header: {
+      marginTop: 20,
+      flexDirection: 'row',
+      alignItems: 'center',
+      height: 50
+    },
+  back: {
+    color: '#fff',
+    marginLeft: 10,
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 50
+  },
+  headline:{
+    color: "white",
+    fontSize: 50,
+    fontWeight:'100',
+  },
+  inputWrap:{
+    flexDirection: 'row',
+    marginVertical: 10,
+    height:60,
+    backgroundColor: 'transparent',
+    paddingHorizontal: 10
+  },
+  textInput: {
+    flex:1,
+    alignItems: 'center',
+    textAlign: 'left',
+    color: '#222222',
+    padding: 10,
+    margin: 5,
+    borderColor: "rgba(255,255,255,.8)",
+    borderWidth: 1,
+    borderRadius: 3,
+  },
+  label: {
+    margin: 10,
+    flex: 1,
+    color: '#60b7e2'
+  },
+  button:{
+    backgroundColor: "rgba(255,255,255,.3)",
+    flex:1,
+    borderColor: '#ffffff',
+    margin: 5,
+    borderRadius: 12,
+    borderColor: "rgba(255,255,255,.8)",
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20
+  },
+  buttonText:{
+    fontSize:20,
+    fontWeight: "bold",
+    color: "#ffffff"
+  }
 });
 
 export default connect(mapStateToProps)(Login);
