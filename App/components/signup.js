@@ -63,7 +63,7 @@ import EmailError from './emailerror';
         this.loginhome();
       }
     return (
-      <LinearGradient colors={['#1AD6FD', '#1D62F0']}
+      <LinearGradient colors={['#cc3366','#8227b3', '#3a49db']}
         style={styles.linearGradient}>
         <View style={styles.header}>
           <TouchableHighlight

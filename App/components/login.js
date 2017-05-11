@@ -63,7 +63,7 @@ class Login extends Component{
       // }
 
     return (
-      <LinearGradient colors={['#FB2B69', '#FF5B37']} style={styles.linearGradient}>
+      <LinearGradient colors={['#37dbcd', '#0072e4']} style={styles.linearGradient}>
           <View style={styles.header}>
             <TouchableHighlight
               onPress={() => {this.back()}}
