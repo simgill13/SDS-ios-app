@@ -17,5 +17,6 @@
   },
   "ios": {
     "supportsTablet": true
-  }
+  },
+  "facebookScheme": "fb1501413713237080"
 }

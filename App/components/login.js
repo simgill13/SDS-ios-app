@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import SocialLogin from 'react-social-login';
+import Expo from "expo";
+import { Facebook } from "expo";
 
 import {
   StyleSheet,
@@ -50,6 +52,21 @@ class Login extends Component{
     this.props.dispatch(loginUser(email, password, this.props.navigator));
   }
 
+  async logIn() {
+    const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('1501413713237080', {
+        permissions: ['public_profile', 'email'],
+      });
+    if (type === 'success') {
+      // Get the user's name using Facebook's Graph API
+      const response = await fetch(
+        `https://graph.facebook.com/me?access_token=${token}`);
+      Alert.alert(
+        'Logged in!',
+        `Hi ${(await response.json()).name}!`,
+      );
+    }
+  }
+
 
 
   render(){
@@ -64,6 +81,14 @@ class Login extends Component{
 
     return (
       <LinearGradient colors={['#37dbcd', '#0072e4']} style={styles.linearGradient}>
+        <View style={styles.container}>
+          <TouchableOpacity onPress={() => this.logIn()} style={styles.button}>
+            <Text style={styles.buttonText}>
+              Login with Facebook
+            </Text>
+          </TouchableOpacity>
+        </View>
+
           <View style={styles.header}>
             <TouchableHighlight
               onPress={() => {this.back()}}
