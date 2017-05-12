@@ -46,7 +46,7 @@ export const loginUser = (email, password, navigator) => dispatch => {
     console.log(json);
     dispatch(userLogin(json.name));
     navigator.push({
-      id:"homeloggedin",
+      id:"tab",
     });
   })
   .catch(err => {
