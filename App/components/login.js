@@ -3,6 +3,11 @@ import {connect} from 'react-redux';
 import SocialLogin from 'react-social-login';
 import Expo from "expo";
 import { Facebook } from "expo";
+import { Components } from 'expo';
+const { LinearGradient } = Components;
+import { Ionicons } from '@expo/vector-icons';
+import {loginUser} from '../actions/action';
+import EmailError from './emailerror';
 
 import {
   StyleSheet,
@@ -12,18 +17,11 @@ import {
   TextInput,
   TouchableHighlight,
   TouchableOpacity,
-  View
+  View,
+  Alert,
 } from 'react-native';
-import { Components } from 'expo';
-const { LinearGradient } = Components;
-import { Ionicons } from '@expo/vector-icons';
-
-import {loginUser} from '../actions/action';
-import EmailError from './emailerror';
-
 
 class Login extends Component{
-
   constructor(props){
     super(props)
     this.state = {
@@ -39,7 +37,7 @@ class Login extends Component{
     })
   }
 
-  loginhome(){
+  loginHome(){
     this.props.navigator.push({
       id:"homeloggedin",
     });
@@ -54,31 +52,20 @@ class Login extends Component{
 
   async logIn() {
     const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('1501413713237080', {
-        permissions: ['public_profile', 'email'],
-      });
+      permissions: ['public_profile', 'email', 'user_friends'],
+    });
     if (type === 'success') {
       // Get the user's name using Facebook's Graph API
-      const response = await fetch(
-        `https://graph.facebook.com/me?access_token=${token}`);
+      const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
       Alert.alert(
         'Logged in!',
         `Hi ${(await response.json()).name}!`,
       );
+      this.loginHome();
     }
   }
 
-
-
   render(){
-    // let errorMessage;
-    //   if (this.props.incorrectEmailOrPassword === true)
-    //     errorMessage=<EmailError/>;
-    //   }
-
-      // if (this.props.authenticated === true) {
-      //   this.loginhome()
-      // }
-
     return (
       <LinearGradient colors={['#37dbcd', '#0072e4']} style={styles.linearGradient}>
         <View style={styles.container}>
