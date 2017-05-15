@@ -9,7 +9,7 @@ import Home from './App/components/home';
 import SignUp from './App/components/signup';
 import Login from './App/components/login';
 import HomeLoggedIn from './App/components/homeLoggedIn';
-import OurChat from './App/components/homeLoggedIn';
+import OurChat from './App/components/ourchat';
 import Tab from './App/components/tab';
 import OurGroup from './App/components/ourgroup';
 import Rooms from './App/components/rooms';
@@ -36,7 +36,7 @@ class App extends React.Component {
       case 'rooms':
           return(<Rooms navigator={navigator} title="rooms"/>)
       case 'chatroom':
-          return(<ChatRoom navigator={navigator} title="chatroom"/>)
+          return(<OurChat navigator={navigator} title="chatroom"/>)
     }
   }
   render(){

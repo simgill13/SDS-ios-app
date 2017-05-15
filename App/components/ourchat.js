@@ -82,7 +82,7 @@ const USER_ID = '@userId';
                         </Button>
                     </Left>
                     <Body>
-                        <Title>Our Cha</Title>
+                        <Title>Our Chat</Title>
                     </Body>
                     <Right>
                         <Button transparent>
