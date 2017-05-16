@@ -1,4 +1,5 @@
 import base64 from 'base-64';
+import { Permissions, Notifications } from 'expo';
 
 export const USER_DATA = 'USER_DATA';
 export const userData = (name,email) => ({
@@ -55,17 +56,19 @@ export const loginUser = (email, password, navigator) => dispatch => {
   })
 }
 
-export const fetchUser = (name,email,password) => dispatch => {
+export const fetchUser = (name,email,password,token) => dispatch => {
     console.log("fetching user data...");
-    fetch('https://sdsserver.herokuapp.com/api/users', {
+    console.log("token...", token);
+    fetch('http://localhost:8080/api/users/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({name,email,password})
+      body: JSON.stringify({name,email,password,token})
     })
     .then(response => response.json())
     .then(json => {
+      console.log('json: ', json);
       if (json.message === "email already taken") {
         dispatch(EmailInDbToggle());
       } else {
@@ -78,4 +81,23 @@ export const fetchUser = (name,email,password) => dispatch => {
     .catch(err => {
       console.log(err);
     })
+}
+
+export const registerForPushNotificationsAsync = () => dispatch => {
+  return Permissions.askAsync(Permissions.REMOTE_NOTIFICATIONS)
+  .then(status => {
+    console.log('status: ', status);
+    // Stop here if the user did not grant permissions
+    if (status !== 'granted') {
+      return;
+    }
+  })
+  .then(() => {
+    // Get the token that uniquely identifies this device
+    return Notifications.getExponentPushTokenAsync()
+    .then(token => {
+      console.log('token (from action): ', token);
+      return token;
+    })
+  })
 }

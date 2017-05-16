@@ -14,6 +14,7 @@ const { LinearGradient } = Components;
 import { Components } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import {fetchUser} from '../actions/action';
+import {registerForPushNotificationsAsync} from '../actions/action';
 import EmailError from './emailerror';
 
 
@@ -25,7 +26,6 @@ import EmailError from './emailerror';
       name: '',
       email:'',
       password:'',
-
     };
     this.formSubmit=this.formSubmit.bind(this)
     this.loginhome=this.loginhome.bind(this)
@@ -48,12 +48,14 @@ import EmailError from './emailerror';
     let name = this.state.name;
     let email = this.state.email;
     let password = this.state.password;
-   this.props.dispatch(fetchUser(name,email,password));
+    this.props.dispatch(registerForPushNotificationsAsync())
+    .then(token => {
+      this.props.dispatch(fetchUser(name,email,password,token));
+    })
   }
 
 
   render(){
-
     let errorMessage;
       if (this.props.emailInDb === true) {
         errorMessage=<EmailError/>;
