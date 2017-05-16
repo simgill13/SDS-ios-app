@@ -59,7 +59,7 @@ export const loginUser = (email, password, navigator) => dispatch => {
 export const fetchUser = (name,email,password,token) => dispatch => {
     console.log("fetching user data...");
     console.log("token...", token);
-    fetch('http://localhost:8080/api/users/', {
+    fetch('https://sdsserver.herokuapp.com/api/users/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
