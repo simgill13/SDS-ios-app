@@ -12,8 +12,11 @@ const { LinearGradient } = Components;
 import { Ionicons } from '@expo/vector-icons';
 import { TabViewAnimated, TabBar } from 'react-native-tab-view';
 import Rooms from './rooms';
-import ChatRoom from './chatroom';
+import Head from './head';
+import Styles from './styles';
+import OurChat from './ourchat';
 import OurGroup from './ourgroup';
+
 import type { NavigationState } from 'react-native-tab-view/types';
 
 type Route = {
@@ -40,7 +43,6 @@ export default class Tab extends Component {
     routes: [
       { key: '1', title: 'Our Chat Rooms', icon: 'md-chatboxes' },
       { key: '2', title: 'Our Group', icon: 'ios-people' },
-      // { key: '3', title: 'Third', icon: 'ios-basketball' },
     ],
   };
 
@@ -95,17 +97,28 @@ export default class Tab extends Component {
   };
 
   _renderHeader = props => {
-    return (
-      <View style={styles.header}>
-        <TouchableHighlight
-          onPress={() => {this.back()}}
-          underlayColor="transparent"
-          activeOpacity={0.7}>
-          <View style={styles.row}>
-            <Ionicons name="md-arrow-dropleft" size={32} color="white" />
-            <Text style={styles.back}> BACK </Text>
-          </View>
-        </TouchableHighlight>
+      return(
+        <View
+          style={styles.header}>
+        <Head
+          navigator={this.props.navigator}
+          title=""
+          backID='home' />
+
+        <View style={styles.headlineWrap}>
+          <Text style={styles.headline} > Dashboard </Text>
+        </View>
+
+        <View style={styles.buttonWrap}>
+          <TouchableHighlight
+            style={styles.button}
+            underlayColor="transparent"
+            activeOpacity={0.7}>
+              <View >
+                <Text style={styles.buttonText}> Send Notice </Text>
+              </View>
+          </TouchableHighlight>
+        </View>
       </View>
     );
   };
@@ -149,10 +162,28 @@ export default class Tab extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'column',
+    backgroundColor: 'transparent',
+  },
+  header: {
+    flexDirection: 'column',
+		paddingLeft: 15,
+		paddingRight:15,
+    height: 200,
+		backgroundColor: '#171B28'
+    },
+  headlineWrap:{
+		alignItems: 'center',
+		flexDirection: 'column',
+		padding: 10
+	},
+  headline:{
+    color: "#ffffff",
+    fontSize:44,
+    fontWeight:'100',
   },
   tabbar: {
-    backgroundColor: '#222',
-
+    backgroundColor: '#171B28',
   },
   tab: {
     padding: 1,
@@ -163,7 +194,7 @@ const styles = StyleSheet.create({
   },
   indicator: {
     flex: 1,
-    backgroundColor: '#0084ff',
+    backgroundColor: '#232c3b',
     margin: 4,
     borderRadius: 2,
   },
@@ -184,5 +215,36 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: -2,
   },
+
+back: {
+  color: '#63768d',
+  marginLeft: 5,
+},
+row: {
+  flexDirection: 'row',
+  justifyContent: 'center',
+  alignItems: 'center',
+},
+buttonWrap:{
+  marginVertical: 10,
+  height:60,
+  paddingHorizontal: 50
+},
+button:{
+  backgroundColor: "#D3574A",
+  flex:1,
+  borderColor: '#ffffff',
+  margin: 5,
+  borderRadius: 22,
+  borderColor: "rgba(255,255,255,.8)",
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: 20
+},
+buttonText:{
+  fontSize:20,
+  fontWeight: "300",
+  color: "#ffffff"
+}
 
 });
