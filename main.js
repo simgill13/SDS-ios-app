@@ -17,6 +17,7 @@ import Rooms from './App/components/rooms';
 import Row from './App/components/row';
 
 import FriendsList from './App/components/friends-list';
+import UserRooms from './App/components/users-rooms';
 
 
 class App extends React.Component {
@@ -38,8 +39,9 @@ class App extends React.Component {
       case 'chatroom':
           return(<OurChat navigator={navigator} title="chatroom"/>)
       case 'friendslist':
-          console.log('main.js');
           return(<FriendsList navigator={navigator} title="friendslist"/>)
+      case 'userrooms':
+          return(<UserRooms navigator={navigator} title="userrooms"/>)
     }
   }
   render(){
