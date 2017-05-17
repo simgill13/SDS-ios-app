@@ -101,3 +101,20 @@ export const registerForPushNotificationsAsync = () => dispatch => {
     })
   })
 }
+
+export const sendNotification = (deviceId, message) => dispatch => {
+  fetch('https://sdsserver.herokuapp.com/api/notification/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({deviceId, message})
+  })
+  .then(response => {
+    console.log(response);
+    return response.json();
+  })
+  .catch(err => {
+    console.log(err);
+  })
+}
