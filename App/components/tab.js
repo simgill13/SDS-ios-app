@@ -17,7 +17,6 @@ import Head from './head';
 import Styles from './styles';
 import OurChat from './ourchat';
 import OurGroup from './ourgroup';
-import dummyData from './dummyData'
 
 import type { NavigationState } from 'react-native-tab-view/types';
 

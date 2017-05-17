@@ -15,8 +15,6 @@ import Tab from './App/components/tab';
 import OurGroup from './App/components/ourgroup';
 import Rooms from './App/components/rooms';
 import Row from './App/components/row';
-import dummyData from './App/components/dummyData';
-
 
 
 class App extends React.Component {
@@ -29,8 +27,6 @@ class App extends React.Component {
         return(<SignUp navigator={navigator} title="signup"/>)
       case 'login':
         return(<Login navigator={navigator} title="login"/>)
-      case 'homeloggedin':
-        return(<HomeLoggedIn navigator={navigator} title="homeloggedin"/>)
       case 'tab':
           return(<Tab navigator={navigator} title="tab"/>)
       case 'ourgroup':
