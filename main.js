@@ -14,6 +14,8 @@ import OurChat from './App/components/ourchat';
 import Tab from './App/components/tab';
 import OurGroup from './App/components/ourgroup';
 import Rooms from './App/components/rooms';
+import Row from './App/components/row';
+import dummyData from './App/components/dummyData';
 
 
 

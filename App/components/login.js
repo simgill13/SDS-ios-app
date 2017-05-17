@@ -8,6 +8,7 @@ import {
   Navigator,
   Text,
   TextInput,
+  Keyboard,
   TouchableHighlight,
   TouchableOpacity,
   View
