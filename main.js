@@ -5,7 +5,7 @@ import {Provider} from 'react-redux';
 import {AppRegistry,Text,View,Navigator} from 'react-native';
 import { StyleSheet } from 'react-native';
 
-import Styles from './App/components/styles';
+import styles from './App/components/styles';
 import Head from './App/components/head';
 import Home from './App/components/home';
 import SignUp from './App/components/signup';

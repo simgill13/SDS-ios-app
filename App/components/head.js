@@ -29,12 +29,27 @@ class Head extends Component{
 	            underlayColor="transparent"
 	            activeOpacity={0.7}>
 	            <View style={styles.row}>
-	              <Ionicons name="md-arrow-dropleft" size={32} color="#444444" />
-	              <Text style={styles.back}> BACK </Text>
+	              <Ionicons name="md-arrow-dropleft"
+									style={{
+									color: this.props.color,
+									fontSize:24 }} />
+	              <Text style={{
+									color: this.props.color,
+									marginLeft:5,
+									fontSize:14,
+									marginBottom:2.125
+									 }}> BACK </Text>
 	            </View>
 	          </TouchableHighlight>
 	          <View style={styles.headerCenter}>
-	            <Text style={styles.title} color="#444444"> { this.props.title } </Text>
+	            <Text
+								style={{
+									color: this.props.color,
+									fontSize: 30,
+							    fontWeight:'200',
+									alignItems: 'center',
+									justifyContent: 'center',
+								}}> { this.props.title } </Text>
 	          </View>
 	          <View style={styles.headerRight}></View>
 	      </View>
@@ -66,18 +81,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',
   },
-	title:{
-		color: '#444444',
-		fontSize: 30,
-    fontWeight:'200',
-		alignItems: 'center',
-		justifyContent: 'center',
 
-  },
-  back: {
-    color: '#444444',
-    marginLeft: 5,
-  },
   row: {
     flexDirection: 'row',
     justifyContent: 'center',

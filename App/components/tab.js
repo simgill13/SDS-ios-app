@@ -5,6 +5,7 @@ import {
   Text,
   StyleSheet,
   TouchableHighlight,
+  TouchableOpacity,
   Navigator
  } from 'react-native';
 import { Components } from 'expo';
@@ -30,7 +31,6 @@ type State = NavigationState<Route>;
 
 export default class Tab extends Component {
 
-
   back(){
     console.log(this.props.navigator)
     this.props.navigator.push({
@@ -45,8 +45,6 @@ export default class Tab extends Component {
       { key: '2', title: 'Our Group', icon: 'ios-people' },
     ],
   };
-
-
 
   _handleChangeTab = index => {
     this.setState({
@@ -103,7 +101,8 @@ export default class Tab extends Component {
         <Head
           navigator={this.props.navigator}
           title=""
-          backID='home' />
+          backID='home'
+          color='#93ABC8' />
 
         <View style={styles.headlineWrap}>
           <Text style={styles.headline} > Dashboard </Text>
@@ -145,7 +144,6 @@ export default class Tab extends Component {
 
   render() {
     return (
-
       <TabViewAnimated
         style={[styles.container, this.props.style]}
         renderHeader={this._renderHeader}
@@ -154,7 +152,6 @@ export default class Tab extends Component {
         renderFooter={this._renderFooter}
         onRequestChangeTab={this._handleChangeTab}
       />
-
     );
   }
 }
@@ -167,8 +164,6 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: 'column',
-		paddingLeft: 15,
-		paddingRight:15,
     height: 200,
 		backgroundColor: '#171B28'
     },
@@ -216,10 +211,6 @@ const styles = StyleSheet.create({
     marginTop: -2,
   },
 
-back: {
-  color: '#63768d',
-  marginLeft: 5,
-},
 row: {
   flexDirection: 'row',
   justifyContent: 'center',
@@ -227,8 +218,8 @@ row: {
 },
 buttonWrap:{
   marginVertical: 10,
-  height:60,
-  paddingHorizontal: 50
+  height:54,
+  paddingHorizontal: 100
 },
 button:{
   backgroundColor: "#D3574A",
@@ -239,10 +230,10 @@ button:{
   borderColor: "rgba(255,255,255,.8)",
   alignItems: 'center',
   justifyContent: 'center',
-  padding: 20
+  padding: 10
 },
 buttonText:{
-  fontSize:20,
+  fontSize:18,
   fontWeight: "300",
   color: "#ffffff"
 }

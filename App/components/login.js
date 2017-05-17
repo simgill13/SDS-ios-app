@@ -18,6 +18,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import {loginUser} from '../actions/action';
 import EmailError from './emailerror';
+import Btn from './btn';
 
 
 class Login extends Component{
@@ -28,6 +29,7 @@ class Login extends Component{
       email: '',
       password: '',
     }
+    this.onSubmit=this.onSubmit.bind(this)
   }
 
   back(){
@@ -51,6 +53,12 @@ class Login extends Component{
   }
 
 
+	onSubmit(){
+    console.log(this.props.navigator)
+    this.props.navigator.push({
+      id:'signup',
+    })
+  }
 
   render(){
     // let errorMessage;
