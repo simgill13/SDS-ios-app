@@ -2,10 +2,9 @@ import base64 from 'base-64';
 import { Permissions, Notifications } from 'expo';
 
 export const USER_DATA = 'USER_DATA';
-export const userData = (name,email) => ({
+export const userData = (userObj) => ({
   type: USER_DATA,
-  name,
-  email,
+  userObj
 })
 
 export const EMAIL_IN_DB_TOGGLE = 'EMAIL_IN_DB_TOGGLE';
@@ -23,9 +22,9 @@ export const incorrectEmailOrPassword = () => ({
 })
 
 export const USER_LOGIN = 'USER_LOGIN';
-export const userLogin = (name) => ({
+export const userLogin = (userObj) => ({
   type: USER_LOGIN,
-  name
+  userObj
 })
 
 // creating an async action to post a new user
@@ -44,8 +43,8 @@ export const loginUser = (email, password, navigator) => dispatch => {
     return response.json();
   })
   .then(json => {
-    console.log(json);
-    dispatch(userLogin(json.name));
+    console.log('login action', json);
+    dispatch(userLogin(json));
     navigator.push({
       id:"tab",
     });
@@ -56,7 +55,8 @@ export const loginUser = (email, password, navigator) => dispatch => {
   })
 }
 
-export const fetchUser = (name,email,password,token) => dispatch => {
+// change name
+export const fetchUser = (name,email,password,token,navigator) => dispatch => {
     console.log("fetching user data...");
     console.log("token...", token);
     fetch('https://sdsserver.herokuapp.com/api/users/', {
@@ -73,9 +73,12 @@ export const fetchUser = (name,email,password,token) => dispatch => {
         dispatch(EmailInDbToggle());
       } else {
         console.log('...I have posted this user')
-          console.log(json)
-          dispatch(userData(json.name,json.email))
+          console.log('fetch Object', json)
+          dispatch(userData(json))
           dispatch(NewuserCreated())
+          navigator.push({
+            id:"tab",
+          });
       }
     })
     .catch(err => {
