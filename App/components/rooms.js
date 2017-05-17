@@ -24,7 +24,7 @@ class Rooms extends Component{
 	chatroom(){
 		console.log(this.props.navigator)
 		this.props.navigator.push({
-			id:"chatroom",
+			id:"friendslist",
 		})
 	}
 
