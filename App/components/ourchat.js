@@ -34,7 +34,8 @@ class OurChat extends Component{
    super(props)
    this.state = {
      messages: [],
-     userId: null
+     userId: null,
+     chatId: 5,
    };
 
    this.determineUser = this.determineUser.bind(this);
@@ -42,8 +43,10 @@ class OurChat extends Component{
    this.onSend = this.onSend.bind(this);
    this._storeMessages = this._storeMessages.bind(this);
 
-   this.socket = SocketIOClient('https://sdsserver.herokuapp.com/');
-   this.socket.on('message', this.onReceivedMessage);
+   const chatId = this.state.chatId;
+
+   this.socket = SocketIOClient('http://localhost:8080');
+   this.socket.on('message', this.onReceivedMessage, chatId);
    this.determineUser();
 
  }
@@ -51,14 +54,15 @@ class OurChat extends Component{
    AsyncStorage.getItem(USER_ID)
      .then((userId) => {
        // If there isn't a stored userId, then fetch one from the server.
+       const chatId = this.state.chatId;
        if (!userId) {
-         this.socket.emit('userJoined', null);
-         this.socket.on('userJoined', (userId) => {
+         this.socket.emit('userJoined', null, chatId);
+         this.socket.on('userJoined', (userId, chatId) => {
            AsyncStorage.setItem(USER_ID, userId);
            this.setState({ userId });
          });
        } else {
-         this.socket.emit('userJoined', userId);
+         this.socket.emit('userJoined', userId, chatId);
          this.setState({ userId });
        }
      })
@@ -68,7 +72,7 @@ class OurChat extends Component{
    this._storeMessages(messages);
  }
  onSend(messages=[]) {
-   this.socket.emit('message', messages[0]);
+   this.socket.emit('message', messages[0], this.state.chatId);
    this._storeMessages(messages);
  }
 
