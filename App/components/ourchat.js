@@ -45,7 +45,7 @@ class OurChat extends Component{
 
    const chatId = this.state.chatId;
 
-   this.socket = SocketIOClient('http://localhost:8080');
+   this.socket = SocketIOClient('https://sdsserver.herokuapp.com/');
    this.socket.on('message', this.onReceivedMessage, chatId);
    this.determineUser();
 
