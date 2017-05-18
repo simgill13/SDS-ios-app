@@ -11,10 +11,17 @@
   "dependencies": {
     "base-64": "^0.1.0",
     "expo": "16.0.0",
+    "firebase": "^4.0.0",
+    "jquery": "^3.2.1",
     "native-base": "^2.1.2",
     "react": "16.0.0-alpha.6",
     "react-native": "^0.43.4",
+
     "react-native-elements": "^0.12.1",
+
+    "react-native-file-upload": "^1.0.4",
+    "react-native-fileupload": "^1.2.0",
+
     "react-native-gifted-chat": "^0.1.4",
     "react-native-tab-view": "0.0.65",
     "react-native-vector-icons": "^4.1.1",
