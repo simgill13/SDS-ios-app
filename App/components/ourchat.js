@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+const { config } = require('../config');
 import {
   StyleSheet,
   Image,
@@ -99,14 +100,17 @@ class OurChat extends Component{
       allowsEditing: true,
       aspect: [4,3]
     });
-    console.log('showjames the IMAGE', pickerResult.uri)
-    // firebase.initializeApp(config);
-    // postpic(pickerResult, 'james')
-    // function postpic(pic,userId) {
-    //   firebase.database().ref('pic/' + userId).set({
-    //     pic
-    //   });
-    // }
+    // console.log("CHECK HERE",config)
+    // console.log('showjames the IMAGE', pickerResult.uri)
+    firebase.initializeApp(config);
+
+    postpic(pickerResult, 'sim')
+    function postpic(pic,userId) {
+      firebase.database().ref('pic/' + userId).set({
+        pic
+      });
+      alert(' SIM IS GREAT Photo sent to fireBase')
+    }
   }
 
 
