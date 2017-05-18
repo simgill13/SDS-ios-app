@@ -19,35 +19,18 @@ import {
 import { Components,Constants,ImagePicker } from 'expo';
 const { LinearGradient } = Components;
 import { Ionicons } from '@expo/vector-icons';
-import request from 'superagent';
 import Head from './head';
 import styles from './styles.js';
-import $ from 'jquery';
 import * as firebase from 'firebase';
-
 
 import {postingCameraPic} from '../actions/action';
 
-
 // socket stuff
+
 import SocketIOClient from 'socket.io-client';
 import { GiftedChat } from 'react-native-gifted-chat'
 
-
-
 const USER_ID = '@userId';
-const CLOUDINARY_UPLOAD_PRESET = 'b5jhmyze';
-const CLOUDINARY_UPLOAD_URL = "https://api.cloudinary.com/v1_1/sds-images/image/upload"
- var config = {
-    apiKey: "AIzaSyCDdRetLuEPQ_KT9mHfU7Bj3qCRB2bW53I",
-    authDomain: "sds-ios.firebaseapp.com",
-    databaseURL: "https://sds-ios.firebaseio.com",
-    projectId: "sds-ios",
-    storageBucket: "sds-ios.appspot.com",
-    messagingSenderId: "1031085208349"
-  };
-
-
 
 ///  END STYLE  ///////////////
 
@@ -64,7 +47,6 @@ class OurChat extends Component{
         text:""
       };
 
-
     this.determineUser = this.determineUser.bind(this);
     this.onReceivedMessage = this.onReceivedMessage.bind(this);
     this.onSend = this.onSend.bind(this);
@@ -74,7 +56,6 @@ class OurChat extends Component{
     this.socket.on('message', this.onReceivedMessage,chatId );
     this.determineUser();
   }
-
 
   _maybeRenderUploadingOverlay = () => {
     if (this.state.uploading) {
@@ -113,29 +94,26 @@ class OurChat extends Component{
     );
   }
 
-
-
-
   _takePhoto = async () => {
     let pickerResult = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
       aspect: [4,3]
     });
     console.log('showjames the IMAGE', pickerResult.uri)
-    firebase.initializeApp(config);
-    postpic(pickerResult, 'james')
-    function postpic(pic,userId) {
-      firebase.database().ref('pic/' + userId).set({
-        pic
-      });
-    }
+    // firebase.initializeApp(config);
+    // postpic(pickerResult, 'james')
+    // function postpic(pic,userId) {
+    //   firebase.database().ref('pic/' + userId).set({
+    //     pic
+    //   });
+    // }
   }
 
 
 
   // _handleImagePicked = async (pickerResult) => {
   //   console.log(pickerResult)
-  
+
 
   // }
 
@@ -235,7 +213,7 @@ class OurChat extends Component{
 
 
 
- 
+
 
 
 
