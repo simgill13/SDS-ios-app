@@ -109,7 +109,7 @@ class OurChat extends Component{
       firebase.database().ref('pic/' + userId).set({
         pic
       });
-      alert(' SIM IS GREAT Photo sent to fireBase')
+      alert(' SIM IS GREAT git Photo sent to fireBase')
     }
   }
 
