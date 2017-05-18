@@ -39,12 +39,12 @@ const USER_ID = '@userId';
 const CLOUDINARY_UPLOAD_PRESET = 'b5jhmyze';
 const CLOUDINARY_UPLOAD_URL = "https://api.cloudinary.com/v1_1/sds-images/image/upload"
  var config = {
-    apiKey: "AIzaSyCDdRetLuEPQ_KT9mHfU7Bj3qCRB2bW53I",
-    authDomain: "sds-ios.firebaseapp.com",
-    databaseURL: "https://sds-ios.firebaseio.com",
+    apiKey: "",
+    authDomain: "",
+    databaseURL: "haseio.com",
     projectId: "sds-ios",
-    storageBucket: "sds-ios.appspot.com",
-    messagingSenderId: "1031085208349"
+    storageBucket: "sds.com",
+    messagingSenderId: "18349"
   };
 
 
@@ -124,11 +124,7 @@ class OurChat extends Component{
     console.log('showjames the IMAGE', pickerResult.uri)
     firebase.initializeApp(config);
     postpic(pickerResult, 'james')
-    function postpic(pic,userId) {
-      firebase.database().ref('pic/' + userId).set({
-        pic
-      });
-    }
+   
   }
 
 
