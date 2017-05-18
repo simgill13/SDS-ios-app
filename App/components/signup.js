@@ -50,7 +50,7 @@ import EmailError from './emailerror';
     let password = this.state.password;
     this.props.dispatch(registerForPushNotificationsAsync())
     .then(token => {
-      this.props.dispatch(fetchUser(name,email,password,token));
+      this.props.dispatch(fetchUser(name,email,password,token,this.props.navigator));
     })
   }
 
@@ -60,10 +60,10 @@ import EmailError from './emailerror';
       if (this.props.emailInDb === true) {
         errorMessage=<EmailError/>;
       }
-
-      if (this.props.newUserCreated === true) {
-        this.loginhome();
-      }
+    //
+    //   if (this.props.newUserCreated === true) {
+    //     this.loginhome();
+    //   }
     return (
       <LinearGradient colors={['#cc3366','#8227b3', '#3a49db']}
         style={styles.linearGradient}>
