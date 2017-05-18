@@ -13,6 +13,7 @@ const { LinearGradient } = Components;
 import { Ionicons } from '@expo/vector-icons';
 import { TabViewAnimated, TabBar } from 'react-native-tab-view';
 import Rooms from './rooms';
+import UserRooms from './users-rooms'
 import Head from './head';
 import Styles from './styles';
 import OurChat from './ourchat';
@@ -126,7 +127,7 @@ export default class Tab extends Component {
     switch (route.key) {
       case '1':
         return (
-          <Rooms
+          <UserRooms
             state={this.state}
             navigator={this.props.navigator}
           />
