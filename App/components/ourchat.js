@@ -9,21 +9,42 @@ import {
   TouchableOpacity,
   View,
   Navigator,
-  AsyncStorage
+  AsyncStorage,
+  ActivityIndicator,
+  Button,
+  Clipboard,
+  Share,
+  StatusBar
 } from 'react-native';
-import { Components } from 'expo';
+import { Components,Constants,ImagePicker } from 'expo';
 const { LinearGradient } = Components;
 import { Ionicons } from '@expo/vector-icons';
-
+import request from 'superagent';
 import Head from './head';
+import $ from 'jquery';
+import * as firebase from 'firebase';
 
+import {postingCameraPic} from '../actions/action';
 
 
 // socket stuff
 import SocketIOClient from 'socket.io-client';
 import { GiftedChat } from 'react-native-gifted-chat'
+var CryptoJS = require('crypto-js');
+var FileUpload = require('NativeModules').FileUpload;
 
 const USER_ID = '@userId';
+const CLOUDINARY_UPLOAD_PRESET = 'b5jhmyze';
+const CLOUDINARY_UPLOAD_URL = "https://api.cloudinary.com/v1_1/sds-images/image/upload"
+ var config = {
+    apiKey: "AIzaSyCDdRetLuEPQ_KT9mHfU7Bj3qCRB2bW53I",
+    authDomain: "sds-ios.firebaseapp.com",
+    databaseURL: "https://sds-ios.firebaseio.com",
+    projectId: "sds-ios",
+    storageBucket: "sds-ios.appspot.com",
+    messagingSenderId: "1031085208349"
+  };
+
 
 
 ///  STYLE  ///////////////
@@ -100,25 +121,127 @@ const styles = StyleSheet.create({
 ///  END STYLE  ///////////////
 
 class OurChat extends Component{
- constructor(props){
-   super(props)
-   this.state = {
-     messages: [],
-     userId: null
-   };
+  constructor(props){
+    super(props)
+      this.state = {
+        messages: [],
+        userId: null,
+        image:null,
+        uploading:false,
+        text:""
+      };
 
-   this.determineUser = this.determineUser.bind(this);
-   this.onReceivedMessage = this.onReceivedMessage.bind(this);
-   this.onSend = this.onSend.bind(this);
-   this._storeMessages = this._storeMessages.bind(this);
+    this.determineUser = this.determineUser.bind(this);
+    this.onReceivedMessage = this.onReceivedMessage.bind(this);
+    this.onSend = this.onSend.bind(this);
+    this._storeMessages = this._storeMessages.bind(this);
+    this.socket = SocketIOClient('https://sdsserver.herokuapp.com/');
+    this.socket.on('message', this.onReceivedMessage);
+    this.determineUser();
+  }
 
-   this.socket = SocketIOClient('https://sdsserver.herokuapp.com/');
-   this.socket.on('message', this.onReceivedMessage);
-   this.determineUser();
 
- }
- determineUser() {
-   AsyncStorage.getItem(USER_ID)
+  _maybeRenderUploadingOverlay = () => {
+    if (this.state.uploading) {
+      return (
+        <View style={[StyleSheet.absoluteFill, {backgroundColor: 'rgba(0,0,0,0.4)', alignItems: 'center', justifyContent: 'center'}]}>
+          <ActivityIndicator
+            color="#fff"
+            animating
+            size="large"
+          />
+        </View>
+      );
+    }
+  }
+
+
+  _maybeRenderImage = () => {
+    let { image } = this.state;
+    if (!image) {
+      return;
+    }
+
+    return (
+      <View >
+        <View style={{borderTopRightRadius: 3, borderTopLeftRadius: 3, overflow: 'hidden'}}>
+          <Image
+            source={{uri: image}}
+            style={{width: 250, height: 250}}
+          />
+        </View>
+
+        <Text style={{paddingVertical: 10, paddingHorizontal: 10}}>
+          {image}
+        </Text>
+      </View>
+    );
+  }
+
+
+
+
+  _takePhoto = async () => {
+    let pickerResult = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      aspect: [4,3]
+    });
+    console.log('showjames the IMAGE', pickerResult.uri)
+    firebase.initializeApp(config);
+    postpic(pickerResult, 'sim')
+   function postpic(pic,userId) {
+  firebase.database().ref('pic/' + userId).set({
+    pic
+  });
+}
+
+    
+
+
+
+
+
+
+
+
+
+  }
+
+
+
+  // _handleImagePicked = async (pickerResult) => {
+  //   console.log(pickerResult)
+  
+
+  // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  determineUser() {
+    AsyncStorage.getItem(USER_ID)
      .then((userId) => {
        // If there isn't a stored userId, then fetch one from the server.
        if (!userId) {
@@ -133,14 +256,17 @@ class OurChat extends Component{
        }
      })
      .catch((e) => alert(e));
- }
- onReceivedMessage(messages) {
+  }
+
+  onReceivedMessage(messages) {
    this._storeMessages(messages);
- }
- onSend(messages=[]) {
+  }
+
+
+  onSend(messages=[]) {
    this.socket.emit('message', messages[0]);
    this._storeMessages(messages);
- }
+  }
 
 
  render(){
@@ -157,6 +283,15 @@ class OurChat extends Component{
      onSend={this.onSend}
      user={user}
      />
+     <View >
+        <Button
+          onPress={this._takePhoto}
+          title="Take a photo"
+        />
+        { this._maybeRenderImage() }
+        { this._maybeRenderUploadingOverlay() }
+        <StatusBar barStyle="default" />
+      </View>
    </View>
    );
  }
@@ -168,7 +303,59 @@ class OurChat extends Component{
       };
     });
   }
+
+
+  // handleImageUpload(file) {
+  //   console.log('handelimage')
+  //   let upload = request.post(CLOUDINARY_UPLOAD_URL)
+  //                       .field('upload_preset', CLOUDINARY_UPLOAD_PRESET)
+  //                       .field('file', file);
+
+  //   upload.end((err, res) => {
+  //     if (err) console.error(err);
+  //   });
+
+  // }
 }
+
+
+
+
+ 
+
+// async function uploadImageAsync(uri) {
+//   let apiUrl = 'https://file-upload-example-backend-xqwlckckqc.now.sh/upload';
+
+//   // Note:
+//   // Uncomment this if you want to experiment with local server
+//   //
+//   // if (Constants.isDevice) {
+//   //   apiUrl = `https://your-ngrok-subdomain.ngrok.io/upload`;
+//   // } else {
+//   //   apiUrl = `http://localhost:3000/upload`
+//   // }
+
+//   let uriParts = uri.split('.');
+//   let fileType = uri[uri.length - 1];
+
+//   let formData = new FormData();
+//   formData.append('photo', {
+//     uri,
+//     name: `photo.${fileType}`,
+//     type: `image/${fileType}`,
+//   });
+
+//   let options = {
+//     method: 'POST',
+//     body: formData,
+//     headers: {
+//       'Accept': 'application/json',
+//       'Content-Type': 'multipart/form-data',
+//     },
+//   };
+
+//   return fetch(apiUrl, options);
+// }
 
 
 const mapStateToProps = (state) => ({

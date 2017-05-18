@@ -101,3 +101,38 @@ export const registerForPushNotificationsAsync = () => dispatch => {
     })
   })
 }
+
+// export const postingCameraPic = (picuri) => dispatch => {
+//     console.log("posting pic...");
+//     console.log("picuri...", picuri);
+//     var photo = {
+//       uri: picuri,
+//       type: 'image/jpeg',
+//       name: 'photo.jpg',
+//     };
+
+//     var body = new FormData();
+//     // body.append('authToken', 'secret');
+//     body.append('photo', photo);
+//     body.append('title', 'A beautiful photo!');
+
+//     xhr.open('POST', 'http://localhost:8080/api/camera');
+//     xhr.send(body);
+//     // .then(response => console.log(response))
+//     // .catch(err => {
+//     //   console.log(err);
+//     // })
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
