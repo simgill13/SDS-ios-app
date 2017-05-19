@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-const { config } = require('../config');
 import {
   StyleSheet,
   Image,
@@ -102,7 +101,6 @@ class Chat extends Component{
     });
     // console.log("CHECK HERE",config)
     // console.log('showjames the IMAGE', pickerResult.uri)
-    firebase.initializeApp(config);
 
     postpic(pickerResult, 'sim')
     function postpic(pic,userId) {
