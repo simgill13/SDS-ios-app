@@ -123,6 +123,12 @@ export const sendNotification = (deviceId, message) => dispatch => {
   })
 }
 
+export const UPDATE_ROOMS = 'UPDATE_ROOMS';
+export const updateRooms = (data) => ({
+  type: UPDATE_ROOMS,
+  data
+})
+
 export const createRoom = (roomName, addedFriends, userId) => dispatch => {
   console.log(roomName, addedFriends, userId);
   fetch(`https://sdsserver.herokuapp.com/api/${userId}/room`, {
@@ -136,7 +142,11 @@ export const createRoom = (roomName, addedFriends, userId) => dispatch => {
     })
   })
   .then(response => {
-    console.log(response);
+    return response.json();
+  })
+  .then(data => {
+    console.log(data);
+    dispatch(updateRooms(data));
   })
   .catch(err => {
     console.log(err);
