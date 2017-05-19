@@ -22,7 +22,10 @@ const { LinearGradient } = Components;
 import { Ionicons } from '@expo/vector-icons';
 import Head from './head';
 import styles from './styles.js';
-import * as firebase from 'firebase';
+var CryptoJS = require('crypto-js');
+
+
+
 
 import {postingCameraPic} from '../actions/action';
 
@@ -30,10 +33,10 @@ import {postingCameraPic} from '../actions/action';
 
 import SocketIOClient from 'socket.io-client';
 import { GiftedChat } from 'react-native-gifted-chat'
-
 const USER_ID = '@userId';
 
-///  END STYLE  ///////////////
+
+
 
 class OurChat extends Component{
 
@@ -52,6 +55,7 @@ class OurChat extends Component{
     this.determineUser = this.determineUser.bind(this);
     this.onReceivedMessage = this.onReceivedMessage.bind(this);
     this.onSend = this.onSend.bind(this);
+    this.upload = this.upload.bind(this);
     this._storeMessages = this._storeMessages.bind(this);
     const chatId = this.state.chatId;
     this.socket = SocketIOClient('https://sdsserver.herokuapp.com/');
@@ -60,8 +64,8 @@ class OurChat extends Component{
   }
 
   componentDidMount(){
-    console.log("component is working")
-    firebase.initializeApp(config);
+    console.log("Hello from component did mont")
+      
   }
 
   _maybeRenderUploadingOverlay = () => {
@@ -101,6 +105,34 @@ class OurChat extends Component{
     );
   }
 
+  upload(pickeruri){
+
+    let timestamp = (Date.now() / 1000 | 0).toString();
+    let api_key = '396646677724831'
+    let api_secret = '0O5anAZgvi0h2UDAqFHAVF9x4yg'
+    let cloud = 'sds-images'
+    let hash_string = 'timestamp=' + timestamp + api_secret
+    let signature = CryptoJS.SHA1(hash_string).toString();
+    let upload_url = 'https://api.cloudinary.com/v1_1/' + cloud + '/image/upload'
+
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', upload_url);
+    xhr.onload = () => {
+      console.log(xhr);
+    };
+    let formdata = new FormData();
+    formdata.append('file', {uri: pickeruri, type: 'image/png', name: 'upload.png'});
+    formdata.append('timestamp', timestamp);
+    formdata.append('api_key', api_key);
+    formdata.append('signature', signature);
+    xhr.send(formdata);
+  }
+
+
+
+
+
+
 
   _takePhoto = async () => {
     let pickerResult = await ImagePicker.launchCameraAsync({
@@ -108,30 +140,9 @@ class OurChat extends Component{
       aspect: [4,3]
     });
 
-    console.log("testingSECRRT", config.apiKey)
-    console.log("LOOKHERE", this.state.counter)
-    this.setState({ counter: this.state.counter+1 });
-    console.log("LOOKHERE", this.state.counter)
-
-
-    console.log('just before')
-    postpic(pickerResult, this.state.counter,this.state.userNumber)
-
-    function postpic(picture,increment,userNumber) {
-      console.log('im inside the function')
-      firebase.database().ref(`${userNumber}/` + increment).set({
-         picture
-      }); 
-    }
+    this.upload(pickerResult.uri)
   }
 
-
-
-  // _handleImagePicked = async (pickerResult) => {
-  //   console.log(pickerResult)
-
-
-  // }
 
 
 
