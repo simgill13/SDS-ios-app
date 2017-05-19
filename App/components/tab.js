@@ -127,7 +127,7 @@ export default class Tab extends Component {
     switch (route.key) {
       case '1':
         return (
-          <Rooms
+          <UserRooms
             state={this.state}
             navigator={this.props.navigator}
           />
