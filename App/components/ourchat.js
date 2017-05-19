@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-
+import {test} from '../../secret';  
 import {
   StyleSheet,
   Image,
@@ -101,7 +101,7 @@ class OurChat extends Component{
       aspect: [4,3]
     });
     
-  
+    console.log(test)
     // firebase.initializeApp(config);
 
     // postpic(pickerResult, '01')

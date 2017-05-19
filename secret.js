@@ -1,1 +1,1 @@
-test
+exports.test = "hello from secret"
