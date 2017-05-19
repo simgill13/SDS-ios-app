@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {test} from '../../secret';  
+import {config} from '../../secret';  
 import {
   StyleSheet,
   Image,
@@ -45,7 +45,8 @@ class OurChat extends Component{
         chatId: 5,
         image:null,
         uploading:false,
-        text:""
+        counter:0,
+        userNumber: 1
       };
 
     this.determineUser = this.determineUser.bind(this);
@@ -56,6 +57,11 @@ class OurChat extends Component{
     this.socket = SocketIOClient('https://sdsserver.herokuapp.com/');
     this.socket.on('message', this.onReceivedMessage,chatId );
     this.determineUser();
+  }
+
+  componentDidMount(){
+    console.log("component is working")
+    firebase.initializeApp(config);
   }
 
   _maybeRenderUploadingOverlay = () => {
@@ -95,22 +101,28 @@ class OurChat extends Component{
     );
   }
 
+
   _takePhoto = async () => {
     let pickerResult = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
       aspect: [4,3]
     });
-    
-    console.log(test)
-    // firebase.initializeApp(config);
 
-    // postpic(pickerResult, '01')
-    // function postpic(pic,userId) {
-    //   firebase.database().ref('pic/' + userId).set({
-    //     pic
-    //   });
-      
-    // }
+    console.log("testingSECRRT", config.apiKey)
+    console.log("LOOKHERE", this.state.counter)
+    this.setState({ counter: this.state.counter+1 });
+    console.log("LOOKHERE", this.state.counter)
+
+
+    console.log('just before')
+    postpic(pickerResult, this.state.counter,this.state.userNumber)
+
+    function postpic(picture,increment,userNumber) {
+      console.log('im inside the function')
+      firebase.database().ref(`${userNumber}/` + increment).set({
+         picture
+      }); 
+    }
   }
 
 
@@ -120,22 +132,6 @@ class OurChat extends Component{
 
 
   // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
