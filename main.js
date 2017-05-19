@@ -19,6 +19,8 @@ import Row from './App/components/row';
 import FriendsList from './App/components/friends-list';
 import UserRooms from './App/components/users-rooms';
 import Chat from './App/components/chat';
+import CreateRoom from './App/components/create-room/newRoom';
+import RoomForm from './App/components/create-room/newRoom-form';
 
 
 class App extends React.Component {
@@ -37,6 +39,10 @@ class App extends React.Component {
           return(<OurGroup navigator={navigator} title="ourgroup"/>)
       case 'rooms':
           return(<Rooms navigator={navigator} title="rooms"/>)
+      case 'newRoom':
+          return(<CreateRoom navigator={navigator} title="rooms"/>)
+      case 'newRoomForm':
+          return(<RoomForm navigator={navigator} data={route.data} title="rooms"/>)
       // case 'chatroom':
       //     return(<OurChat navigator={navigator} title="chatroom"/>)
       case 'chatroom':

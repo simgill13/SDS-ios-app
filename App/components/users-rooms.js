@@ -50,6 +50,12 @@ class UserRooms extends Component{
 		})
 	}
 
+  createRoom(){
+    this.props.navigator.push({
+      id:"newRoom",
+    })
+  }
+
   // myList(){
   //   console.log('hello');
   //   if (this.props.rooms !== []) {
@@ -107,8 +113,9 @@ class UserRooms extends Component{
           renderItem={({item}) => this.myRenderItem(item)}
           onPressItem={({item}) => this._onPressItem(item.id)}
         />
+      <Text onPress={() => this.createRoom()}>Create Room</Text>
       </View>
-    )
+    );
   }
 }
 
