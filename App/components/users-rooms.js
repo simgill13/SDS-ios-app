@@ -21,12 +21,32 @@ class UserRooms extends Component{
     this.chatroom=this.chatroom.bind(this)
   }
 
+  convertChatId(chatId){
+    let total = 0;
+    console.log(chatId);
+    console.log(chatId.split(''));
+    chatId.split('').forEach((element, i) => {
+      if (parseInt(element) !== NaN) {
+        let elementNum = chatId.charCodeAt(i);
+        console.log(elementNum);
+        total += elementNum;
+      } else {
+        console.log(parseInt(element));
+        total += parseInt(element);
+      }
+    });
+    console.log(total);
+    return total;
+  }
 
 	chatroom(chatId){
 		console.log(this.props.navigator)
     console.log(chatId);
+    let numChatId = this.convertChatId(chatId)
+    console.log(numChatId);
 		this.props.navigator.push({
 			id:"chatroom",
+      data: numChatId
 		})
 	}
 
@@ -66,7 +86,7 @@ class UserRooms extends Component{
         <Text>{item.name}</Text>
         <Text>{item._id}</Text>
         <Text>Go In Room</Text>
-        <TouchableHighlight onPress={() => this._onPressItem(item._id) }>
+        <TouchableHighlight onPress={() => this.chatroom(item._id) }>
         <Text>Click Here</Text>
         </TouchableHighlight>
       </View>
