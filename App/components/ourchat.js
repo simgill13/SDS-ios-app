@@ -59,10 +59,8 @@ class OurChat extends Component{
     let xhr = new XMLHttpRequest();
     xhr.open('POST', upload_url);
     xhr.onload = () => {
-      console.log("==XHR MINI RESONSE", xhr._response)
       let data = JSON.parse(xhr.responseText);
-      console.log("===Data URL ===", data.secure_url)
-      this.setState({})
+      this.setState({image:data.secure_url})
     };
     let formdata = new FormData();
     formdata.append('file', {uri: pickeruri, type: 'image/png', name: 'upload.png'});
@@ -126,6 +124,7 @@ class OurChat extends Component{
      messages={this.state.messages}
      onSend={this.onSend}
      user={user}
+
      />
      <View >
         <Button
