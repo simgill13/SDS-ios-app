@@ -1,36 +1,16 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {config} from '../../secret';  
-import {
-  StyleSheet,
-  Image,
-  Linking,
-  Text,
-  TouchableHighlight,
-  TouchableOpacity,
-  View,
-  Navigator,
-  AsyncStorage,
-  ActivityIndicator,
-  Button,
-  Clipboard,
-  Share,
-  StatusBar
-} from 'react-native';
+import {StyleSheet, Image, Linking, Text, TouchableHighlight, TouchableOpacity, View, Navigator, AsyncStorage,
+        ActivityIndicator, Button, Clipboard, Share, StatusBar
+      } from 'react-native';
 import { Components,Constants,ImagePicker } from 'expo';
 const { LinearGradient } = Components;
 import { Ionicons } from '@expo/vector-icons';
 import Head from './head';
 import styles from './styles.js';
 var CryptoJS = require('crypto-js');
-
-
-
-
 import {postingCameraPic} from '../actions/action';
-
-// socket stuff
-
 import SocketIOClient from 'socket.io-client';
 import { GiftedChat } from 'react-native-gifted-chat'
 const USER_ID = '@userId';
@@ -49,8 +29,9 @@ class OurChat extends Component{
         image:null,
         uploading:false,
         counter:0,
-        userNumber: 1
-      };
+        userNumber: 1,
+        animating:false,
+    };
 
     this.determineUser = this.determineUser.bind(this);
     this.onReceivedMessage = this.onReceivedMessage.bind(this);
@@ -63,53 +44,13 @@ class OurChat extends Component{
     this.determineUser();
   }
 
-  componentDidMount(){
-    console.log("Hello from component did mont")
-      
-  }
-
-  _maybeRenderUploadingOverlay = () => {
-    if (this.state.uploading) {
-      return (
-        <View style={[StyleSheet.absoluteFill, {backgroundColor: 'rgba(0,0,0,0.4)', alignItems: 'center', justifyContent: 'center'}]}>
-          <ActivityIndicator
-            color="#fff"
-            animating
-            size="large"
-          />
-        </View>
-      );
-    }
-  }
-
-
-  _maybeRenderImage = () => {
-    let { image } = this.state;
-    if (!image) {
-      return;
-    }
-
-    return (
-      <View >
-        <View style={{borderTopRightRadius: 3, borderTopLeftRadius: 3, overflow: 'hidden'}}>
-          <Image
-            source={{uri: image}}
-            style={{width: 250, height: 250}}
-          />
-        </View>
-
-        <Text style={{paddingVertical: 10, paddingHorizontal: 10}}>
-          {image}
-        </Text>
-      </View>
-    );
-  }
+  
 
   upload(pickeruri){
-
+    
     let timestamp = (Date.now() / 1000 | 0).toString();
-    let api_key = '396646677724831'
-    let api_secret = '0O5anAZgvi0h2UDAqFHAVF9x4yg'
+    let api_key = config.api_key
+    let api_secret = config.api_secret
     let cloud = 'sds-images'
     let hash_string = 'timestamp=' + timestamp + api_secret
     let signature = CryptoJS.SHA1(hash_string).toString();
@@ -118,7 +59,10 @@ class OurChat extends Component{
     let xhr = new XMLHttpRequest();
     xhr.open('POST', upload_url);
     xhr.onload = () => {
-      console.log(xhr);
+      console.log("==XHR MINI RESONSE", xhr._response)
+      let data = JSON.parse(xhr.responseText);
+      console.log("===Data URL ===", data.secure_url)
+      this.setState({})
     };
     let formdata = new FormData();
     formdata.append('file', {uri: pickeruri, type: 'image/png', name: 'upload.png'});
@@ -129,36 +73,22 @@ class OurChat extends Component{
   }
 
 
-
-
-
-
-
   _takePhoto = async () => {
     let pickerResult = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
       aspect: [4,3]
     });
-
     this.upload(pickerResult.uri)
   }
 
 
 
-
-
-
-
-
-
-
-
   determineUser() {
     AsyncStorage.getItem(USER_ID)
-     .then((userId) => {
+      .then((userId) => {
        // If there isn't a stored userId, then fetch one from the server.
-       const chatId = this.state.chatId;
-       if (!userId) {
+        const chatId = this.state.chatId;
+        if (!userId) {
          this.socket.emit('userJoined', null, chatId);
          this.socket.on('userJoined', (userId, chatId) => {
            AsyncStorage.setItem(USER_ID, userId);
@@ -168,8 +98,8 @@ class OurChat extends Component{
          this.socket.emit('userJoined', userId, chatId);
          this.setState({ userId });
        }
-     })
-     .catch((e) => alert(e));
+    })
+    .catch((e) => alert(e));
   }
 
   onReceivedMessage(messages) {
@@ -202,8 +132,6 @@ class OurChat extends Component{
           onPress={this._takePhoto}
           title="Take a photo"
         />
-        { this._maybeRenderImage() }
-        { this._maybeRenderUploadingOverlay() }
         <StatusBar barStyle="default" />
       </View>
    </View>
@@ -217,19 +145,12 @@ class OurChat extends Component{
       };
     });
   }
-
-
 }
 
 
 
 
-
-
-
-
 const mapStateToProps = (state) => ({
-
 });
 
 export default connect(mapStateToProps)(OurChat);
