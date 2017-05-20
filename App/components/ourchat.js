@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {config} from '../../secret';  
+import {config} from '../../configTwo';  
 import {StyleSheet, Image, Linking, Text, TouchableHighlight, TouchableOpacity, View, Navigator, AsyncStorage,
         ActivityIndicator, Button, Clipboard, Share, StatusBar
       } from 'react-native';
