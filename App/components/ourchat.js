@@ -14,6 +14,7 @@ import {postingCameraPic} from '../actions/action';
 import SocketIOClient from 'socket.io-client';
 import { GiftedChat } from 'react-native-gifted-chat'
 const USER_ID = '@userId';
+import update from 'immutability-helper';
 
 
 
@@ -57,15 +58,40 @@ class OurChat extends Component{
     let upload_url = 'https://api.cloudinary.com/v1_1/' + cloud + '/image/upload'
 
     let xhr = new XMLHttpRequest();
+    let newPhoto;
     xhr.open('POST', upload_url);
     xhr.onload = () => {
       let data = JSON.parse(xhr.responseText);
-      this.setState({image:data.secure_url})
+      // this.setState({image:data.secure_url})
+      newPhoto = data.secure_url;
+//      console.log("New Photo prepping for msg update", newPhoto);
+      // console.log("this.state.image======", this.state.image);
+      console.log("this.state.messages======", this.state.messages);
+//      console.log("this.state.messages[0]======", this.state.messages[0]);
+      let imageMsg = {...this.state.messages[0], image: newPhoto};
+      // TODO SHOULD ACTUALLY SHIFT TO FRONT OF ARRAY INSTEAD OF ADDING IMG TO LAST MSG
+//      console.log("Image Message OBJECT==========", imageMsg);
+      const updatedMsgs = update(this.state.messages, {
+        0: {$set: imageMsg}
+      });
+      console.log("UPDATED MESSAGES: _________", updatedMsgs);
+      this.setState({messages: updatedMsgs});
+      console.log("this.state.messages has just been updated======", this.state.messages);
+      this.socket.emit('message', imageMsg, this.state.chatId);
     };
     //
-    // console.log("this.state.image======", this.state.image);
-    // let imageMsg = {...this.state.messages[0], image: this.state.image};
+    // console.log("New Photo prepping for msg update", newPhoto);
+    // // console.log("this.state.image======", this.state.image);
+    // console.log("this.state.messages======", this.state.messages);
+    // console.log("this.state.messages[0]======", this.state.messages[0]);
+    // let imageMsg = {...this.state.messages[0], image: newPhoto};
     // console.log("Image Message OBJECT==========", imageMsg);
+    // const updatedMsgs = update(this.state, {
+    //   messages: {0:{$set: imageMsg}}
+    // });
+    // console.log("UPDATED MESSAGES: _________", updatedMsgs);
+    // this.setState({messages: updatedMsgs});
+    // console.log("this.state.messages has just been updated======", this.state.messages);
     // this.socket.emit('message', imageMsg, this.state.chatId);
     // this._storeMessages(messages);
     //
