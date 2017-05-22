@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {config} from '../../config';  
+import {config} from '../../config';
 import {StyleSheet, Image, Linking, Text, TouchableHighlight, TouchableOpacity, View, Navigator, AsyncStorage,
         ActivityIndicator, Button, Clipboard, Share, StatusBar
       } from 'react-native';
@@ -39,15 +39,15 @@ class OurChat extends Component{
     this.upload = this.upload.bind(this);
     this._storeMessages = this._storeMessages.bind(this);
     const chatId = this.state.chatId;
-    this.socket = SocketIOClient('https://sdsserver.herokuapp.com/');
+    this.socket = SocketIOClient('https://sdsserver.herokuapp.com');
     this.socket.on('message', this.onReceivedMessage,chatId );
     this.determineUser();
   }
 
-  
+
 
   upload(pickeruri){
-    
+
     let timestamp = (Date.now() / 1000 | 0).toString();
     let api_key = config.api_key
     let api_secret = config.api_secret
@@ -60,7 +60,11 @@ class OurChat extends Component{
     xhr.open('POST', upload_url);
     xhr.onload = () => {
       let data = JSON.parse(xhr.responseText);
-      this.setState({image:data.secure_url})
+      this.setState({image:data.secure_url});
+      console.log('this.state.image: ', this.state.image);
+      this.onSend(this.state.messages, this.state.image);
+      // let photoMsg = {...this.state.messages[0], image: this.state.image};
+      // this.socket.emit('message', photoMsg, this.state.chatId);
     };
     let formdata = new FormData();
     formdata.append('file', {uri: pickeruri, type: 'image/png', name: 'upload.png'});
@@ -103,8 +107,8 @@ class OurChat extends Component{
   onReceivedMessage(messages) {
    this._storeMessages(messages);
   }
-  onSend(messages=[]) {
-    this.socket.emit('message', messages[0], this.state.chatId);
+  onSend(messages=[], image=null) {
+    this.socket.emit('message', messages[0], this.state.chatId, image);
     this._storeMessages(messages);
   }
 
