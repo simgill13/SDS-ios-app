@@ -16,9 +16,6 @@ import { GiftedChat } from 'react-native-gifted-chat'
 const USER_ID = '@userId';
 import update from 'immutability-helper';
 
-
-
-
 class OurChat extends Component{
 
   constructor(props){
@@ -45,8 +42,6 @@ class OurChat extends Component{
     this.determineUser();
   }
 
-
-
   upload(pickeruri){
 
     let timestamp = (Date.now() / 1000 | 0).toString();
@@ -62,39 +57,19 @@ class OurChat extends Component{
     xhr.open('POST', upload_url);
     xhr.onload = () => {
       let data = JSON.parse(xhr.responseText);
-      // this.setState({image:data.secure_url})
       newPhoto = data.secure_url;
-//      console.log("New Photo prepping for msg update", newPhoto);
-      // console.log("this.state.image======", this.state.image);
-      console.log("this.state.messages======", this.state.messages);
-//      console.log("this.state.messages[0]======", this.state.messages[0]);
-      let imageMsg = {...this.state.messages[0], image: newPhoto};
-      // TODO SHOULD ACTUALLY SHIFT TO FRONT OF ARRAY INSTEAD OF ADDING IMG TO LAST MSG
-//      console.log("Image Message OBJECT==========", imageMsg);
+
+        //TODO need to update id, user, createdAt, chatId
+      let imageMsg = {"_id":"8675309","user":{"_id":"591f78ea11e70a0011586ea3"},
+        "createdAt":"2017-05-22T22:08:17.155Z", "chatId":1347, image: newPhoto};
       const updatedMsgs = update(this.state.messages, {
-        0: {$set: imageMsg}
+        $splice: [[0, 0, imageMsg]]
       });
-      console.log("UPDATED MESSAGES: _________", updatedMsgs);
+      // console.log("UPDATED MESSAGES: _________", updatedMsgs);
       this.setState({messages: updatedMsgs});
-      console.log("this.state.messages has just been updated======", this.state.messages);
+      // console.log("this.state.messages has just been updated======", this.state.messages);
       this.socket.emit('message', imageMsg, this.state.chatId);
     };
-    //
-    // console.log("New Photo prepping for msg update", newPhoto);
-    // // console.log("this.state.image======", this.state.image);
-    // console.log("this.state.messages======", this.state.messages);
-    // console.log("this.state.messages[0]======", this.state.messages[0]);
-    // let imageMsg = {...this.state.messages[0], image: newPhoto};
-    // console.log("Image Message OBJECT==========", imageMsg);
-    // const updatedMsgs = update(this.state, {
-    //   messages: {0:{$set: imageMsg}}
-    // });
-    // console.log("UPDATED MESSAGES: _________", updatedMsgs);
-    // this.setState({messages: updatedMsgs});
-    // console.log("this.state.messages has just been updated======", this.state.messages);
-    // this.socket.emit('message', imageMsg, this.state.chatId);
-    // this._storeMessages(messages);
-    //
     let formdata = new FormData();
     formdata.append('file', {uri: pickeruri, type: 'image/png', name: 'upload.png'});
     formdata.append('timestamp', timestamp);
@@ -109,7 +84,9 @@ class OurChat extends Component{
       allowsEditing: true,
       aspect: [4,3]
     });
-    this.upload(pickerResult.uri)
+    if (!pickerResult.cancelled){
+      this.upload(pickerResult.uri);
+    }
   }
 
 
