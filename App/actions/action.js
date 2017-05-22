@@ -123,6 +123,35 @@ export const sendNotification = (deviceId, message) => dispatch => {
   })
 }
 
+export const UPDATE_ROOMS = 'UPDATE_ROOMS';
+export const updateRooms = (data) => ({
+  type: UPDATE_ROOMS,
+  data
+})
+
+export const createRoom = (roomName, addedFriends, userId) => dispatch => {
+  console.log(roomName, addedFriends, userId);
+  fetch(`https://sdsserver.herokuapp.com/api/${userId}/room`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      roomName,
+      addedFriends
+    })
+  })
+  .then(response => {
+    return response.json();
+  })
+  .then(data => {
+    console.log(data);
+    dispatch(updateRooms(data));
+  })
+  .catch(err => {
+    console.log(err);
+  })
+}
 // export const postingCameraPic = (picuri) => dispatch => {
 //     console.log("posting pic...");
 //     console.log("picuri...", picuri);
@@ -144,17 +173,3 @@ export const sendNotification = (deviceId, message) => dispatch => {
 //     //   console.log(err);
 //     // })
 // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

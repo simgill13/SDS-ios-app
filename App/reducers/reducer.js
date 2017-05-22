@@ -3,7 +3,8 @@ import {
  EMAIL_IN_DB_TOGGLE,
  INCORRECT_EMAIL_PASSWORD,
  NEW_USER_CREATED,
- USER_LOGIN
+ USER_LOGIN,
+ UPDATE_ROOMS
 } from '../actions/action';
 
 const initialState = {
@@ -51,6 +52,12 @@ export default (state = initialState, action) => {
         userId: action.userObj.id,
         deviceToken: action.userObj.deviceToken,
         rooms: action.userObj.rooms
+      }
+    case UPDATE_ROOMS:
+      console.log(action.data);
+      return {
+        ...state,
+        rooms: [...state.rooms, action.data]
       }
 	    default:
 	        return state;
