@@ -89,7 +89,7 @@ class UserRooms extends Component{
     console.log(item);
     return (
       <View>
-        <Text>{item.name}</Text>
+        <Text>{item.roomName}</Text>
         <Text>{item._id}</Text>
         <Text>Go In Room</Text>
         <TouchableHighlight onPress={() => this.chatroom(item._id) }>

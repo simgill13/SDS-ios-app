@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {config} from '../../config';  
+import {config} from '../../config';
 import {StyleSheet, Image, Linking, Text, TouchableHighlight, TouchableOpacity, View, Navigator, AsyncStorage,
         ActivityIndicator, Button, Clipboard, Share, StatusBar
       } from 'react-native';
@@ -25,7 +25,7 @@ class OurChat extends Component{
       this.state = {
         messages: [],
         userId: null,
-        chatId: 5,
+        chatId: this.props.data,
         image:null,
         uploading:false,
         counter:0,
@@ -44,10 +44,10 @@ class OurChat extends Component{
     this.determineUser();
   }
 
-  
+
 
   upload(pickeruri){
-    
+
     let timestamp = (Date.now() / 1000 | 0).toString();
     let api_key = config.api_key
     let api_secret = config.api_secret

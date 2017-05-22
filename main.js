@@ -43,10 +43,10 @@ class App extends React.Component {
           return(<CreateRoom navigator={navigator} title="rooms"/>)
       case 'newRoomForm':
           return(<RoomForm navigator={navigator} data={route.data} title="rooms"/>)
-      // case 'chatroom':
-      //     return(<OurChat navigator={navigator} title="chatroom"/>)
       case 'chatroom':
-          return(<Chat navigator={navigator} data={route.data} title="chatroom"/>)
+          return(<OurChat navigator={navigator} data={route.data} title="chatroom"/>)
+      // case 'chatroom':
+          // return(<Chat navigator={navigator} data={route.data} title="chatroom"/>)
       case 'friendslist':
           return(<FriendsList navigator={navigator} title="friendslist"/>)
       case 'userrooms':

@@ -208,16 +208,7 @@ class Chat extends Component{
       };
     });
   }
-
-
 }
-
-
-
-
-
-
-
 
 const mapStateToProps = (state) => ({
 
