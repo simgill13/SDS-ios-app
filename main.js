@@ -21,6 +21,7 @@ import UserRooms from './App/components/users-rooms';
 import Chat from './App/components/chat';
 import CreateRoom from './App/components/create-room/newRoom';
 import RoomForm from './App/components/create-room/newRoom-form';
+import SearchUsers from './App/components/search';
 
 
 class App extends React.Component {
@@ -49,6 +50,8 @@ class App extends React.Component {
           // return(<Chat navigator={navigator} data={route.data} title="chatroom"/>)
       case 'friendslist':
           return(<FriendsList navigator={navigator} title="friendslist"/>)
+      case 'searchUsers':
+          return(<SearchUsers navigator={navigator} title="searchUsers"/>)
       case 'userrooms':
           return(<UserRooms navigator={navigator} title="userrooms"/>)
     }
