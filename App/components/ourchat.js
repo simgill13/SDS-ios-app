@@ -62,6 +62,13 @@ class OurChat extends Component{
       let data = JSON.parse(xhr.responseText);
       this.setState({image:data.secure_url})
     };
+    //
+    // console.log("this.state.image======", this.state.image);
+    // let imageMsg = {...this.state.messages[0], image: this.state.image};
+    // console.log("Image Message OBJECT==========", imageMsg);
+    // this.socket.emit('message', imageMsg, this.state.chatId);
+    // this._storeMessages(messages);
+    //
     let formdata = new FormData();
     formdata.append('file', {uri: pickeruri, type: 'image/png', name: 'upload.png'});
     formdata.append('timestamp', timestamp);
