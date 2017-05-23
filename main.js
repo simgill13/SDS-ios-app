@@ -14,13 +14,14 @@ import OurChat from './App/components/ourchat';
 import Tab from './App/components/tab';
 import OurGroup from './App/components/ourgroup';
 import Row from './App/components/row';
-
 import FriendsList from './App/components/friends-list';
 import UserRooms from './App/components/users-rooms';
 import Chat from './App/components/chat';
 import CreateRoom from './App/components/create-room/newRoom';
 import RoomForm from './App/components/create-room/newRoom-form';
 import SearchUsers from './App/components/search';
+
+import UserProfile from './App/components/userProfile/userProfile';
 
 
 class App extends React.Component {
@@ -35,24 +36,18 @@ class App extends React.Component {
         return(<Login navigator={navigator} title="login"/>)
       case 'tab':
           return(<Tab navigator={navigator} title="tab"/>)
-      case 'ourgroup':
-          return(<OurGroup navigator={navigator} title="ourgroup"/>)
-      case 'rooms':
-          return(<Rooms navigator={navigator} title="rooms"/>)
       case 'newRoom':
           return(<CreateRoom navigator={navigator} title="rooms"/>)
-      case 'newRoomForm':
-          return(<RoomForm navigator={navigator} data={route.data} title="rooms"/>)
       case 'chatroom':
           return(<OurChat navigator={navigator} data={route.data} title="chatroom"/>)
-      // case 'chatroom':
-          // return(<Chat navigator={navigator} data={route.data} title="chatroom"/>)
       case 'friendslist':
           return(<FriendsList navigator={navigator} title="friendslist"/>)
-      case 'searchUsers':
-          return(<SearchUsers navigator={navigator} title="searchUsers"/>)
       case 'userrooms':
           return(<UserRooms navigator={navigator} title="userrooms"/>)
+      case 'userProfile':
+          return(<UserProfile navigator={navigator} title="userProfile"/>)
+
+      
     }
   }
   render(){
