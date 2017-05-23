@@ -19,6 +19,10 @@ import Styles from './styles';
 import OurChat from './ourchat';
 import OurGroup from './ourgroup';
 import SearchUsers from './search';
+import UserProfile from './userProfile/userProfile';
+import UserFriends from './userProfile/userFriends';
+import CreateRoomForm from './create-room/createRoomForm';
+import SelectFriends from './create-room/selectFriends';
 
 import type { NavigationState } from 'react-native-tab-view/types';
 
@@ -43,8 +47,9 @@ export default class Tab extends Component {
   state: State = {
     index: 0,
     routes: [
-      { key: '1', title: 'Our Chat Rooms', icon: 'md-chatboxes' },
-      { key: '2', title: 'Our Group', icon: 'ios-people' },
+      { key: '1', title: 'Chat Rooms', icon: 'md-chatboxes' },
+      { key: '2', title: '', icon: 'ios-reverse-camera' },
+      { key: '3', title: 'My Profile', icon: 'ios-person' },
     ],
   };
 
@@ -98,28 +103,12 @@ export default class Tab extends Component {
 
   _renderHeader = props => {
       return(
-        <View
-          style={styles.header}>
+        <View>
         <Head
           navigator={this.props.navigator}
           title=""
           backID='home'
           color='#93ABC8' />
-
-        <View style={styles.headlineWrap}>
-          <Text style={styles.headline} > Dashboard </Text>
-        </View>
-
-        <View style={styles.buttonWrap}>
-          <TouchableHighlight
-            style={styles.button}
-            underlayColor="transparent"
-            activeOpacity={0.7}>
-              <View >
-                <Text style={styles.buttonText}> Send Notice </Text>
-              </View>
-          </TouchableHighlight>
-        </View>
       </View>
     );
   };
@@ -139,6 +128,13 @@ export default class Tab extends Component {
           state={this.state}
           />
         );
+      case '3':
+        return (
+          <UserProfile
+          state={this.state}
+          navigator={this.props.navigator}
+        />
+    );
       default:
         return null;
     }

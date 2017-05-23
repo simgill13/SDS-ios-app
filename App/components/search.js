@@ -14,6 +14,7 @@ import { List, ListItem } from 'react-native-elements'
 import { Components } from 'expo';
 import {searchUsers, addFriend} from '../actions/action';
 import ChatRoom from './chatroom';
+import Head from './head';
 
 
 class SearchUsers extends Component{
@@ -52,12 +53,15 @@ class SearchUsers extends Component{
       </ScrollView>
     );
   }
-
   render(){
     return (
       <View>
         <View>
-          <Text>Search</Text>
+          <Head
+            navigator={this.props.navigator}
+            title="Add Friends"
+            backID='tab'
+            color='#444444' />
         </View>
 
         <View style={styles.inputWrap}>
@@ -76,7 +80,6 @@ class SearchUsers extends Component{
         <View>
           {this.renderSearchList()}
         </View>
-
       </View>
     )
   }
