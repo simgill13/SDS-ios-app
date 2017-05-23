@@ -77,16 +77,6 @@ export default class Tab extends Component {
     return <Ionicons name={route.icon} size={24} style={styles.icon} />;
   };
 
-  _renderBadge = ({ route }) => {
-    if (route.key === '1') {
-      return (
-        <View style={styles.badge}>
-          <Text style={styles.count}>2</Text>
-        </View>
-      );
-    }
-    return null;
-  };
 
   _renderFooter = props => {
     return (
