@@ -27,19 +27,37 @@ export const userLogin = (userObj) => ({
   userObj
 })
 
+export const SPINNER_ON = 'SPINNER_ON';
+export const spinnerOn = () => ({
+  type: SPINNER_ON,
+})
+export const SPINNER_OFF = 'SPINNER_OFF';
+export const spinnerOff = () => ({
+  type: SPINNER_OFF,
+})
+export const CHANGE_LOGIN_BTN_STATE = 'CHANGE_LOGIN_BTN_STATE';
+export const changeLoginBtnState = () => ({
+  type: CHANGE_LOGIN_BTN_STATE,
+})
+
 // creating an async action to post a new user
 
 export const loginUser = (email, password, navigator) => dispatch => {
-  console.log(email);
+  console.log("====Action EMAIL =====",email);
   const encodedLoginInfo = base64.encode(`${email.toLowerCase()}:${password}`)
-  console.log(encodedLoginInfo)
+  console.log("====Action encodedemail =====",encodedLoginInfo)
   return fetch(`https://sdsserver.herokuapp.com/api/users/${email}`, {
     headers: {
         "Authorization": "Basic " + encodedLoginInfo,
     }
   })
   .then(response => {
-    console.log(response);
+    console.log("====Action Response =====",response);
+    if(response.status === 401 || response.status === 404){
+      console.log("====Action Denied =====")
+      dispatch(changeLoginBtnState());
+      dispatch(spinnerOff());
+    }
     return response.json();
   })
   .then(json => {

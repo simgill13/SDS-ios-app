@@ -62,8 +62,13 @@ class OurChat extends Component{
 
       let currentTime = Date.now();
       console.log("this.state.messages ======", this.state.messages);
-      let imageMsg = {_id:this._randomString(20), user:{ _id: this.state.userId || -1 },
-        createdAt: currentTime, chatId: this.state.chatId, image: newPhoto};
+      let imageMsg = {
+        _id:this._randomString(20),
+        user:{ _id: this.state.userId || -1 },
+        createdAt: currentTime,
+        chatId: this.state.chatId,
+        image: newPhoto
+      };
       const updatedMsgs = update(this.state.messages, {
         $splice: [[0, 0, imageMsg]]
       });
@@ -125,7 +130,6 @@ class OurChat extends Component{
     this.socket.emit('message', messages[0], this.state.chatId);
     this._storeMessages(messages);
   }
-
 
 
  render(){
