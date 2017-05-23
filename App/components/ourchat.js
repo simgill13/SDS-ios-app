@@ -40,6 +40,7 @@ class OurChat extends Component{
     this.socket = SocketIOClient('https://sdsserver.herokuapp.com/');
     this.socket.on('message', this.onReceivedMessage,chatId );
     this.determineUser();
+    this._randomString = this._randomString.bind(this);
   }
 
   upload(pickeruri){
@@ -59,15 +60,14 @@ class OurChat extends Component{
       let data = JSON.parse(xhr.responseText);
       newPhoto = data.secure_url;
 
-        //TODO need to update id, user, createdAt, chatId
-      let imageMsg = {"_id":"8675309","user":{"_id":"591f78ea11e70a0011586ea3"},
-        "createdAt":"2017-05-22T22:08:17.155Z", "chatId":1347, image: newPhoto};
+      let currentTime = Date.now();
+      console.log("this.state.messages ======", this.state.messages);
+      let imageMsg = {_id:this._randomString(20), user:{ _id: this.state.userId || -1 },
+        createdAt: currentTime, chatId: this.state.chatId, image: newPhoto};
       const updatedMsgs = update(this.state.messages, {
         $splice: [[0, 0, imageMsg]]
       });
-      // console.log("UPDATED MESSAGES: _________", updatedMsgs);
       this.setState({messages: updatedMsgs});
-      // console.log("this.state.messages has just been updated======", this.state.messages);
       this.socket.emit('message', imageMsg, this.state.chatId);
     };
     let formdata = new FormData();
@@ -78,6 +78,14 @@ class OurChat extends Component{
     xhr.send(formdata);
   }
 
+  _randomString = length => {
+    let text = "";
+    const possible = "abcdefghijklmnopqrstuvwxyz0123456789";
+    for(let i = 0; i < length; i++) {
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return text;
+  }
 
   _takePhoto = async () => {
     let pickerResult = await ImagePicker.launchCameraAsync({
