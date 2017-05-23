@@ -44,7 +44,7 @@ class FriendsList extends Component{
         {
           this.props.friendsList.map((friend, i) => (
             <ListItem
-              key={friend.id}
+              key={i}
               title={friend.name}
               onPress={() => {this.onPressList(friend)}}
               hideChevron={true}

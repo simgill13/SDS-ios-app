@@ -6,6 +6,8 @@ import {
  USER_LOGIN,
  UPDATE_ROOMS,
  CHANGE_LOGIN_BTN_STATE
+ SEARCHED_USERS,
+ ADDED_FRIEND
 } from '../actions/action';
 
 const initialState = {
@@ -21,6 +23,7 @@ const initialState = {
     userLogin: false,
     LoginButtonError:false,
     activityIndicator:false
+    searchedUsers: [],
 }
 
 export default (state = initialState, action) => {
@@ -35,6 +38,10 @@ export default (state = initialState, action) => {
         deviceToken: action.userObj.deviceToken,
         rooms: action.userObj.rooms
 			});
+    case SEARCHED_USERS:
+      return {...state, searchedUsers: action.data}
+    case ADDED_FRIEND:
+      return {...state, friendsList: action.data.friendsList}
 		case EMAIL_IN_DB_TOGGLE:
 			return Object.assign({}, state, {
 				emailInDb: true
