@@ -14,7 +14,7 @@ import {
 const { LinearGradient } = Components;
 import { Components } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
-import { fetchUser, registerForPushNotificationsAsync, spinnerOn, spinnerOff, EmailInDbToggle } from '../actions/action';
+import { createUser, registerForPushNotificationsAsync, spinnerOn, spinnerOff, EmailInDbOff } from '../actions/action';
 
  class SignUp extends Component{
 
@@ -27,6 +27,10 @@ import { fetchUser, registerForPushNotificationsAsync, spinnerOn, spinnerOff, Em
     };
     this.formSubmit = this.formSubmit.bind(this);
     this.loginhome = this.loginhome.bind(this);
+  }
+
+  componentWillUnmount(){
+    this.props.dispatch(EmailInDbOff());
   }
 
   back(){
@@ -48,12 +52,11 @@ import { fetchUser, registerForPushNotificationsAsync, spinnerOn, spinnerOff, Em
     let password = this.state.password;
     this.props.dispatch(registerForPushNotificationsAsync())
     .then(token => {
-      this.props.dispatch(fetchUser(name,email,password,token,this.props.navigator));
+      this.props.dispatch(createUser(name,email,password,token,this.props.navigator));
     })
     setTimeout(() => {
-      this.props.dispatch(spinnerOff());
-      this.props.dispatch(EmailInDbToggle());
-    }, 3000)
+      this.props.dispatch(EmailInDbOff());
+    }, 2500)
   }
 
   render(){
