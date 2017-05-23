@@ -139,7 +139,7 @@ export const sendNotification = (deviceId, message) => dispatch => {
     body: JSON.stringify({deviceId, message})
   })
   .then(response => {
-    console.log(response);
+    // console.log(response);
     return response.json();
   })
   .catch(err => {
@@ -154,8 +154,10 @@ export const updateRooms = (data) => ({
 })
 
 export const createRoom = (roomName, addedFriends, userId) => dispatch => {
-  console.log(roomName, addedFriends, userId);
-  fetch(`https://sdsserver.herokuapp.com/api/${userId}/room`, {
+  // console.log(roomName, addedFriends, userId);
+  console.log('/////////////////////////////////////////////////');
+  console.log('creating Room', roomName);
+  fetch(`http://localhost:8080/api/${userId}/room`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -166,11 +168,38 @@ export const createRoom = (roomName, addedFriends, userId) => dispatch => {
     })
   })
   .then(response => {
+    console.log('hello new Room')
+    console.log('create Room response', response)
     return response.json();
   })
   .then(data => {
-    console.log(data);
+    console.log(data)
+    console.log('//////////////////////', data.rooms[data.rooms.length - 1])
+    console.log('friends list', addedFriends);
+    addedFriends.forEach((friend) => {
+      console.log('friend', friend._id);
+      dispatch(addUserToRoom(data.rooms[data.rooms.length - 1]._id, friend._id))
+    })
     dispatch(updateRooms(data));
+  })
+  .catch(err => {
+    console.log(err);
+  })
+}
+
+export const addUserToRoom = (roomId, userId) => dispatch => {
+  console.log(userId);
+  fetch(`http://localhost:8080/api/room/${roomId}/add`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      currentUserId: userId
+    })
+  })
+  .then((response) => {
+    console.log(response)
   })
   .catch(err => {
     console.log(err);

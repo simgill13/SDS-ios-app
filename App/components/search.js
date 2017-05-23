@@ -30,6 +30,7 @@ class SearchUsers extends Component{
   }
 
   onPressList(user){
+    console.log(user)
     this.props.dispatch(addFriend(this.props.userId, user._id));
   }
 
@@ -71,9 +72,9 @@ class SearchUsers extends Component{
                 <ListItem
                   key={i}
                   title={user.name}
-                  onPress={() => {this.onPressList(user)}}
                   hideChevron={true}
                   switchButton={true}
+                  onSwitch={() => this.onPressList(user)}
                 />
               )
             }
