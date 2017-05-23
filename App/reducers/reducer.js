@@ -5,8 +5,11 @@ import {
  NEW_USER_CREATED,
  USER_LOGIN,
  UPDATE_ROOMS,
+ CHANGE_LOGIN_BTN_STATE,
  SEARCHED_USERS,
- ADDED_FRIEND
+ ADDED_FRIEND,
+ SPINNER_ON,
+ SPINNER_OFF
 } from '../actions/action';
 
 const initialState = {
@@ -20,7 +23,10 @@ const initialState = {
     newUserCreated:false,
     incorrectEmailOrPassword: false,
     userLogin: false,
+    LoginButtonError:false,
+    activityIndicator:false,
     searchedUsers: [],
+    spinner:false
 }
 
 export default (state = initialState, action) => {
@@ -66,6 +72,18 @@ export default (state = initialState, action) => {
         ...state,
         rooms: [...state.rooms, action.data]
       }
+      case CHANGE_LOGIN_BTN_STATE:
+      return Object.assign({}, state, {
+        LoginButtonError: true
+      });
+      case SPINNER_ON:
+      return Object.assign({}, state, {
+        spinner: true
+      });
+      case SPINNER_OFF:
+      return Object.assign({}, state, {
+        spinner: false
+      });
 	    default:
 	        return state;
 	}
