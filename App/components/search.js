@@ -7,7 +7,8 @@ import {
   StyleSheet,
   TouchableHighlight,
   Navigator,
-  TextInput
+  TextInput,
+  ScrollView
  } from 'react-native';
 import { List, ListItem } from 'react-native-elements'
 import { Components } from 'expo';
@@ -35,18 +36,20 @@ class SearchUsers extends Component{
 
   renderSearchList() {
     return (
-      <List containerStyle={{marginBottom: 20}}>
-        {
-          this.props.searchedUsers.map((user, i) => (
-            <ListItem
-              key={i}
-              title={user.name}
-              onPress={() => {this.onPressList(user)}}
-              hideChevron={false}
-            />
-          ))
-        }
-      </List>
+      <ScrollView>
+        <List containerStyle={{marginBottom: 20}}>
+          {
+            this.props.searchedUsers.map((user, i) => (
+              <ListItem
+                key={i}
+                title={user.name}
+                onPress={() => {this.onPressList(user)}}
+                hideChevron={false}
+              />
+            ))
+          }
+        </List>
+      </ScrollView>
     );
   }
 
