@@ -26,20 +26,28 @@ export const userLogin = (userObj) => ({
   type: USER_LOGIN,
   userObj
 })
+export const CHANGE_LOGIN_BTN_STATE = 'CHANGE_LOGIN_BTN_STATE';
+export const changeLoginBtnState = () => ({
+  type: CHANGE_LOGIN_BTN_STATE,
+})
 
 // creating an async action to post a new user
 
 export const loginUser = (email, password, navigator) => dispatch => {
-  console.log(email);
+  console.log("====Action EMAIL =====",email);
   const encodedLoginInfo = base64.encode(`${email.toLowerCase()}:${password}`)
-  console.log(encodedLoginInfo)
+  console.log("====Action encodedemail =====",encodedLoginInfo)
   return fetch(`https://sdsserver.herokuapp.com/api/users/${email}`, {
     headers: {
         "Authorization": "Basic " + encodedLoginInfo,
     }
   })
   .then(response => {
-    console.log(response);
+    console.log("====Action Response =====",response._bodyText);
+    if(response._bodyText === 'Unauthorized'){
+      console.log("====Action Denied =====")
+      dispatch(changeLoginBtnState());
+    }
     return response.json();
   })
   .then(json => {

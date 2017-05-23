@@ -4,7 +4,8 @@ import {
  INCORRECT_EMAIL_PASSWORD,
  NEW_USER_CREATED,
  USER_LOGIN,
- UPDATE_ROOMS
+ UPDATE_ROOMS,
+ CHANGE_LOGIN_BTN_STATE
 } from '../actions/action';
 
 const initialState = {
@@ -18,6 +19,8 @@ const initialState = {
     newUserCreated:false,
     incorrectEmailOrPassword: false,
     userLogin: false,
+    LoginButtonError:false,
+    activityIndicator:false
 }
 
 export default (state = initialState, action) => {
@@ -59,6 +62,10 @@ export default (state = initialState, action) => {
         ...state,
         rooms: [...state.rooms, action.data]
       }
+      case CHANGE_LOGIN_BTN_STATE:
+      return Object.assign({}, state, {
+        LoginButtonError: true
+      });
 	    default:
 	        return state;
 	}
