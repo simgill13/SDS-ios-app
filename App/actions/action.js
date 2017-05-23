@@ -7,12 +7,18 @@ export const userData = (userObj) => ({
   userObj
 })
 
-export const EMAIL_IN_DB_TOGGLE = 'EMAIL_IN_DB_TOGGLE';
-export const EmailInDbToggle = () => ({
-  type: EMAIL_IN_DB_TOGGLE,
+export const EMAIL_IN_DB_ON = 'EMAIL_IN_DB_ON';
+export const EmailInDbOn = () => ({
+  type: EMAIL_IN_DB_ON,
 })
+
+export const EMAIL_IN_DB_OFF = 'EMAIL_IN_DB_OFF';
+export const EmailInDbOff = () => ({
+  type: EMAIL_IN_DB_OFF,
+})
+
 export const NEW_USER_CREATED = 'NEW_USER_CREATED';
-export const NewuserCreated = () => ({
+export const NewUserCreated = () => ({
   type: NEW_USER_CREATED,
 })
 
@@ -31,17 +37,20 @@ export const SPINNER_ON = 'SPINNER_ON';
 export const spinnerOn = () => ({
   type: SPINNER_ON,
 })
+
 export const SPINNER_OFF = 'SPINNER_OFF';
 export const spinnerOff = () => ({
   type: SPINNER_OFF,
 })
-export const CHANGE_LOGIN_BTN_STATE = 'CHANGE_LOGIN_BTN_STATE';
-export const changeLoginBtnState = () => ({
-  type: CHANGE_LOGIN_BTN_STATE,
+
+export const LOGIN_ERROR_TRUE = 'LOGIN_ERROR_TRUE';
+export const LoginErrorTrue = () => ({
+  type: LOGIN_ERROR_TRUE,
 })
-export const CHANGE_LOGIN_BTN_STATE2 = 'CHANGE_LOGIN_BTN_STATE2';
-export const changeLoginBtnState2 = () => ({
-  type: CHANGE_LOGIN_BTN_STATE2,
+
+export const LOGIN_ERROR_FALSE = 'LOGIN_ERROR_FALSE';
+export const LoginErrorFalse = () => ({
+  type: LOGIN_ERROR_FALSE,
 })
 
 // creating an async action to post a new user
@@ -59,14 +68,14 @@ export const loginUser = (email, password, navigator) => dispatch => {
     console.log("====Action Response =====",response);
     if(response.status === 401 || response.status === 404){
       console.log("====Action Denied =====")
-      dispatch(changeLoginBtnState());
+      dispatch(LoginErrorTrue());
       dispatch(spinnerOff());
     }
     return response.json();
   })
   .then(json => {
     console.log('login action', json);
-    dispatch(changeLoginBtnState2());
+    dispatch(LoginErrorFalse());
     dispatch(spinnerOff());
     dispatch(userLogin(json));
     navigator.push({
@@ -79,8 +88,7 @@ export const loginUser = (email, password, navigator) => dispatch => {
   })
 }
 
-// change name
-export const fetchUser = (name,email,password,token,navigator) => dispatch => {
+export const createUser = (name,email,password,token,navigator) => dispatch => {
     console.log("fetching user data...");
     console.log("token...", token);
     fetch('https://sdsserver.herokuapp.com/api/users/', {
@@ -94,12 +102,12 @@ export const fetchUser = (name,email,password,token,navigator) => dispatch => {
     .then(json => {
       console.log('json: ', json);
       if (json.message === "email already taken") {
-        dispatch(EmailInDbToggle());
+        dispatch(EmailInDbOn());
       } else {
         console.log('...I have posted this user')
           console.log('fetch Object', json)
           dispatch(userData(json))
-          dispatch(NewuserCreated())
+          dispatch(NewUserCreated())
           navigator.push({
             id:"tab",
           });
@@ -108,14 +116,17 @@ export const fetchUser = (name,email,password,token,navigator) => dispatch => {
     .catch(err => {
       console.log(err);
     })
+    dispatch(spinnerOff());
 }
 
 export const registerForPushNotificationsAsync = () => dispatch => {
+  dispatch(spinnerOn());
   return Permissions.askAsync(Permissions.REMOTE_NOTIFICATIONS)
   .then(status => {
     console.log('status: ', status);
     // Stop here if the user did not grant permissions
     if (status !== 'granted') {
+      dispatch(spinnerOff());
       return;
     }
   })
@@ -124,6 +135,7 @@ export const registerForPushNotificationsAsync = () => dispatch => {
     return Notifications.getExponentPushTokenAsync()
     .then(token => {
       console.log('token (from action): ', token);
+      dispatch(spinnerOff());
       return token;
     })
   })
@@ -131,6 +143,7 @@ export const registerForPushNotificationsAsync = () => dispatch => {
 
 
 export const sendNotification = (deviceId, message) => dispatch => {
+  dispatch(spinnerOn());
   fetch('https://sdsserver.herokuapp.com/api/notification/', {
     method: 'POST',
     headers: {
@@ -145,6 +158,7 @@ export const sendNotification = (deviceId, message) => dispatch => {
   .catch(err => {
     console.log(err);
   })
+  dispatch(spinnerOff());
 }
 
 export const UPDATE_ROOMS = 'UPDATE_ROOMS';
@@ -154,6 +168,7 @@ export const updateRooms = (data) => ({
 })
 
 export const createRoom = (roomName, addedFriends, userId) => dispatch => {
+  dispatch(spinnerOn());
   console.log(roomName, addedFriends, userId);
   fetch(`https://sdsserver.herokuapp.com/api/${userId}/room`, {
     method: 'POST',
@@ -175,6 +190,7 @@ export const createRoom = (roomName, addedFriends, userId) => dispatch => {
   .catch(err => {
     console.log(err);
   })
+  dispatch(spinnerOff());
 }
 
 export const SEARCHED_USERS = 'SEARCHED_USERS';
