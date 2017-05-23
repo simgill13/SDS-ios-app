@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import SocialLogin from 'react-social-login';
-import { StyleSheet, Linking, Navigator, Text, TextInput, Keyboard, TouchableHighlight, TouchableOpacity, View, ActivityIndicator} from 'react-native';
+import { StyleSheet, Linking, Navigator, Text, TextInput, Keyboard, TouchableHighlight,
+         TouchableOpacity, View, ActivityIndicator} from 'react-native';
 import { Components } from 'expo';
 const { LinearGradient } = Components;
 import { Ionicons } from '@expo/vector-icons';
@@ -22,7 +23,6 @@ class Login extends Component{
       buttonText: "Lets Go!"
     }
     this.onSubmit=this.onSubmit.bind(this)
-    // this.toggle=this.toggle.bind(this)
   }
 
   back(){
@@ -40,14 +40,24 @@ class Login extends Component{
 
   formSubmit(e){
     this.props.dispatch(spinnerOn())
+<<<<<<< HEAD
     this.setState({animating:true})
+=======
+    this.setState({animating:true})
+>>>>>>> 1d81cadbf9458de8de81b81f84678ef0051f5174
     console.log(this.state.animating)
     let email = this.state.email;
     let password = this.state.password;
     console.log(email, password);
     this.props.dispatch(loginUser(email, password, this.props.navigator))
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> 1d81cadbf9458de8de81b81f84678ef0051f5174
   }
+
+
 
 
 
@@ -60,6 +70,7 @@ class Login extends Component{
   }
 
   render(){
+<<<<<<< HEAD
 
 
     let error;
@@ -67,6 +78,15 @@ class Login extends Component{
       error="Please check your credentials"
     }
 
+=======
+
+
+    let error;
+    if (this.props.LoginButtonError){
+      error="Please check your credentials"
+    }
+
+>>>>>>> 1d81cadbf9458de8de81b81f84678ef0051f5174
 
     return (
       <LinearGradient colors={['#37dbcd', '#0072e4']} style={styles.linearGradient}>
@@ -89,9 +109,15 @@ class Login extends Component{
           </View>
 
           <View style={styles.row} />
+<<<<<<< HEAD
 
           <Text>{error}</Text>
 
+=======
+
+          <Text>{error}</Text>
+
+>>>>>>> 1d81cadbf9458de8de81b81f84678ef0051f5174
           <View style={styles.inputWrap}>
             <TextInput
               placeholder="Email Address"
@@ -120,7 +146,11 @@ class Login extends Component{
                   <Text style={styles.buttonText}> Lets Go!</Text>
                 </View>
             </TouchableHighlight>
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> 1d81cadbf9458de8de81b81f84678ef0051f5174
           </View>
 
            <ActivityIndicator
