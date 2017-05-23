@@ -12,11 +12,9 @@ import { Components } from 'expo';
 const { LinearGradient } = Components;
 import { Ionicons } from '@expo/vector-icons';
 import { TabViewAnimated, TabBar } from 'react-native-tab-view';
-import Rooms from './rooms';
 import UserRooms from './users-rooms'
 import Head from './head';
 import Styles from './styles';
-import OurChat from './ourchat';
 import OurGroup from './ourgroup';
 import SearchUsers from './search';
 import UserProfile from './userProfile/userProfile';
