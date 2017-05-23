@@ -29,27 +29,63 @@ class SearchUsers extends Component{
   }
 
   onPressList(user){
-    // console.log(user);
-    // console.log(this.props.userId)
     this.props.dispatch(addFriend(this.props.userId, user._id));
+  }
+
+  checkFriendsList(user) {
+    let total = 0;
+    console.log(user);
+    this.props.friendsList.forEach((friend, i) => {
+      if (user.email === friend.email) {
+        console.log('friend exists', true);
+        total ++;
+        return true;
+      } else {
+        console.log('friend not found', false);
+        return false;
+      }
+    })
+    return total > 0;
   }
 
   renderSearchList() {
     return (
-      <ScrollView>
-        <List containerStyle={{marginBottom: 20}}>
-          {
-            this.props.searchedUsers.map((user, i) => (
-              <ListItem
-                key={i}
-                title={user.name}
-                onPress={() => {this.onPressList(user)}}
-                hideChevron={false}
-              />
-            ))
-          }
-        </List>
-      </ScrollView>
+      <List containerStyle={{marginBottom: 20}}>
+        {
+          // if searchedUser exists in friendsList return true
+          //   render ListItem as disabled and with no onPress function and switchButton disabled
+
+          this.props.searchedUsers.map((user, i) => {
+            console.log(user);
+            if (user === undefined) {
+              return;
+            }
+            console.log('Inside searchedUsers map', this.checkFriendsList(user));
+            if (this.checkFriendsList(user)) {
+              return (
+                <ListItem
+                  key={i}
+                  title={user.name}
+                  hideChevron={true}
+                  switchButton={true}
+                  switched={true}
+                  switchDisabled={true}
+                />
+              )
+            } else {
+              return (
+                <ListItem
+                  key={i}
+                  title={user.name}
+                  onPress={() => {this.onPressList(user)}}
+                  hideChevron={true}
+                  switchButton={true}
+                />
+              )
+            }
+          })
+        }
+      </List>
     );
   }
 
@@ -74,7 +110,9 @@ class SearchUsers extends Component{
         </View>
 
         <View>
-          {this.renderSearchList()}
+          <ScrollView>
+            {this.renderSearchList()}
+          </ScrollView>
         </View>
 
       </View>
@@ -119,7 +157,8 @@ const styles = {
 
 const mapStateToProps = (state) => ({
   userId: state.userId,
-  searchedUsers: state.searchedUsers
+  searchedUsers: state.searchedUsers,
+  friendsList: state.friendsList
 });
 
 export default connect(mapStateToProps)(SearchUsers);
