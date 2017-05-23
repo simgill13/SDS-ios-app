@@ -34,14 +34,11 @@ class SearchUsers extends Component{
 
   checkFriendsList(user) {
     let total = 0;
-    console.log(user);
     this.props.friendsList.forEach((friend, i) => {
       if (user.email === friend.email) {
-        console.log('friend exists', true);
         total ++;
         return true;
       } else {
-        console.log('friend not found', false);
         return false;
       }
     })
@@ -52,15 +49,11 @@ class SearchUsers extends Component{
     return (
       <List containerStyle={{marginBottom: 20}}>
         {
-          // if searchedUser exists in friendsList return true
-          //   render ListItem as disabled and with no onPress function and switchButton disabled
-
           this.props.searchedUsers.map((user, i) => {
             console.log(user);
             if (user === undefined) {
               return;
             }
-            console.log('Inside searchedUsers map', this.checkFriendsList(user));
             if (this.checkFriendsList(user)) {
               return (
                 <ListItem
