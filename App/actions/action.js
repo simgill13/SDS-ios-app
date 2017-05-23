@@ -26,6 +26,15 @@ export const userLogin = (userObj) => ({
   type: USER_LOGIN,
   userObj
 })
+
+export const SPINNER_ON = 'SPINNER_ON';
+export const spinnerOn = () => ({
+  type: SPINNER_ON,
+})
+export const SPINNER_OFF = 'SPINNER_OFF';
+export const spinnerOff = () => ({
+  type: SPINNER_OFF,
+})
 export const CHANGE_LOGIN_BTN_STATE = 'CHANGE_LOGIN_BTN_STATE';
 export const changeLoginBtnState = () => ({
   type: CHANGE_LOGIN_BTN_STATE,
@@ -43,10 +52,11 @@ export const loginUser = (email, password, navigator) => dispatch => {
     }
   })
   .then(response => {
-    console.log("====Action Response =====",response._bodyText);
-    if(response._bodyText === 'Unauthorized'){
+    console.log("====Action Response =====",response);
+    if(response.status === 401){
       console.log("====Action Denied =====")
       dispatch(changeLoginBtnState());
+      dispatch(spinnerOff());
     }
     return response.json();
   })

@@ -1,26 +1,15 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import SocialLogin from 'react-social-login';
-
-import {
-  StyleSheet,
-  Linking,
-  Navigator,
-  Text,
-  TextInput,
-  Keyboard,
-  TouchableHighlight,
-  TouchableOpacity,
-  View,
-  ActivityIndicator
-} from 'react-native';
+import { StyleSheet, Linking, Navigator, Text, TextInput, Keyboard, TouchableHighlight, 
+         TouchableOpacity, View, ActivityIndicator} from 'react-native';
 import { Components } from 'expo';
 const { LinearGradient } = Components;
 import { Ionicons } from '@expo/vector-icons';
-
 import {loginUser} from '../actions/action';
 import EmailError from './emailerror';
 import Btn from './btn';
+import {spinnerOn} from '../actions/action';
 
 
 class Login extends Component{
@@ -34,7 +23,7 @@ class Login extends Component{
       buttonText: "Lets Go!"
     }
     this.onSubmit=this.onSubmit.bind(this)
-    // this.logInError=this.logInError.bind(this)
+    // this.toggle=this.toggle.bind(this)
   }
 
   back(){
@@ -51,17 +40,18 @@ class Login extends Component{
   }
 
   formSubmit(e){
+    this.props.dispatch(spinnerOn())
     this.setState({animating:true}) 
     console.log(this.state.animating)
     let email = this.state.email;
     let password = this.state.password;
     console.log(email, password);
     this.props.dispatch(loginUser(email, password, this.props.navigator))
-
+    
   }
 
   
-
+  
 
 	onSubmit(){
     console.log(this.props.navigator)
@@ -102,11 +92,11 @@ class Login extends Component{
           <View style={styles.row} />
           
           <Text>{error}</Text>
+         
           <View style={styles.inputWrap}>
             <TextInput
               placeholder="Email Address"
               keyboardType='email-address'
-              dataDetectorTypes='address'
               enablesReturnKeyAutomatically={true}
               onChangeText={(email) => this.setState({email})}
               style={styles.textInput}>
@@ -135,7 +125,7 @@ class Login extends Component{
           </View>
 
            <ActivityIndicator
-        animating={this.state.animating}
+        animating={this.props.spinner}
         style={[styles.centering, {height: 80}]}
         size="large"
       />
@@ -149,7 +139,8 @@ class Login extends Component{
 
 const mapStateToProps = (state) => ({
   incorrectEmailOrPassword: state.incorrectEmailOrPassword,
-  LoginButtonError:state.LoginButtonError
+  LoginButtonError:state.LoginButtonError,
+  spinner:state.spinner
 });
 const styles = StyleSheet.create({
   container: {
