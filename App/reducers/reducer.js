@@ -4,7 +4,9 @@ import {
  INCORRECT_EMAIL_PASSWORD,
  NEW_USER_CREATED,
  USER_LOGIN,
- UPDATE_ROOMS
+ UPDATE_ROOMS,
+ SEARCHED_USERS,
+ ADDED_FRIEND
 } from '../actions/action';
 
 const initialState = {
@@ -18,6 +20,7 @@ const initialState = {
     newUserCreated:false,
     incorrectEmailOrPassword: false,
     userLogin: false,
+    searchedUsers: [],
 }
 
 export default (state = initialState, action) => {
@@ -32,6 +35,10 @@ export default (state = initialState, action) => {
         deviceToken: action.userObj.deviceToken,
         rooms: action.userObj.rooms
 			});
+    case SEARCHED_USERS:
+      return {...state, searchedUsers: action.data}
+    case ADDED_FRIEND:
+      return {...state, friendsList: action.data.friendsList}
 		case EMAIL_IN_DB_TOGGLE:
 			return Object.assign({}, state, {
 				emailInDb: true

@@ -18,6 +18,7 @@ import Head from './head';
 import Styles from './styles';
 import OurChat from './ourchat';
 import OurGroup from './ourgroup';
+import SearchUsers from './search';
 
 import type { NavigationState } from 'react-native-tab-view/types';
 
@@ -134,7 +135,7 @@ export default class Tab extends Component {
         );
       case '2':
         return (
-          <OurGroup
+          <SearchUsers
           state={this.state}
           />
         );
