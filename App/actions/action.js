@@ -39,6 +39,10 @@ export const CHANGE_LOGIN_BTN_STATE = 'CHANGE_LOGIN_BTN_STATE';
 export const changeLoginBtnState = () => ({
   type: CHANGE_LOGIN_BTN_STATE,
 })
+export const CHANGE_LOGIN_BTN_STATE2 = 'CHANGE_LOGIN_BTN_STATE2';
+export const changeLoginBtnState2 = () => ({
+  type: CHANGE_LOGIN_BTN_STATE2,
+})
 
 // creating an async action to post a new user
 
@@ -62,6 +66,8 @@ export const loginUser = (email, password, navigator) => dispatch => {
   })
   .then(json => {
     console.log('login action', json);
+    dispatch(changeLoginBtnState2());
+    dispatch(spinnerOff());
     dispatch(userLogin(json));
     navigator.push({
       id:"tab",

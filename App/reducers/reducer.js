@@ -6,6 +6,7 @@ import {
  USER_LOGIN,
  UPDATE_ROOMS,
  CHANGE_LOGIN_BTN_STATE,
+ CHANGE_LOGIN_BTN_STATE2,
  SEARCHED_USERS,
  ADDED_FRIEND,
  SPINNER_ON,
@@ -75,6 +76,10 @@ export default (state = initialState, action) => {
       case CHANGE_LOGIN_BTN_STATE:
       return Object.assign({}, state, {
         LoginButtonError: true
+      });
+      case CHANGE_LOGIN_BTN_STATE2:
+      return Object.assign({}, state, {
+        LoginButtonError: false
       });
       case SPINNER_ON:
       return Object.assign({}, state, {

@@ -13,7 +13,6 @@ import {spinnerOn} from '../actions/action';
 
 
 class Login extends Component{
-
   constructor(props){
     super(props)
     this.state = {
@@ -40,27 +39,13 @@ class Login extends Component{
 
   formSubmit(e){
     this.props.dispatch(spinnerOn())
-<<<<<<< HEAD
     this.setState({animating:true})
-=======
-    this.setState({animating:true})
->>>>>>> 1d81cadbf9458de8de81b81f84678ef0051f5174
     console.log(this.state.animating)
     let email = this.state.email;
     let password = this.state.password;
     console.log(email, password);
     this.props.dispatch(loginUser(email, password, this.props.navigator))
-<<<<<<< HEAD
-
-=======
-
->>>>>>> 1d81cadbf9458de8de81b81f84678ef0051f5174
   }
-
-
-
-
-
 
 	onSubmit(){
     console.log(this.props.navigator)
@@ -70,24 +55,10 @@ class Login extends Component{
   }
 
   render(){
-<<<<<<< HEAD
-
-
     let error;
     if (this.props.LoginButtonError){
       error="Please check your credentials"
     }
-
-=======
-
-
-    let error;
-    if (this.props.LoginButtonError){
-      error="Please check your credentials"
-    }
-
->>>>>>> 1d81cadbf9458de8de81b81f84678ef0051f5174
-
     return (
       <LinearGradient colors={['#37dbcd', '#0072e4']} style={styles.linearGradient}>
           <View style={styles.header}>
@@ -109,15 +80,9 @@ class Login extends Component{
           </View>
 
           <View style={styles.row} />
-<<<<<<< HEAD
 
           <Text>{error}</Text>
 
-=======
-
-          <Text>{error}</Text>
-
->>>>>>> 1d81cadbf9458de8de81b81f84678ef0051f5174
           <View style={styles.inputWrap}>
             <TextInput
               placeholder="Email Address"
@@ -146,21 +111,14 @@ class Login extends Component{
                   <Text style={styles.buttonText}> Lets Go!</Text>
                 </View>
             </TouchableHighlight>
-<<<<<<< HEAD
-
-=======
-
->>>>>>> 1d81cadbf9458de8de81b81f84678ef0051f5174
           </View>
-
-           <ActivityIndicator
-        animating={this.props.spinner}
-        style={[styles.centering, {height: 80}]}
-        size="large"
-      />
+          <ActivityIndicator
+            animating={this.props.spinner}
+            style={[styles.centering, {height: 80}]}
+            size="large"
+          />
 
           <View style={styles.container} />
-
       </LinearGradient>
     );
   }
