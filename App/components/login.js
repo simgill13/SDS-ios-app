@@ -7,7 +7,6 @@ import { Components } from 'expo';
 const { LinearGradient } = Components;
 import { Ionicons } from '@expo/vector-icons';
 import {loginUser} from '../actions/action';
-import EmailError from './emailerror';
 import Btn from './btn';
 import {spinnerOn} from '../actions/action';
 
