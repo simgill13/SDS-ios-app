@@ -48,7 +48,7 @@ export default (state = initialState, action) => {
       return {...state, friendsList: action.data.friendsList}
 		case EMAIL_IN_DB_TOGGLE:
 			return Object.assign({}, state, {
-				emailInDb: true
+				emailInDb: !state.emailInDb
 			});
     case INCORRECT_EMAIL_PASSWORD:
       return {...state, incorrectEmailOrPassword: true }

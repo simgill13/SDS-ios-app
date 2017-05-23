@@ -17,7 +17,6 @@ const { LinearGradient } = Components;
 import { Ionicons } from '@expo/vector-icons';
 
 import {loginUser} from '../actions/action';
-import EmailError from './emailerror';
 
 
 class ChatRoom extends Component{

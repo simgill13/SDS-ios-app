@@ -8,15 +8,13 @@ import {
   TextInput,
   TouchableHighlight,
   TouchableOpacity,
-  View
+  View,
+  ActivityIndicator,
 } from 'react-native';
 const { LinearGradient } = Components;
 import { Components } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
-import {fetchUser} from '../actions/action';
-import {registerForPushNotificationsAsync} from '../actions/action';
-import EmailError from './emailerror';
-
+import { fetchUser, registerForPushNotificationsAsync, spinnerOn, spinnerOff, EmailInDbToggle } from '../actions/action';
 
  class SignUp extends Component{
 
@@ -24,13 +22,12 @@ import EmailError from './emailerror';
     super(props)
     this.state = {
       name: '',
-      email:'',
-      password:'',
+      email: '',
+      password: '',
     };
-    this.formSubmit=this.formSubmit.bind(this)
-    this.loginhome=this.loginhome.bind(this)
+    this.formSubmit = this.formSubmit.bind(this);
+    this.loginhome = this.loginhome.bind(this);
   }
-
 
   back(){
     this.props.navigator.push({
@@ -38,13 +35,14 @@ import EmailError from './emailerror';
     })
   }
 
-   loginhome(){
+  loginhome(){
     this.props.navigator.push({
       id:"homeloggedin",
     })
   }
 
   formSubmit(e){
+    this.props.dispatch(spinnerOn())
     let name = this.state.name;
     let email = this.state.email;
     let password = this.state.password;
@@ -52,21 +50,18 @@ import EmailError from './emailerror';
     .then(token => {
       this.props.dispatch(fetchUser(name,email,password,token,this.props.navigator));
     })
+    setTimeout(() => {
+      this.props.dispatch(spinnerOff());
+      this.props.dispatch(EmailInDbToggle());
+    }, 3000)
   }
 
-
   render(){
-    let errorMessage;
-      if (this.props.emailInDb === true) {
-        errorMessage=<EmailError/>;
-      }
-    //
-    //   if (this.props.newUserCreated === true) {
-    //     this.loginhome();
-    //   }
+    let errorMessage = this.props.emailInDb === true ? 'An account with this email already exists.' : '';
     return (
       <LinearGradient colors={['#cc3366','#8227b3', '#3a49db']}
-        style={styles.linearGradient}>
+                      style={styles.linearGradient}>
+
         <View style={styles.header}>
           <TouchableHighlight
             onPress={() => {this.back()}}
@@ -81,62 +76,72 @@ import EmailError from './emailerror';
 
         <View style={styles.container}>
           <Text style={styles.headline}>
-            Sign up to join your group!
+            Sign Up
           </Text>
         </View>
 
-          <View style={styles.row} />
+        <View style={styles.row} />
 
-          <View style={styles.inputWrap}>
-            <TextInput
-              placeholder="Name"
-              onChangeText={(name) => this.setState({name})}
-              style={styles.textInput}>
-            </TextInput>
-          </View>
+        <View style={styles.inputWrap}>
+          <TextInput
+            placeholder="Name"
+            onChangeText={(name) => this.setState({name})}
+            style={styles.textInput}>
+          </TextInput>
+        </View>
 
-          <View style={styles.inputWrap}>
-            <TextInput
-              placeholder="Email Address"
-              onChangeText={(email) => this.setState({email})}
-              style={styles.textInput}>
-            </TextInput>
-          </View>
-          <View style={styles.inputWrap}>
-            <TextInput
-              placeholder="Password"
-              secureTextEntry
-              onChangeText={(password) => this.setState({password})}
-              style={styles.textInput}>
-            </TextInput>
-          </View>
+        <View style={styles.inputWrap}>
+          <TextInput
+            placeholder="Email Address"
+            onChangeText={(email) => this.setState({email})}
+            style={styles.textInput}>
+          </TextInput>
+        </View>
 
-          {errorMessage}
+        <View style={styles.inputWrap}>
+          <TextInput
+            placeholder="Password"
+            secureTextEntry
+            onChangeText={(password) => this.setState({password})}
+            style={styles.textInput}>
+          </TextInput>
+        </View>
 
-          <View style={styles.inputWrap}>
-            <TouchableHighlight
+        <View>
+          <Text style={styles.errorText}>
+            {errorMessage}
+          </Text>
+        </View>
+
+        <View style={styles.inputWrap}>
+          <TouchableHighlight
               style={styles.button}
               onPress={(c) => {this.formSubmit(c)}}
               underlayColor="transparent"
               activeOpacity={0.7}>
-                <View >
-                  <Text style={styles.buttonText}> Sign Me Up! </Text>
-                </View>
-            </TouchableHighlight>
-          </View>
+            <View >
+              <Text style={styles.buttonText}> Sign Me Up! </Text>
+            </View>
+          </TouchableHighlight>
+        </View>
 
-          <View style={styles.container} />
+        <ActivityIndicator
+          animating={this.props.spinner}
+          style={[styles.centering, {height: 80}]}
+          size="small"
+        />
+
+        <View style={styles.container} />
 
       </LinearGradient>
     );
   }
 }
 
-
 const mapStateToProps = (state) => ({
-  emailInDb:state.emailInDb,
-  newUserCreated:state.newUserCreated
-
+  emailInDb: state.emailInDb,
+  newUserCreated: state.newUserCreated,
+  spinner: state.spinner,
 });
 
 const styles = StyleSheet.create({
@@ -150,17 +155,17 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingLeft: 25,
     paddingRight: 25,
-    },
+  },
   header: {
-      marginTop: 20,
-      flexDirection: 'row',
-      alignItems: 'center',
-      height: 50
-    },
-    back: {
-      color: '#fff',
-      marginLeft: 10,
-    },
+    marginTop: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 50,
+  },
+  back: {
+    color: '#fff',
+    marginLeft: 10,
+  },
   row: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -175,10 +180,9 @@ const styles = StyleSheet.create({
   inputWrap:{
     flexDirection: 'row',
     marginVertical: 10,
-    height:60,
+    height: 60,
     backgroundColor: 'transparent',
-    paddingHorizontal: 10
-
+    paddingHorizontal: 10,
   },
   textInput: {
     flex:1,
@@ -194,24 +198,27 @@ const styles = StyleSheet.create({
   label: {
     margin: 10,
     flex: 1,
-    color: '#60b7e2'
+    color: '#60b7e2',
   },
   button:{
     backgroundColor: "rgba(255,255,255,.3)",
-    flex:1,
+    flex: 1,
     borderColor: '#ffffff',
     margin: 5,
     borderRadius: 12,
     borderColor: "rgba(255,255,255,.8)",
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 20
+    padding: 20,
   },
   buttonText:{
     fontSize:20,
     fontWeight: "bold",
-    color: "#ffffff"
-  }
+    color: "#ffffff",
+  },
+  errorText:{
+    textAlign: 'center'
+  },
 });
 
 export default connect(mapStateToProps)(SignUp);
