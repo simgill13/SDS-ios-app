@@ -199,7 +199,7 @@ export const createRoom = (roomName, addedFriends, userId) => dispatch => {
 }
 
 export const addUserToRoom = (roomId, userId) => dispatch => {
-  fetch(`http://localhost:8080/api/room/${roomId}/add`, {
+  fetch(`https://sdsserver.herokuapp.com/api/room/${roomId}/add`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
