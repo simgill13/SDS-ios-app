@@ -53,7 +53,7 @@ export const loginUser = (email, password, navigator) => dispatch => {
   })
   .then(response => {
     console.log("====Action Response =====",response);
-    if(response.status === 401){
+    if(response.status === 401 || response.status === 404){
       console.log("====Action Denied =====")
       dispatch(changeLoginBtnState());
       dispatch(spinnerOff());
