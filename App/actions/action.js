@@ -228,8 +228,6 @@ export const addedFriend = (data) => ({
 })
 
 export const addFriend = (userId, friendId) => dispatch => {
-  console.log('current user id', userId);
-  console.log('friend id', friendId);
   fetch(`https://sdsserver.herokuapp.com/api/${friendId}/friends/${userId}`, (req, res) => {
     method: 'POST'
   })
@@ -237,12 +235,10 @@ export const addFriend = (userId, friendId) => dispatch => {
     method: 'POST'
   })
   .then(response => {
-    console.log(response);
     return response.json();
   })
   .then(data => {
     dispatch(addedFriend(data));
-    console.log(data);
   })
   .catch(err => {
     console.log(err);

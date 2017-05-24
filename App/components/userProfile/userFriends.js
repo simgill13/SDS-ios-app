@@ -7,7 +7,7 @@ import {
   ScrollView
 } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
-import { friendsData } from './friendsData';
+
 
 class UserFriends extends Component {
   onPressList(friend) {

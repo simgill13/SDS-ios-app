@@ -22,7 +22,7 @@ export default class Btn extends Component{
               margin: 5,
               padding: 10,
             }}
-            onSubmit={this.props.onSubmit}
+            onPress={this.props.onPress}
             underlayColor="transparent"
             activeOpacity={0.7}>
             <View >

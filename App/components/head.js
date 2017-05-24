@@ -61,7 +61,7 @@ class Head extends Component{
 const styles = StyleSheet.create({
 
   header: {
-		marginVertical:15,
+		marginVertical:0,
     flexDirection: 'row',
 		paddingLeft: 15,
 		paddingRight:15,
