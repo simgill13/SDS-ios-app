@@ -14,13 +14,10 @@ import { Ionicons } from '@expo/vector-icons';
 import { TabViewAnimated, TabBar } from 'react-native-tab-view';
 import UserRooms from './users-rooms'
 import Head from './head';
-import Styles from './styles';
-import OurGroup from './ourgroup';
-import SearchUsers from './search';
+
 import UserProfile from './userProfile/userProfile';
-import UserFriends from './userProfile/userFriends';
-import CreateRoomForm from './create-room/createRoomForm';
-import SelectFriends from './create-room/selectFriends';
+
+import CreateRoom from './create-room/createRoom';
 
 import type { NavigationState } from 'react-native-tab-view/types';
 
@@ -112,7 +109,7 @@ export default class Tab extends Component {
         );
       case '2':
         return (
-          <SearchUsers
+          <CreateRoom
           state={this.state}
           />
         );

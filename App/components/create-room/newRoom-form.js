@@ -23,9 +23,7 @@ import { createRoom } from '../../actions/action';
 // import EmailError from './emailerror';
 import Btn from '../btn';
 
-
 class RoomForm extends Component{
-
   constructor(props){
     super(props)
     this.state = {
@@ -57,7 +55,7 @@ class RoomForm extends Component{
     console.log(this.props.data);
     console.log(this.state.roomName);
     return (
-      <LinearGradient colors={['#37dbcd', '#0072e4']} style={styles.linearGradient}>
+      <View>
           <View style={styles.header}>
             <TouchableHighlight
               onPress={() => {this.back()}}
@@ -116,7 +114,7 @@ class RoomForm extends Component{
 
           <View style={styles.container} />
 
-      </LinearGradient>
+      </View>
     );
   }
 }

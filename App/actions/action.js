@@ -220,6 +220,10 @@ export const searchUsers = (query) => dispatch => {
     console.log(err);
   })
 }
+export const FRIENDS_INVITED = 'FRIENDS_INVITED';
+export const friendsInvited = () => ({
+  type: FRIENDS_INVITED,
+})
 
 export const ADDED_FRIEND = 'ADDED_FRIEND';
 export const addedFriend = (data) => ({
