@@ -37,10 +37,13 @@ class CreateRoom extends Component{
 
   onPressList(friend) {
     if (this.state.addedFriends.includes(friend)) {
-      console.log('error');
+      let friendIndex = this.state.addedFriends.indexOf(friend);
+      let editFriends = this.state.addedFriends.splice(friendIndex, 1);
     } else {
       this.setState({addedFriends: [...this.state.addedFriends, friend]});
     }
+    this.switchedCheck(friend);
+    this.forceUpdate();
   }
 
   nextButton() {
@@ -51,10 +54,17 @@ class CreateRoom extends Component{
     })
   }
 
-
+  switchedCheck(friend) {
+    console.log(this.state.addedFriends.includes(friend));
+    if (this.state.addedFriends.includes(friend)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   render(){
-    console.log(this.state.addedFriends)
+    console.log('currentList', this.state.addedFriends)
     if (this.props.friendsList !== []) {
       return (
       <View>
@@ -66,6 +76,9 @@ class CreateRoom extends Component{
                 title={friend.name}
                 onPress={() => {this.onPressList(friend)}}
                 hideChevron={true}
+                switchButton={true}
+                switched={this.switchedCheck(friend)}
+                onSwitch={() => this.onPressList(friend)}
               />
             ))
           }
