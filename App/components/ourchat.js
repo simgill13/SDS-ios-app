@@ -64,7 +64,7 @@ class OurChat extends Component{
       console.log("this.state.messages ======", this.state.messages);
       let imageMsg = {
         _id:this._randomString(20),
-        user:{ _id: this.state.userId || -1 },
+        user:{ _id: this.state.userId || -1 , name: this.props.name},
         createdAt: currentTime,
         chatId: this.state.chatId,
         image: newPhoto
