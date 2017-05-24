@@ -124,11 +124,11 @@ class SearchUsers extends Component{
             >Search</Text>
         </View>
 
-        <View>
-          <ScrollView>
-            {this.renderSearchList()}
-          </ScrollView>
-        </View>
+        
+        <ScrollView>
+          {this.renderSearchList()}
+        </ScrollView>
+        
       </View>
     )
   }
