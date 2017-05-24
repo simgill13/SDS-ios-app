@@ -131,11 +131,9 @@ class OurChat extends Component{
     this._storeMessages(messages);
   }
 
-
  render(){
-   var user = { _id: this.state.userId || -1 };
+   var user = {_id: this.state.userId || -1, name: this.props.name};
    return (
-
    <View style={styles.container}>
    <Head
      navigator={this.props.navigator}
@@ -146,7 +144,7 @@ class OurChat extends Component{
      messages={this.state.messages}
      onSend={this.onSend}
      user={user}
-
+     renderAvatarOnTop={true}
      />
      <View >
         <Button
@@ -168,10 +166,8 @@ class OurChat extends Component{
   }
 }
 
-
-
-
 const mapStateToProps = (state) => ({
+  name: state.name,
 });
 
 export default connect(mapStateToProps)(OurChat);
