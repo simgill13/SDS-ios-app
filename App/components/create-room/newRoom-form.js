@@ -48,7 +48,7 @@ class RoomForm extends Component{
 	onSubmit(){
     // console.log(this.props.navigator)
     // console.log(this.state.roomName, this.props.data, this.props.userId);
-    this.props.dispatch(createRoom(this.state.roomName, this.props.data, this.props.userId));
+    this.props.dispatch(createRoom(this.state.roomName, this.props.data, this.props.userId, this.props.navigator));
     this.props.navigator.push({
       id:'tab',
     })

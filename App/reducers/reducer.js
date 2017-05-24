@@ -65,7 +65,8 @@ export default (state = initialState, action) => {
         rooms: action.userObj.rooms
       }
     case UPDATE_ROOMS:
-      return {...state, rooms: [...state.rooms, action.data]}
+      console.log('Room Data', action.data.rooms[action.data.rooms.length - 1])
+      return {...state, rooms: [...state.rooms, action.data.rooms[action.data.rooms.length - 1]]}
     case LOGIN_ERROR_TRUE:
       return {...state, LoginButtonError: true}
     case LOGIN_ERROR_FALSE:
