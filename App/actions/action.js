@@ -167,7 +167,7 @@ export const updateRooms = (data) => ({
   data
 })
 
-export const createRoom = (roomName, addedFriends, userId) => dispatch => {
+export const createRoom = (roomName, addedFriends, userId, navigator) => dispatch => {
   dispatch(spinnerOn());
 
   console.log(roomName, addedFriends, userId);
@@ -186,9 +186,18 @@ export const createRoom = (roomName, addedFriends, userId) => dispatch => {
     return response.json();
   })
   .then(data => {
+    console.log('push here with new numChatId', data);
+    let numChatId = data.rooms[data.rooms.length - 1];
+    // navigator.push({
+		// 	id:"chatroom",
+    //   data: numChatId
+		// })
     addedFriends.forEach((friend) => {
       dispatch(addUserToRoom(data.rooms[data.rooms.length - 1]._id, friend._id))
     })
+    return data;
+  })
+  .then((data) => {
     dispatch(updateRooms(data));
   })
   .catch(err => {
