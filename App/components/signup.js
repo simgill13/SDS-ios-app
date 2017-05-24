@@ -24,10 +24,12 @@ import { createUser, registerForPushNotificationsAsync, spinnerOn, spinnerOff, E
       name: '',
       email: '',
       password: '',
-      invalidInputError: '',
+      incompleteInputError: '',
+      invalidEmailError: '',
     };
     this.formSubmit = this.formSubmit.bind(this);
     this.loginhome = this.loginhome.bind(this);
+    this.validateEmail = this.validateEmail.bind(this);
   }
 
   componentWillUnmount(){
@@ -46,14 +48,24 @@ import { createUser, registerForPushNotificationsAsync, spinnerOn, spinnerOff, E
     })
   }
 
+  validateEmail(email) {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+  }
+
   formSubmit(e){
     let name = this.state.name.trim();
     let email = this.state.email.trim().toLowerCase();
     let password = this.state.password.trim();
     if (name === '' || email === '' || password === ''){
-      this.setState({invalidInputError:'Please fill out each field'});
-    } else{
-      this.setState({invalidInputError:''});
+      this.setState({invalidEmailError:''});
+      this.setState({incompleteInputError:'Please fill out each field'});
+    } else if (this.validateEmail(email) === false){
+      this.setState({incompleteInputError:''});
+      this.setState({invalidEmailError:'Please enter a valid email address'});
+    } else {
+      this.setState({incompleteInputError:''});
+      this.setState({invalidEmailError:''});
       this.props.dispatch(spinnerOn())
       this.props.dispatch(registerForPushNotificationsAsync())
       .then(token => {
@@ -120,7 +132,8 @@ import { createUser, registerForPushNotificationsAsync, spinnerOn, spinnerOff, E
         <View>
           <Text style={styles.errorText}>
             {emailExistsError}
-            {this.state.invalidInputError}
+            {this.state.incompleteInputError}
+            {this.state.invalidEmailError}
           </Text>
         </View>
 
