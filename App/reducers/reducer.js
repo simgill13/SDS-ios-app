@@ -57,7 +57,7 @@ export default (state = initialState, action) => {
     case USER_LOGIN:
       return {...state,
         userLogin: true,
-        name: action.name,
+        name: action.userObj.name,
         email: action.userObj.email,
         friendsList: action.userObj.friendsList,
         userId: action.userObj.id,
