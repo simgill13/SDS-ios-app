@@ -12,42 +12,94 @@ import {
 import { List, ListItem, Button } from 'react-native-elements'
 import { Components } from 'expo';
 
-import InviteFriends from './inviteFriends';
-import RoomForm from './newRoom-form';
-import X from './x';
+
+import ChatRoom from '../chatroom';
 
 class CreateRoom extends Component{
   constructor(props) {
-         super(props);
-         this.onPress = this.onPress.bind(this)
-     }
-  onPress(e) {
-         e.preventDefault();
-         this.props.dispatch(actions.friendsInvited());
-   }
+    super(props);
+    this.chatroom = this.chatroom.bind(this)
+    this.state = {
+      addedFriends: [],
+    };
+  }
+
+  componentWillMount(){
+    this.setState({addedFriends: []})
+  }
+
+	chatroom(){
+		console.log(this.props.navigator)
+		this.props.navigator.push({
+			id:"chatroom",
+		})
+	}
+
+  onPressList(friend) {
+    if (this.state.addedFriends.includes(friend)) {
+      console.log('error');
+    } else {
+      this.setState({addedFriends: [...this.state.addedFriends, friend]});
+    }
+  }
+
+  nextButton() {
+    console.log(this.state.addedFriends);
+    this.props.navigator.push({
+      id:"newRoomForm",
+      data: this.state.addedFriends
+    })
+  }
+
   render(){
-    return(
+    console.log(this.state.addedFriends)
+    if (this.props.friendsList !== []) {
+      return (
       <View>
-        <View style={styles.headlineWrap}>
-          <Text style={styles.subhead}>Stop, Drop</Text>
-          <Text style={styles.small}> & </Text>
-          <Text style={styles.headline}>Selfie</Text>
-        </View>
-        { this.props.friendsInvited ? <X /> : <InviteFriends /> }
+        <View>
+          <View style={styles.headlineWrap}>
+            <Text style={styles.subhead}>Stop, Drop</Text>
+            <Text style={styles.small}> & </Text>
+            <Text style={styles.headline}>Selfie</Text>
+          </View>
+
+
+        <List containerStyle={{marginBottom: 20}}>
+          {
+            this.props.friendsList.map((friend, i) => (
+              <ListItem
+                key={i}
+                title={friend.name}
+                onPress={() => {this.onPressList(friend)}}
+                hideChevron={true}
+              />
+            ))
+          }
+        </List>
 
         <Button
           title="Next"
-          onPress={(e) => {this.onPress(e)}}/>
+          onPress={() => {this.nextButton()}}
+        />
       </View>
-    )
+    </View>
+    );
+    } else {
+      return (
+        <View>
+          <Text>Add Some Friends</Text>
+        </View>
+      );
+    }
   }
 }
 
 const mapStateToProps = (state) => ({
-  friendsInvited: state.friendsInvited,
+  friendsList: state.friendsList,
   userId: state.userId,
 });
 export default connect(mapStateToProps)(CreateRoom);
+
 
 const styles = StyleSheet.create({
 	container: {
@@ -56,17 +108,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: 'transparent',
   },
-  linearGradient: {
-    flex: 1,
-    paddingLeft: 25,
-    paddingRight: 25,
-    },
-  header: {
-      marginTop: 20,
-      flexDirection: 'row',
-      alignItems: 'center',
-      height: 50
-    },
   back: {
     color: '#fff',
     marginLeft: 10,
@@ -80,9 +121,8 @@ const styles = StyleSheet.create({
 	headlineWrap:{
 		alignItems: 'center',
 		flexDirection: 'column',
-		marginVertical: 60,
+		marginVertical: 20,
 		backgroundColor: 'transparent',
-		padding: 30
 	},
 	small:{
 		color: "#999999",
@@ -98,14 +138,7 @@ const styles = StyleSheet.create({
   headline:{
 		marginVertical: -5,
     color: "#999999",
-    fontSize:84,
+    fontSize:64,
     fontWeight:'100',
   },
- 	inputWrap:{
-    flexDirection: 'row',
-    marginVertical: 10,
-    height:60,
-    backgroundColor: 'transparent',
-    paddingHorizontal: 10
-  }
 });

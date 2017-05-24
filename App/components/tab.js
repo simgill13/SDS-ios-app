@@ -111,6 +111,7 @@ export default class Tab extends Component {
         return (
           <CreateRoom
           state={this.state}
+          navigator={this.props.navigator}
           />
         );
       case '3':

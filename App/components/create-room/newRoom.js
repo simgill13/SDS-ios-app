@@ -44,7 +44,7 @@ class CreateRoom extends Component{
   }
 
   nextButton() {
-    console.log(this.state.addedFriends);
+    console.log('this.state.addedFriends', this.state.addedFriends);
     this.props.navigator.push({
       id:"newRoomForm",
       data: this.state.addedFriends
@@ -84,7 +84,6 @@ class CreateRoom extends Component{
     }
   }
 }
-
 
 const mapStateToProps = (state) => ({
   friendsList: state.friendsList,

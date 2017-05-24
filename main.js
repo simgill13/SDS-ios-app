@@ -18,7 +18,7 @@ import FriendsList from './App/components/friends-list';
 import UserRooms from './App/components/users-rooms';
 import Chat from './App/components/chat';
 import CreateRoom from './App/components/create-room/createRoom';
-import RoomForm from './App/components/create-room/newRoom-form';
+import NewRoomForm from './App/components/create-room/newRoomForm';
 import SearchUsers from './App/components/search';
 
 import UserProfile from './App/components/userProfile/userProfile';
@@ -51,6 +51,7 @@ class App extends React.Component {
           return(<CreateRoom navigator={navigator} title="createRoom"/>)
       case 'inviteFriends':
           return(<InviteFriends navigator={navigator} title="inviteFriends"/>)
+      case 'newRoomForm': return(<NewRoomForm navigator={navigator} data={route.data} title="rooms"/>)
 
     }
   }

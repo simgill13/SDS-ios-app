@@ -152,7 +152,7 @@ export const sendNotification = (deviceId, message) => dispatch => {
     body: JSON.stringify({deviceId, message})
   })
   .then(response => {
-    console.log(response);
+    // console.log(response);
     return response.json();
   })
   .catch(err => {
@@ -169,7 +169,9 @@ export const updateRooms = (data) => ({
 
 export const createRoom = (roomName, addedFriends, userId) => dispatch => {
   dispatch(spinnerOn());
-  console.log(roomName, addedFriends, userId);
+
+  // console.log(roomName, addedFriends, userId);
+
   fetch(`https://sdsserver.herokuapp.com/api/${userId}/room`, {
     method: 'POST',
     headers: {
@@ -184,13 +186,34 @@ export const createRoom = (roomName, addedFriends, userId) => dispatch => {
     return response.json();
   })
   .then(data => {
-    console.log(data);
+    addedFriends.forEach((friend) => {
+      console.log('friend', friend._id);
+      dispatch(addUserToRoom(data.rooms[data.rooms.length - 1]._id, friend._id))
+    })
     dispatch(updateRooms(data));
   })
   .catch(err => {
     console.log(err);
   })
   dispatch(spinnerOff());
+}
+
+export const addUserToRoom = (roomId, userId) => dispatch => {
+  fetch(`https://sdsserver.herokuapp.com/api/room/${roomId}/add`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      currentUserId: userId
+    })
+  })
+  .then((response) => {
+    console.log(response)
+  })
+  .catch(err => {
+    console.log(err);
+  })
 }
 
 export const SEARCHED_USERS = 'SEARCHED_USERS';
@@ -220,10 +243,6 @@ export const searchUsers = (query) => dispatch => {
     console.log(err);
   })
 }
-export const FRIENDS_INVITED = 'FRIENDS_INVITED';
-export const friendsInvited = () => ({
-  type: FRIENDS_INVITED,
-})
 
 export const ADDED_FRIEND = 'ADDED_FRIEND';
 export const addedFriend = (data) => ({
@@ -232,6 +251,8 @@ export const addedFriend = (data) => ({
 })
 
 export const addFriend = (userId, friendId) => dispatch => {
+  console.log('current user id', userId);
+  console.log('friend id', friendId);
   fetch(`https://sdsserver.herokuapp.com/api/${friendId}/friends/${userId}`, (req, res) => {
     method: 'POST'
   })
@@ -239,17 +260,17 @@ export const addFriend = (userId, friendId) => dispatch => {
     method: 'POST'
   })
   .then(response => {
+    console.log(response);
     return response.json();
   })
   .then(data => {
     dispatch(addedFriend(data));
+    console.log(data);
   })
   .catch(err => {
     console.log(err);
   })
 }
-
-
 // export const postingCameraPic = (picuri) => dispatch => {
 //     console.log("posting pic...");
 //     console.log("picuri...", picuri);
