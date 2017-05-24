@@ -55,6 +55,9 @@ class SearchUsers extends Component{
             console.log(user);
             if (user === undefined) {
               return;
+            } 
+            if (user._id === this.props.userId) {
+              return;
             }
             if (this.checkFriendsList(user)) {
               return (
