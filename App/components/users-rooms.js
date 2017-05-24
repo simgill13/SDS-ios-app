@@ -8,9 +8,12 @@ import {
   TouchableHighlight,
   Navigator,
   FlatList,
+  TouchableWithoutFeedback,
+  Image
  } from 'react-native';
 import { Components } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
+
 
 import ChatRoom from './chatroom';
 
@@ -88,14 +91,18 @@ class UserRooms extends Component{
   myRenderItem(item){
     console.log(item);
     return (
-      <View>
-        <Text>{item.roomName}</Text>
-        <Text>{item._id}</Text>
-        <Text>Go In Room</Text>
-        <TouchableHighlight onPress={() => this.chatroom(item._id) }>
-        <Text>Click Here</Text>
-        </TouchableHighlight>
+   
+       <TouchableWithoutFeedback onPress={() => this.chatroom(item._id)}>
+      <View style={styles.roomContainer}>
+          <View  style={styles.roomText}>
+            
+            <Text style={styles.roomName}>
+             <Ionicons  name="ios-chatbubbles-outline" size={22} paddingRight={20} color="#6F501F" /> {item.roomName}</Text>
+          </View>    
       </View>
+      
+      </TouchableWithoutFeedback>
+     
     );
   };
 
@@ -108,49 +115,88 @@ class UserRooms extends Component{
     console.log(this.props.rooms);
     return (
       <View style={styles.container}>
-        <FlatList
-          data={this.props.rooms}
-          renderItem={({item}) => this.myRenderItem(item)}
-          onPressItem={({item}) => this._onPressItem(item.id)}
-        />
-      <Text onPress={() => this.createRoom()}>Create Room</Text>
+        <View style={styles.header}>
+        <Ionicons style={styles.icon} name="ios-trophy-outline" size={102} padding={0} color="#6F501F" />
+          <Text style={styles.text} > Welcome </Text>
+          <Text onPress={() => this.createRoom()} style={styles.text2}> Create or Select a Room to begin </Text>
+        </View>
+        <View style={styles.FlatList}>
+          <FlatList
+            data={this.props.rooms}
+            renderItem={({item}) => this.myRenderItem(item)}
+            onPressItem={({item}) => this._onPressItem(item.id)}
+          />
+        </View>
       </View>
+      
     );
   }
 }
-
+// this was taken out 
+//   <Text onPress={() => this.createRoom()}>Create Room</Text>
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    flexDirection: 'column',
     backgroundColor: 'transparent',
   },
-  room: {
+  roomText: {
     flex: 1,
-    padding: 20,
+    padding: 40,
     flexDirection: 'column',
-    backgroundColor: '#cccccc',
-    marginVertical: 10
+    backgroundColor: '#EDEDED',
+    marginVertical: 5,
+     borderRadius: 4,
+    borderWidth: 0.5,
+    borderColor: '#AFAFAF',
   },
-
   header: {
-      marginTop: 20,
-      flexDirection: 'row',
-      alignItems: 'center',
-      height: 50
-    },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 50
+    flex: 1,
+    
+    flexDirection: 'column',
+    backgroundColor: '#232C3B',
+    marginBottom: 5,
   },
-  headline:{
-    color: "white",
-    fontSize: 50,
-    fontWeight:'100',
+   roomName: {
+  
+   textAlign:"center",
+    fontSize: 22,
+    fontWeight:"100",
   },
+  icon: {
+  textAlign:"center",
+  marginTop: 60,
+  padding:0
+  },
+  text: {
+  color:"white",
+  marginTop:-25,
+   fontSize: 40,
+  fontWeight:"200",
+  textAlign:"center",
+
+
+  },
+   text2: {
+  color:"white",
+  fontSize: 20,
+  fontWeight:"100",
+  textAlign:"center",
+
+  },
+  FlatList: {
+  flex:1
+  },
+  roomContainer:{
+    flex:1,
+
+  },
+  roompic:{
+    flex:1,
+     height:40,
+    width:300,
+
+  }
+
 });
 const mapStateToProps = (state) => ({
   rooms: state.rooms,

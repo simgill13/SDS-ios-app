@@ -91,14 +91,11 @@ export default class Tab extends Component {
     );
   };
 
+//removed head component here
   _renderHeader = props => {
       return(
         <View>
-        <Head
-          navigator={this.props.navigator}
-          title=""
-          backID='home'
-          color='#93ABC8' />
+      
       </View>
     );
   };
