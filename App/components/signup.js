@@ -24,6 +24,7 @@ import { createUser, registerForPushNotificationsAsync, spinnerOn, spinnerOff, E
       name: '',
       email: '',
       password: '',
+      invalidInputError: '',
     };
     this.formSubmit = this.formSubmit.bind(this);
     this.loginhome = this.loginhome.bind(this);
@@ -46,21 +47,26 @@ import { createUser, registerForPushNotificationsAsync, spinnerOn, spinnerOff, E
   }
 
   formSubmit(e){
-    this.props.dispatch(spinnerOn())
-    let name = this.state.name;
-    let email = this.state.email;
-    let password = this.state.password;
-    this.props.dispatch(registerForPushNotificationsAsync())
-    .then(token => {
-      this.props.dispatch(createUser(name,email,password,token,this.props.navigator));
-    })
-    setTimeout(() => {
-      this.props.dispatch(EmailInDbOff());
-    }, 2500)
+    let name = this.state.name.trim();
+    let email = this.state.email.trim().toLowerCase();
+    let password = this.state.password.trim();
+    if (name === '' || email === '' || password === ''){
+      this.setState({invalidInputError:'Please fill out each field'});
+    } else{
+      this.setState({invalidInputError:''});
+      this.props.dispatch(spinnerOn())
+      this.props.dispatch(registerForPushNotificationsAsync())
+      .then(token => {
+        this.props.dispatch(createUser(name,email,password,token,this.props.navigator));
+      })
+      setTimeout(() => {
+        this.props.dispatch(EmailInDbOff());
+      }, 3000)
+    }
   }
 
   render(){
-    let errorMessage = this.props.emailInDb === true ? 'An account with this email already exists.' : '';
+    let emailExistsError = this.props.emailInDb === true ? 'An account with this email already exists.' : '';
     return (
       <LinearGradient colors={['#cc3366','#8227b3', '#3a49db']}
                       style={styles.linearGradient}>
@@ -96,6 +102,7 @@ import { createUser, registerForPushNotificationsAsync, spinnerOn, spinnerOff, E
         <View style={styles.inputWrap}>
           <TextInput
             placeholder="Email Address"
+            keyboardType='email-address'
             onChangeText={(email) => this.setState({email})}
             style={styles.textInput}>
           </TextInput>
@@ -112,7 +119,8 @@ import { createUser, registerForPushNotificationsAsync, spinnerOn, spinnerOff, E
 
         <View>
           <Text style={styles.errorText}>
-            {errorMessage}
+            {emailExistsError}
+            {this.state.invalidInputError}
           </Text>
         </View>
 
