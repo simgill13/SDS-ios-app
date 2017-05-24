@@ -24,7 +24,7 @@ import { createRoom } from '../../actions/action';
 import Btn from '../btn';
 
 
-class RoomForm extends Component{
+class NewRoomForm extends Component{
 
   constructor(props){
     super(props)
@@ -46,7 +46,7 @@ class RoomForm extends Component{
   }
 
 	onSubmit(){
-    console.log(this.props.navigator)
+    console.log('this.props.navigator)', this.props.navigator)
     this.props.dispatch(createRoom(this.state.roomName, this.props.data, this.props.userId));
     this.props.navigator.push({
       id:'userrooms',
@@ -54,7 +54,8 @@ class RoomForm extends Component{
   }
 
   render(){
-    console.log(this.props.data);
+    console.log('this.props.data', this.props.data);
+      console.log('this.props.navigator)', this.props.navigator)
     console.log(this.state.roomName);
     return (
       <LinearGradient colors={['#37dbcd', '#0072e4']} style={styles.linearGradient}>
@@ -91,7 +92,6 @@ class RoomForm extends Component{
             </List>
           </View>
 
-
           <View style={styles.row} />
 
           <View style={styles.inputWrap}>
@@ -115,7 +115,6 @@ class RoomForm extends Component{
           </View>
 
           <View style={styles.container} />
-
       </LinearGradient>
     );
   }
@@ -199,4 +198,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default connect(mapStateToProps)(RoomForm);
+export default connect(mapStateToProps)(NewRoomForm);

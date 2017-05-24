@@ -17,12 +17,13 @@ import Row from './App/components/row';
 import FriendsList from './App/components/friends-list';
 import UserRooms from './App/components/users-rooms';
 import Chat from './App/components/chat';
-import CreateRoom from './App/components/create-room/newRoom';
-import RoomForm from './App/components/create-room/newRoom-form';
+import CreateRoom from './App/components/create-room/createRoom';
+import NewRoomForm from './App/components/create-room/newRoomForm';
 import SearchUsers from './App/components/search';
 
 import UserProfile from './App/components/userProfile/userProfile';
 
+import InviteFriends from './App/components/create-room/inviteFriends';
 
 class App extends React.Component {
 
@@ -36,8 +37,6 @@ class App extends React.Component {
         return(<Login navigator={navigator} title="login"/>)
       case 'tab':
           return(<Tab navigator={navigator} title="tab"/>)
-      case 'newRoom':
-          return(<CreateRoom navigator={navigator} title="rooms"/>)
       case 'chatroom':
           return(<OurChat navigator={navigator} data={route.data} title="chatroom"/>)
       case 'friendslist':
@@ -46,8 +45,14 @@ class App extends React.Component {
           return(<UserRooms navigator={navigator} title="userrooms"/>)
       case 'userProfile':
           return(<UserProfile navigator={navigator} title="userProfile"/>)
+      case 'search':
+          return(<SearchUsers navigator={navigator} title="search"/>)
+      case 'createRoom':
+          return(<CreateRoom navigator={navigator} title="createRoom"/>)
+      case 'inviteFriends':
+          return(<InviteFriends navigator={navigator} title="inviteFriends"/>)
+      case 'newRoomForm': return(<NewRoomForm navigator={navigator} data={route.data} title="rooms"/>)
 
-      
     }
   }
   render(){

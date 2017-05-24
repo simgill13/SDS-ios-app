@@ -35,7 +35,6 @@ class Home extends Component{
     console.log(this.props.navigator)
     this.props.navigator.push({
       id:"login",
-
     })
   }
 
