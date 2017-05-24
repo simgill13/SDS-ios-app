@@ -170,7 +170,7 @@ export const updateRooms = (data) => ({
 export const createRoom = (roomName, addedFriends, userId) => dispatch => {
   dispatch(spinnerOn());
 
-  // console.log(roomName, addedFriends, userId);
+  console.log(roomName, addedFriends, userId);
 
   fetch(`https://sdsserver.herokuapp.com/api/${userId}/room`, {
     method: 'POST',
@@ -187,13 +187,12 @@ export const createRoom = (roomName, addedFriends, userId) => dispatch => {
   })
   .then(data => {
     addedFriends.forEach((friend) => {
-      console.log('friend', friend._id);
       dispatch(addUserToRoom(data.rooms[data.rooms.length - 1]._id, friend._id))
     })
     dispatch(updateRooms(data));
   })
   .catch(err => {
-    console.log(err);
+    console.log('errored', err);
   })
   dispatch(spinnerOff());
 }

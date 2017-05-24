@@ -22,6 +22,7 @@ class SearchUsers extends Component{
     super(props);
     this.state = {
       query: '',
+      filteredList: this.props.friendsList,
     }
   }
 
@@ -30,13 +31,15 @@ class SearchUsers extends Component{
   }
 
   onPressList(user){
-    console.log(user)
     this.props.dispatch(addFriend(this.props.userId, user._id));
+    this.checkSwitch(user);
+    this.setState({filteredList: this.state.filteredList.concat(user)})
+    // this.forceUpdate();
   }
 
   checkFriendsList(user) {
     let total = 0;
-    this.props.friendsList.forEach((friend, i) => {
+    this.state.filteredList.forEach((friend, i) => {
       if (user.email === friend.email) {
         total ++;
         return true;
@@ -47,13 +50,26 @@ class SearchUsers extends Component{
     return total > 0;
   }
 
+  checkSwitch(user) {
+    let filteredList = this.state.filteredList.map((friend) => {
+      return friend._id;
+    })
+    if (filteredList.includes(user._id)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   renderSearchList() {
     return (
       <List containerStyle={{marginBottom: 20}}>
         {
           this.props.searchedUsers.map((user, i) => {
-            console.log(user);
             if (user === undefined) {
+              return;
+            } 
+            if (user._id === this.props.userId) {
               return;
             }
             if (this.checkFriendsList(user)) {
@@ -63,7 +79,7 @@ class SearchUsers extends Component{
                   title={user.name}
                   hideChevron={true}
                   switchButton={true}
-                  switched={true}
+                  switched={this.checkSwitch(user)}
                   switchDisabled={true}
                 />
               )
@@ -74,6 +90,7 @@ class SearchUsers extends Component{
                   title={user.name}
                   hideChevron={true}
                   switchButton={true}
+                  switched={this.checkSwitch(user)}
                   onSwitch={() => this.onPressList(user)}
                 />
               )
@@ -107,11 +124,11 @@ class SearchUsers extends Component{
             >Search</Text>
         </View>
 
-        <View>
-          <ScrollView>
-            {this.renderSearchList()}
-          </ScrollView>
-        </View>
+        
+        <ScrollView>
+          {this.renderSearchList()}
+        </ScrollView>
+        
       </View>
     )
   }

@@ -20,10 +20,7 @@ import Chat from './App/components/chat';
 import CreateRoom from './App/components/create-room/createRoom';
 import NewRoomForm from './App/components/create-room/newRoomForm';
 import SearchUsers from './App/components/search';
-
 import UserProfile from './App/components/userProfile/userProfile';
-
-import InviteFriends from './App/components/create-room/inviteFriends';
 
 class App extends React.Component {
 

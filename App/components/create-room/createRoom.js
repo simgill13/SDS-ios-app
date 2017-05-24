@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {friendsInvited} from '../../actions/action';
 import {
   Animated,
   View,
@@ -9,16 +8,17 @@ import {
   TouchableHighlight,
   Navigator
  } from 'react-native';
-import { List, ListItem, Button } from 'react-native-elements'
+import { List, ListItem, Button } from 'react-native-elements';
 import { Components } from 'expo';
 
-
 import ChatRoom from '../chatroom';
+
 
 class CreateRoom extends Component{
   constructor(props) {
     super(props);
     this.chatroom = this.chatroom.bind(this)
+
     this.state = {
       addedFriends: [],
     };
@@ -37,10 +37,13 @@ class CreateRoom extends Component{
 
   onPressList(friend) {
     if (this.state.addedFriends.includes(friend)) {
-      console.log('error');
+      let friendIndex = this.state.addedFriends.indexOf(friend);
+      let editFriends = this.state.addedFriends.splice(friendIndex, 1);
     } else {
       this.setState({addedFriends: [...this.state.addedFriends, friend]});
     }
+    this.switchedCheck(friend);
+    this.forceUpdate();
   }
 
   nextButton() {
@@ -51,8 +54,17 @@ class CreateRoom extends Component{
     })
   }
 
+  switchedCheck(friend) {
+    console.log(this.state.addedFriends.includes(friend));
+    if (this.state.addedFriends.includes(friend)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   render(){
-    console.log(this.state.addedFriends)
+    console.log('currentList', this.state.addedFriends)
     if (this.props.friendsList !== []) {
       return (
       <View>
@@ -72,6 +84,9 @@ class CreateRoom extends Component{
                 title={friend.name}
                 onPress={() => {this.onPressList(friend)}}
                 hideChevron={true}
+                switchButton={true}
+                switched={this.switchedCheck(friend)}
+                onSwitch={() => this.onPressList(friend)}
               />
             ))
           }
