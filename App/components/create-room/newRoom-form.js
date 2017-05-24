@@ -46,16 +46,17 @@ class RoomForm extends Component{
   }
 
 	onSubmit(){
-    console.log(this.props.navigator)
+    // console.log(this.props.navigator)
+    // console.log(this.state.roomName, this.props.data, this.props.userId);
     this.props.dispatch(createRoom(this.state.roomName, this.props.data, this.props.userId));
     this.props.navigator.push({
-      id:'userrooms',
+      id:'tab',
     })
   }
 
   render(){
-    console.log(this.props.data);
-    console.log(this.state.roomName);
+    // console.log(this.props.data);
+    // console.log(this.state.roomName);
     return (
       <LinearGradient colors={['#37dbcd', '#0072e4']} style={styles.linearGradient}>
           <View style={styles.header}>
