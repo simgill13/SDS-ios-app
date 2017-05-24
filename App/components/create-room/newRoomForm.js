@@ -50,7 +50,7 @@ class NewRoomForm extends Component{
     // console.log(this.state.roomName, this.props.data, this.props.userId);
     this.props.dispatch(createRoom(this.state.roomName, this.props.data, this.props.userId, this.props.navigator));
     this.props.navigator.push({
-      id:'userrooms',
+      id:'tab',
     })
   }
 
