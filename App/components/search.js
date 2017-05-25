@@ -133,10 +133,6 @@ class SearchUsers extends Component{
             paddingHorizontal={10}
             fontSize={16}
             />
-
-
-
-
         <ScrollView>
           {this.renderSearchList()}
         </ScrollView>
