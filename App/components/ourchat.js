@@ -4,8 +4,8 @@ import { config } from '../../config';
 import { StyleSheet, Image, Linking, Text, TouchableHighlight, TouchableOpacity,
   View, Navigator, AsyncStorage, ActivityIndicator, Button, Clipboard, Share,
   StatusBar } from 'react-native';
-import { Components,Constants,ImagePicker } from 'expo';
-import { Ionicons } from '@expo/vector-icons';
+import { Components, Constants, ImagePicker } from 'expo';
+import { MaterialIcons } from '@expo/vector-icons';
 import Head from './head';
 import styles from './styles.js';
 import CryptoJS from 'crypto-js';
@@ -34,6 +34,7 @@ class OurChat extends Component {
     this.upload = this.upload.bind(this);
     this._storeMessages = this._storeMessages.bind(this);
     this._randomString = this._randomString.bind(this);
+    this.renderActions = this.renderActions.bind(this);
     const chatId = this.state.chatId;
     this.socket = SocketIOClient('https://sdsserver.herokuapp.com/');
     this.socket.on('message', this.onReceivedMessage,chatId );
@@ -131,6 +132,14 @@ class OurChat extends Component {
     });
   }
 
+  renderActions(){
+    return (
+      <TouchableHighlight onPress={this._takePhoto}>
+        <MaterialIcons name="photo-camera" size={30} />
+      </TouchableHighlight>
+    )
+  }
+
   render(){
     const user = {_id: this.state.userId || -1, name: this.props.name};
     return (
@@ -144,13 +153,9 @@ class OurChat extends Component {
           messages={this.state.messages}
           onSend={this.onSend}
           user={user}
-          renderAvatarOnTop={true} />
-        <View >
-          <Button
-          onPress={this._takePhoto}
-          title="Take a photo" />
-          <StatusBar barStyle="default" />
-        </View>
+          renderAvatarOnTop={true}
+          renderActions={this.renderActions} />
+        <StatusBar barStyle="default" />
       </View>
     );
   }
