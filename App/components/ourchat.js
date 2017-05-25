@@ -22,11 +22,13 @@ class OurChat extends Component {
     this.state = {
       messages: [],
       userId: null,
-      chatId: this.props.data,
+      chatId: this.props.data[0],
+      longRoomId: this.props.data[1],
       uploading: false,
       counter: 0,
       userNumber: 1,
       animating: false,
+      roomUsersPushTokens: [],
     };
     this.determineUser = this.determineUser.bind(this);
     this.onReceivedMessage = this.onReceivedMessage.bind(this);
@@ -35,10 +37,15 @@ class OurChat extends Component {
     this._storeMessages = this._storeMessages.bind(this);
     this._randomString = this._randomString.bind(this);
     this.renderActions = this.renderActions.bind(this);
-    const chatId = this.state.chatId;
     this.socket = SocketIOClient('https://sdsserver.herokuapp.com/');
-    this.socket.on('message', this.onReceivedMessage,chatId );
+    this.socket.on('message', this.onReceivedMessage, this.state.chatId );
     this.determineUser();
+  }
+
+  componentDidMount(){
+    let currentRoom = this.props.rooms.find(room => room._id === this.state.longRoomId);
+    const userDeviceTokens = currentRoom.users.map(user => user.deviceToken);
+    this.setState({roomUsersPushTokens: userDeviceTokens});
   }
 
   upload(pickeruri) {
@@ -149,7 +156,8 @@ class OurChat extends Component {
           title="Our Chat"
           backID='tab'
           color='#444444'
-          inChat={true} />
+          inChat={true}
+          userPushTokens={this.state.roomUsersPushTokens} />
         <GiftedChat
           messages={this.state.messages}
           onSend={this.onSend}
@@ -164,6 +172,7 @@ class OurChat extends Component {
 
 const mapStateToProps = (state) => ({
   name: state.name,
+  rooms: state.rooms,
 });
 
 export default connect(mapStateToProps)(OurChat);

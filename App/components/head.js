@@ -15,8 +15,6 @@ import { sendNotification } from '../actions/action';
 emoji-flirt
 megaphone
 paper-plane
-
-bell-ring-outline
 */
 
 class Head extends Component {
@@ -32,7 +30,9 @@ class Head extends Component {
   }
 
 	sendGroupNotification() {
-		this.props.dispatch(sendNotification("ExponentPushToken[MQWAdWFMGCf9SFCY9PjOeK]", "Message!"));
+		this.props.userPushTokens.forEach(user => {
+			this.props.dispatch(sendNotification(user, "Message!"));
+		})
 	}
 
 	_renderNotificationSender() {

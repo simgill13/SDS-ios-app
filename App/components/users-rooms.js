@@ -27,30 +27,22 @@ class UserRooms extends Component{
 
   convertChatId(chatId){
     let total = 0;
-    console.log(chatId);
-    console.log(chatId.split(''));
     chatId.split('').forEach((element, i) => {
       if (parseInt(element) !== NaN) {
         let elementNum = chatId.charCodeAt(i);
-        console.log(elementNum);
         total += elementNum;
       } else {
-        console.log(parseInt(element));
         total += parseInt(element);
       }
     });
-    console.log(total);
     return total;
   }
 
 	chatroom(chatId){
-		console.log(this.props.navigator)
-    console.log(chatId);
     let numChatId = this.convertChatId(chatId)
-    console.log(numChatId);
 		this.props.navigator.push({
 			id:"chatroom",
-      data: numChatId
+      data: [numChatId, chatId],
 		})
 	}
 
@@ -60,37 +52,7 @@ class UserRooms extends Component{
     })
   }
 
-  // myList(){
-  //   console.log('hello');
-  //   if (this.props.rooms !== []) {
-  //     return (
-  //       <View style={styles.container}>
-  //         <View style={styles.room}>
-  //           <TouchableHighlight>
-  //             <Text>Create A Room</Text>
-  //             {console.log('hello2')}
-  //           </TouchableHighlight>
-  //         </View>
-  //       </View>
-  //     )
-  //   } else {
-  //     return (
-  //       this.props.rooms.map((room, i) => {
-  //         <View style={styles.container}>
-  //           <View style={styles.room}>
-  //             <TouchableHighlight
-  //             onPress={() => {this.chatroom(room.id)}}>
-  //               <Text>{room.name}</Text>
-  //             </TouchableHighlight>
-  //           </View>
-  //         </View>
-  //       })
-  //     )
-  //   }
-  // }
-
   myRenderItem(item){
-    console.log(item);
     return (
     <TouchableWithoutFeedback onPress={() => this.chatroom(item._id)}>
       <View style={styles.roomContainer}>
@@ -106,12 +68,11 @@ class UserRooms extends Component{
   };
 
   _onPressItem(chatId){
-    console.log(chatId);
+    // console.log(chatId);
   }
 
 
   render(){
-    console.log(this.props.rooms);
     return (
       <LinearGradient
         style={styles.container}
@@ -133,8 +94,7 @@ class UserRooms extends Component{
     );
   }
 }
-// this was taken out
-//   <Text onPress={() => this.createRoom()}>Create Room</Text>
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

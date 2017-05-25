@@ -40,7 +40,6 @@ type State = NavigationState<Route>;
 export default class Tab extends Component {
 
   back(){
-    console.log(this.props.navigator)
     this.props.navigator.push({
       id:"home",
     })

@@ -22,7 +22,6 @@ class FriendsList extends Component{
 
 
 	chatroom(){
-		console.log(this.props.navigator)
 		this.props.navigator.push({
 			id:"chatroom",
 		})
@@ -35,9 +34,6 @@ class FriendsList extends Component{
 
 
   render(){
-    console.log('hello');
-    console.log(this.props.friendsList);
-    console.log(this.props.userId)
     if (this.props.friendsList !== []) {
       return (
       <List containerStyle={{marginBottom: 20}}>

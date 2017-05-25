@@ -24,14 +24,14 @@ class Home extends Component{
   }
 
   signup(){
-    console.log(this.props.navigator)
+    // console.log(this.props.navigator)
     this.props.navigator.push({
       id:"signup",
     })
   }
 
   login(){
-    console.log(this.props.navigator)
+    // console.log(this.props.navigator)
     this.props.navigator.push({
       id:"login",
     })

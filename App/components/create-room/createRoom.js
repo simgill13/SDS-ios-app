@@ -30,7 +30,6 @@ class CreateRoom extends Component{
   }
 
 	chatroom(){
-		console.log(this.props.navigator)
 		this.props.navigator.push({
 			id:"chatroom",
 		})
@@ -48,7 +47,6 @@ class CreateRoom extends Component{
   }
 
   nextButton() {
-    console.log(this.state.addedFriends);
     this.props.navigator.push({
       id:"newRoomForm",
       data: this.state.addedFriends
@@ -56,7 +54,6 @@ class CreateRoom extends Component{
   }
 
   switchedCheck(friend) {
-    console.log(this.state.addedFriends.includes(friend));
     if (this.state.addedFriends.includes(friend)) {
       return true;
     } else {
@@ -65,7 +62,6 @@ class CreateRoom extends Component{
   }
 // <LinearGradient colors={['#FB2B69', '#FF5B37']}
   render(){
-    console.log('currentList', this.state.addedFriends)
     if (this.props.friendsList !== []) {
       return (
       <LinearGradient
