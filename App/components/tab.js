@@ -13,14 +13,20 @@ import { Components } from 'expo';
 const { LinearGradient } = Components;
 import { Ionicons } from '@expo/vector-icons';
 import { TabViewAnimated, TabBar } from 'react-native-tab-view';
+import { Constants, Svg } from 'expo';
 import UserRooms from './users-rooms'
 import Head from './head';
+
+import ChatsIcon from './icons/chatsIcon';
+import ProfileIcon from './icons/profileIcon.js';
+import SDSicon from './icons/sdsicon';
 
 import UserProfile from './userProfile/userProfile';
 
 import CreateRoom from './create-room/createRoom';
 
 import type { NavigationState } from 'react-native-tab-view/types';
+
 
 type Route = {
   key: string,
@@ -43,9 +49,9 @@ export default class Tab extends Component {
   state: State = {
     index: 0,
     routes: [
-      { key: '1', title: '', icon: 'md-chatboxes' },
-      { key: '2', title: '', icon: 'ios-reverse-camera' },
-      { key: '3', title: '', icon: 'ios-person' },
+      { key: '1', title: '' },
+      { key: '2', title: ''  },
+      { key: '3', title: '' },
     ],
   };
 
@@ -75,12 +81,28 @@ export default class Tab extends Component {
   };
 
   _renderIcon = ({ route }) => {
-    return <Ionicons name={route.icon} size={24} style={styles.icon} />;
+    switch (route.key) {
+      case '1':
+      return (
+        <ChatsIcon style={styles.icon} />
+      );
+      case '2':
+      return (
+        <SDSicon style={styles.icon} />
+      );
+      case '3':
+      return (
+        <ProfileIcon style={styles.icon}/>
+    );
+      default:
+        return null;
+    }
   };
 
 
   _renderFooter = props => {
     return (
+
       <TabBar
         {...props}
         renderIcon={this._renderIcon}
@@ -89,6 +111,7 @@ export default class Tab extends Component {
         style={styles.tabbar}
         tabStyle={styles.tab}
       />
+
     );
   };
 
@@ -131,6 +154,7 @@ export default class Tab extends Component {
 
   render() {
     return (
+
       <TabViewAnimated
         style={[styles.container, this.props.style]}
         renderHeader={this._renderHeader}
@@ -147,12 +171,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: 'transparent',
+    backgroundColor: '#0072e4',
   },
   header: {
     flexDirection: 'column',
     height: 200,
-		backgroundColor: '#171B28'
     },
   headlineWrap:{
 		alignItems: 'center',
@@ -165,19 +188,20 @@ const styles = StyleSheet.create({
     fontWeight:'100',
   },
   tabbar: {
-    backgroundColor: '#171B28',
+    backgroundColor: '#0479e2',
+    borderTopColor:'#ffffff'
   },
   tab: {
-    padding: 1,
+    padding: 10,
   },
   icon: {
-    backgroundColor: 'transparent',
-    color: 'white',
+    width: 44,
+    height:44
   },
   indicator: {
     flex: 1,
-    backgroundColor: '#232c3b',
-    margin: 4,
+    backgroundColor: 'rgba(0,0,0,.3)',
+    margin: 0,
     borderRadius: 2,
   },
   badge: {

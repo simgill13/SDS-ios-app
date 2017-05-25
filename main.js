@@ -4,7 +4,8 @@ import store from './App/store';
 import {Provider} from 'react-redux';
 import {AppRegistry,Text,View,Navigator} from 'react-native';
 import { StyleSheet } from 'react-native';
-
+import { Components } from 'expo';
+const { LinearGradient } = Components;
 import styles from './App/components/styles';
 import Head from './App/components/head';
 import Home from './App/components/home';
@@ -49,17 +50,17 @@ class App extends React.Component {
       case 'inviteFriends':
           return(<InviteFriends navigator={navigator} title="inviteFriends"/>)
       case 'newRoomForm': return(<NewRoomForm navigator={navigator} data={route.data} title="rooms"/>)
-
     }
   }
   render(){
     return(
-      <Provider store={store}>
+      <Provider
+        store={store}>
         <Navigator
           initialRoute={{id: 'home'}}
           renderScene= {this.renderScene}
         />
-      </Provider>
+        </Provider>
     )
   }
 

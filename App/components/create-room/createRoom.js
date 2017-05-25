@@ -10,6 +10,7 @@ import {
  } from 'react-native';
 import { List, ListItem, Button } from 'react-native-elements';
 import { Components } from 'expo';
+const { LinearGradient } = Components;
 
 import ChatRoom from '../chatroom';
 
@@ -62,12 +63,14 @@ class CreateRoom extends Component{
       return false;
     }
   }
-
+// <LinearGradient colors={['#FB2B69', '#FF5B37']}
   render(){
     console.log('currentList', this.state.addedFriends)
     if (this.props.friendsList !== []) {
       return (
-      <View>
+      <LinearGradient
+        style={{flex:1}}
+        colors={['#37dbcd', '#0072e4']}>
         <View>
           <View style={styles.headlineWrap}>
             <Text style={styles.subhead}>Stop, Drop</Text>
@@ -76,7 +79,7 @@ class CreateRoom extends Component{
           </View>
 
 
-        <List containerStyle={{marginBottom: 20}}>
+        <List containerStyle={{marginBottom: 20, backgroundColor:'transparent', padding: 20}}>
           {
             this.props.friendsList.map((friend, i) => (
               <ListItem
@@ -97,13 +100,14 @@ class CreateRoom extends Component{
           onPress={() => {this.nextButton()}}
         />
       </View>
-    </View>
+    </LinearGradient>
     );
     } else {
       return (
-        <View>
+        <LinearGradient style={{flex:1}} colors={['#37dbcd', '#189fda']}>
+
           <Text>Add Some Friends</Text>
-        </View>
+        </LinearGradient>
       );
     }
   }
@@ -121,7 +125,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     flexDirection: 'column',
-    backgroundColor: 'transparent',
   },
   back: {
     color: '#fff',
@@ -140,19 +143,19 @@ const styles = StyleSheet.create({
 		backgroundColor: 'transparent',
 	},
 	small:{
-		color: "#999999",
+		color: "#FFF",
 		fontSize: 25,
 		fontWeight:'300',
 		marginVertical: 1,
 	},
   subhead:{
-    color: "#999999",
+    color: "#FFF",
     fontSize: 42,
     fontWeight:'200',
   },
   headline:{
 		marginVertical: -5,
-    color: "#999999",
+    color: "#FFF",
     fontSize:64,
     fontWeight:'100',
   },

@@ -13,7 +13,6 @@ import {
 } from 'react-native';
 import { Components } from 'expo';
 const { LinearGradient } = Components;
-import { Ionicons } from '@expo/vector-icons';
 
 
 
