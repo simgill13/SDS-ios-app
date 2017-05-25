@@ -18,9 +18,6 @@ import { Components } from 'expo';
 const { LinearGradient } = Components;
 import { Ionicons } from '@expo/vector-icons';
 import { createRoom } from '../../actions/action';
-
-// import {loginUser} from '../../actions/action';
-// import EmailError from './emailerror';
 import Btn from '../btn';
 
 
@@ -35,9 +32,8 @@ class NewRoomForm extends Component{
   }
 
   back(){
-    console.log(this.props.navigator)
     this.props.navigator.push({
-      id:"newRoom",
+      id:"tab",
     })
   }
 
@@ -46,8 +42,6 @@ class NewRoomForm extends Component{
   }
 
 	onSubmit(){
-    // console.log(this.props.navigator)
-    // console.log(this.state.roomName, this.props.data, this.props.userId);
     this.props.dispatch(createRoom(this.state.roomName, this.props.data, this.props.userId, this.props.navigator));
     this.props.navigator.push({
       id:'tab',
@@ -55,9 +49,6 @@ class NewRoomForm extends Component{
   }
 
   render(){
-    console.log('this.props.data', this.props.data);
-      console.log('this.props.navigator)', this.props.navigator)
-    console.log(this.state.roomName);
     return (
       <LinearGradient colors={['#37dbcd', '#0072e4']} style={styles.linearGradient}>
           <View style={styles.header}>

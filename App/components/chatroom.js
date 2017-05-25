@@ -20,7 +20,6 @@ import {loginUser} from '../actions/action';
 
 class ChatRoom extends Component{
   back(){
-    console.log(this.props.navigator)
     this.props.navigator.push({
       id:"tab",
     })

@@ -24,7 +24,7 @@ class Login extends Component{
   }
 
   back(){
-    console.log(this.props.navigator)
+    // console.log(this.props.navigator)
     this.props.navigator.push({
       id:"home",
     })
@@ -39,15 +39,15 @@ class Login extends Component{
   formSubmit(e){
     this.props.dispatch(spinnerOn())
     this.setState({animating:true})
-    console.log(this.state.animating)
+    // console.log(this.state.animating)
     let email = this.state.email;
     let password = this.state.password;
-    console.log(email, password);
+    // console.log(email, password);
     this.props.dispatch(loginUser(email, password, this.props.navigator))
   }
 
 	onSubmit(){
-    console.log(this.props.navigator)
+    // console.log(this.props.navigator)
     this.props.navigator.push({
       id:'signup',
     })

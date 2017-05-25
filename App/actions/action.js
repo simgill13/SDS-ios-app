@@ -56,25 +56,20 @@ export const LoginErrorFalse = () => ({
 // creating an async action to post a new user
 
 export const loginUser = (email, password, navigator) => dispatch => {
-  console.log("====Action EMAIL =====",email);
   const encodedLoginInfo = base64.encode(`${email.toLowerCase()}:${password}`)
-  console.log("====Action encodedemail =====",encodedLoginInfo)
   return fetch(`https://sdsserver.herokuapp.com/api/users/${email}`, {
     headers: {
         "Authorization": "Basic " + encodedLoginInfo,
     }
   })
   .then(response => {
-    console.log("====Action Response =====",response);
     if(response.status === 401 || response.status === 404){
-      console.log("====Action Denied =====")
       dispatch(LoginErrorTrue());
       dispatch(spinnerOff());
     }
     return response.json();
   })
   .then(json => {
-    console.log('login action', json);
     dispatch(LoginErrorFalse());
     dispatch(spinnerOff());
     dispatch(userLogin(json));
@@ -89,8 +84,6 @@ export const loginUser = (email, password, navigator) => dispatch => {
 }
 
 export const createUser = (name,email,password,token,navigator) => dispatch => {
-    console.log("fetching user data...");
-    console.log("token...", token);
     fetch('https://sdsserver.herokuapp.com/api/users/', {
       method: 'POST',
       headers: {
@@ -100,12 +93,9 @@ export const createUser = (name,email,password,token,navigator) => dispatch => {
     })
     .then(response => response.json())
     .then(json => {
-      console.log('json: ', json);
       if (json.message === "email already taken") {
         dispatch(EmailInDbOn());
       } else {
-        console.log('...I have posted this user')
-          console.log('fetch Object', json)
           dispatch(userData(json))
           dispatch(NewUserCreated())
           navigator.push({
@@ -123,7 +113,6 @@ export const registerForPushNotificationsAsync = () => dispatch => {
   dispatch(spinnerOn());
   return Permissions.askAsync(Permissions.REMOTE_NOTIFICATIONS)
   .then(status => {
-    console.log('status: ', status);
     // Stop here if the user did not grant permissions
     if (status !== 'granted') {
       dispatch(spinnerOff());
@@ -134,7 +123,6 @@ export const registerForPushNotificationsAsync = () => dispatch => {
     // Get the token that uniquely identifies this device
     return Notifications.getExponentPushTokenAsync()
     .then(token => {
-      console.log('token (from action): ', token);
       dispatch(spinnerOff());
       return token;
     })
@@ -152,7 +140,7 @@ export const sendNotification = (deviceId, message) => dispatch => {
     body: JSON.stringify({deviceId, message})
   })
   .then(response => {
-    // console.log(response);
+    console.log(response);
     return response.json();
   })
   .catch(err => {
@@ -169,9 +157,6 @@ export const updateRooms = (data) => ({
 
 export const createRoom = (roomName, addedFriends, userId, navigator) => dispatch => {
   dispatch(spinnerOn());
-
-  console.log(roomName, addedFriends, userId);
-
   fetch(`https://sdsserver.herokuapp.com/api/${userId}/room`, {
     method: 'POST',
     headers: {
@@ -186,7 +171,6 @@ export const createRoom = (roomName, addedFriends, userId, navigator) => dispatc
     return response.json();
   })
   .then(data => {
-    console.log('push here with new numChatId', data);
     let numChatId = data.rooms[data.rooms.length - 1];
     // navigator.push({
 		// 	id:"chatroom",
@@ -217,7 +201,7 @@ export const addUserToRoom = (roomId, userId) => dispatch => {
     })
   })
   .then((response) => {
-    console.log(response)
+    // console.log(response)
   })
   .catch(err => {
     console.log(err);
@@ -231,7 +215,6 @@ export const searchedUsers = (data) => ({
 })
 
 export const searchUsers = (query) => dispatch => {
-  console.log('hello', query);
   fetch('https://sdsserver.herokuapp.com/api/search', {
     method: 'POST',
     headers: {
@@ -259,8 +242,7 @@ export const addedFriend = (data) => ({
 })
 
 export const addFriend = (userId, friendId) => dispatch => {
-  console.log('current user id', userId);
-  console.log('friend id', friendId);
+
   fetch(`https://sdsserver.herokuapp.com/api/${friendId}/friends/${userId}`, (req, res) => {
     method: 'POST'
   })
@@ -273,31 +255,8 @@ export const addFriend = (userId, friendId) => dispatch => {
   })
   .then(data => {
     dispatch(addedFriend(data));
-    console.log(data);
   })
   .catch(err => {
     console.log(err);
   })
 }
-
-// export const postingCameraPic = (picuri) => dispatch => {
-//     console.log("posting pic...");
-//     console.log("picuri...", picuri);
-//     var photo = {
-//       uri: picuri,
-//       type: 'image/jpeg',
-//       name: 'photo.jpg',
-//     };
-
-//     var body = new FormData();
-//     // body.append('authToken', 'secret');
-//     body.append('photo', photo);
-//     body.append('title', 'A beautiful photo!');
-
-//     xhr.open('POST', 'http://localhost:8080/api/camera');
-//     xhr.send(body);
-//     // .then(response => console.log(response))
-//     // .catch(err => {
-//     //   console.log(err);
-//     // })
-// }

@@ -16,7 +16,6 @@ class UserProfile extends Component {
   }
 
   search(){
-    console.log(this.props.navigator)
     this.props.navigator.push({
       id:'search',
     })
