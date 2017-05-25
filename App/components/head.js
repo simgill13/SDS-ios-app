@@ -15,8 +15,6 @@ import { sendNotification } from '../actions/action';
 emoji-flirt
 megaphone
 paper-plane
-
-bell-ring-outline
 */
 
 class Head extends Component {
