@@ -11,10 +11,13 @@ import {
   ScrollView
  } from 'react-native';
 import { List, ListItem } from 'react-native-elements'
-import { Components } from 'expo';
 import {searchUsers, addFriend} from '../actions/action';
 import ChatRoom from './chatroom';
 import Head from './head';
+import Btn from './btn';
+
+import { Components } from 'expo';
+const { LinearGradient } = Components;
 
 
 class SearchUsers extends Component{
@@ -63,20 +66,22 @@ class SearchUsers extends Component{
 
   renderSearchList() {
     return (
-      <List containerStyle={{marginBottom: 20}}>
+      <List style={styles.listContainer}>
         {
           this.props.searchedUsers.map((user, i) => {
             if (user === undefined) {
               return;
-            } 
+            }
             if (user._id === this.props.userId) {
               return;
             }
             if (this.checkFriendsList(user)) {
               return (
                 <ListItem
+                  containerStyle={styles.listItem}
                   key={i}
                   title={user.name}
+                  titleStyle={{color:"#FFF"}}
                   hideChevron={true}
                   switchButton={true}
                   switched={this.checkSwitch(user)}
@@ -86,8 +91,10 @@ class SearchUsers extends Component{
             } else {
               return (
                 <ListItem
+                  containerStyle={styles.listItem}
                   key={i}
                   title={user.name}
+                  titleStyle={{color:"#FFF"}}
                   hideChevron={true}
                   switchButton={true}
                   switched={this.checkSwitch(user)}
@@ -102,13 +109,15 @@ class SearchUsers extends Component{
   }
   render(){
     return (
-      <View>
+      <LinearGradient
+        style={styles.container}
+        colors={['#37dbcd', '#0072e4']}>
         <View>
           <Head
             navigator={this.props.navigator}
             title="Add Friends"
             backID='tab'
-            color='#444444' />
+            color='#FFF' />
         </View>
 
         <View style={styles.inputWrap}>
@@ -118,23 +127,34 @@ class SearchUsers extends Component{
             style={styles.textInput}>
           </TextInput>
         </View>
-        <View>
-          <Text
+          <Btn
+            title="Add more friends"
             onPress={() => this.onPressSearch(this.state.query)}
-            >Search</Text>
-        </View>
+            paddingHorizontal={10}
+            fontSize={16}
+            />
 
-        
+
+
+
         <ScrollView>
           {this.renderSearchList()}
         </ScrollView>
-        
-      </View>
+      </LinearGradient>
     )
   }
 }
 
-const styles = {
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 10,
+    flexDirection: 'column',
+  },
+  back: {
+    color: '#fff',
+    marginLeft: 10,
+  },
   inputWrap:{
     flexDirection: 'row',
     marginVertical: 10,
@@ -165,8 +185,20 @@ const styles = {
     padding: 20,
     height: 50,
     width: 50,
-  }
-}
+  },
+  listContainer: {
+    borderTopWidth: 0,
+    borderBottomWidth: 0,
+    borderColor: 'rgba(255,255,255,.5)',
+    backgroundColor: 'transparent',
+    paddingHorizontal:20,
+    marginVertical:20,
+  },
+  listItem: {
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(255,255,255,.3)',
+  },
+});
 
 
 const mapStateToProps = (state) => ({

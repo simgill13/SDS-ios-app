@@ -1,10 +1,13 @@
 import React, { Component } from "react";
-import { View, Text, FlatList, ActivityIndicator, Navigator } from "react-native";
+import { View, Text, FlatList, ActivityIndicator, Navigator, StyleSheet } from "react-native";
 import { List, ListItem, SearchBar, Button } from "react-native-elements";
 import UserFriends from './userFriends';
 import User from './user';
 import SearchUsers from '../search';
 import Btn from '../btn';
+
+import { Components } from 'expo';
+const { LinearGradient } = Components;
 
 class UserProfile extends Component {
   constructor(props) {
@@ -21,20 +24,32 @@ class UserProfile extends Component {
 
   render() {
     return(
-      <View>
+      <LinearGradient colors={['#37dbcd', '#0072e4']} style={styles.linearGradient}>
         <User/>
-        <View style={{ backgroundColor: '#a4a4a4'}}>
+        <View style={{ backgroundColor: 'rgba(26,83,178,.35)', alignItems:'flex-start'}}>
         <Button
           icon={{name: 'plus-circle', type: 'font-awesome'}}
           small
           title="ADD FRIENDS"
-          backgroundColor='#a4a4a4'
-          containerViewStyle={{margin:0, padding: 0}}
+          backgroundColor='transparent'
+          containerViewStyle={{margin:0, padding: 10}}
           onPress={() => {this.search()}} />
         </View>
         <UserFriends />
-      </View>
+      </LinearGradient>
     )
   }
 }
 export default UserProfile;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    flexDirection: 'column',
+    backgroundColor: 'transparent',
+  },
+  linearGradient: {
+    flex: 1
+    },
+});

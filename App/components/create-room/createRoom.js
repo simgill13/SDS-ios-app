@@ -13,7 +13,7 @@ import { Components } from 'expo';
 const { LinearGradient } = Components;
 
 import ChatRoom from '../chatroom';
-
+import Btn from '../btn';
 
 class CreateRoom extends Component{
   constructor(props) {
@@ -69,9 +69,9 @@ class CreateRoom extends Component{
     if (this.props.friendsList !== []) {
       return (
       <LinearGradient
-        style={{flex:1}}
+        style={styles.container}
         colors={['#37dbcd', '#0072e4']}>
-        <View>
+        <View style={styles.container} >
           <View style={styles.headlineWrap}>
             <Text style={styles.subhead}>Stop, Drop</Text>
             <Text style={styles.small}> & </Text>
@@ -79,12 +79,15 @@ class CreateRoom extends Component{
           </View>
 
 
-        <List containerStyle={{marginBottom: 20, backgroundColor:'transparent', padding: 20}}>
+      <View style={styles.container}>
+        <List style={styles.listContainer}>
           {
             this.props.friendsList.map((friend, i) => (
               <ListItem
+                containerStyle={styles.listItem}
                 key={i}
                 title={friend.name}
+                titleStyle={{color:"#FFF"}}
                 onPress={() => {this.onPressList(friend)}}
                 hideChevron={true}
                 switchButton={true}
@@ -94,11 +97,10 @@ class CreateRoom extends Component{
             ))
           }
         </List>
-
-        <Button
-          title="Next"
-          onPress={() => {this.nextButton()}}
-        />
+      </View>
+      <Btn
+        title="Next"
+        onPress={() => {this.nextButton()}}/>
       </View>
     </LinearGradient>
     );
@@ -123,7 +125,7 @@ export default connect(mapStateToProps)(CreateRoom);
 const styles = StyleSheet.create({
 	container: {
     flex: 1,
-    padding: 20,
+    padding: 10,
     flexDirection: 'column',
   },
   back: {
@@ -158,5 +160,17 @@ const styles = StyleSheet.create({
     color: "#FFF",
     fontSize:64,
     fontWeight:'100',
+  },
+  listContainer: {
+    borderTopWidth: 0,
+    borderBottomWidth: 0,
+    borderColor: 'rgba(255,255,255,.5)',
+    backgroundColor: 'transparent',
+    paddingHorizontal:20,
+    marginVertical:20,
+  },
+  listItem: {
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(255,255,255,.3)',
   },
 });

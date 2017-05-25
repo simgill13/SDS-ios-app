@@ -78,11 +78,13 @@ class NewRoomForm extends Component{
             </Text>
           </View>
 
-          <View>
-            <List containerStyle={{marginBottom: 20}}>
+          <View style={styles.container}>
+            <List style={styles.listContainer}>
               {
                 this.props.data.map((friend, i) => (
                   <ListItem
+                    containerStyle={styles.listItem}
+                    titleStyle={{color:"#FFF"}}
                     key={i}
                     title={friend.name}
                     onPress={() => {this.onPressList(friend)}}
@@ -92,7 +94,6 @@ class NewRoomForm extends Component{
               }
             </List>
           </View>
-
           <View style={styles.row} />
 
           <View style={styles.inputWrap}>
@@ -196,7 +197,19 @@ const styles = StyleSheet.create({
     fontSize:20,
     fontWeight: "bold",
     color: "#ffffff"
-  }
+  },
+  listContainer: {
+    borderTopWidth: 0,
+    borderBottomWidth: 0,
+    borderColor: 'rgba(255,255,255,.5)',
+    backgroundColor: 'transparent',
+
+    marginVertical:30,
+  },
+  listItem: {
+    borderBottomWidth: 0,
+    borderBottomColor: 'rgba(255,255,255,.3)',
+  },
 });
 
 export default connect(mapStateToProps)(NewRoomForm);

@@ -154,7 +154,6 @@ export default class Tab extends Component {
 
   render() {
     return (
-
       <TabViewAnimated
         style={[styles.container, this.props.style]}
         renderHeader={this._renderHeader}
@@ -200,7 +199,7 @@ const styles = StyleSheet.create({
   },
   indicator: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,.3)',
+    backgroundColor: 'rgba(26,83,178,.35)',
     margin: 0,
     borderRadius: 2,
   },
