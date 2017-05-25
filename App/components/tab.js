@@ -43,11 +43,16 @@ export default class Tab extends Component {
   state: State = {
     index: 0,
     routes: [
-      { key: '1', title: 'Chat Rooms', icon: 'md-chatboxes' },
+      { key: '1', title: '', icon: 'md-chatboxes' },
       { key: '2', title: '', icon: 'ios-reverse-camera' },
-      { key: '3', title: 'My Profile', icon: 'ios-person' },
+      { key: '3', title: '', icon: 'ios-person' },
     ],
   };
+
+
+
+
+
 
   _handleChangeTab = index => {
     this.setState({

@@ -1,16 +1,16 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {config} from '../../config';
-import {StyleSheet, Image, Linking, Text, TouchableHighlight, TouchableOpacity, View, Navigator, AsyncStorage,
-        ActivityIndicator, Button, Clipboard, Share, StatusBar
-      } from 'react-native';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { config } from '../../config';
+import { StyleSheet, Image, Linking, Text, TouchableHighlight, TouchableOpacity,
+  View, Navigator, AsyncStorage, ActivityIndicator, Button, Clipboard, Share,
+  StatusBar } from 'react-native';
 import { Components,Constants,ImagePicker } from 'expo';
 const { LinearGradient } = Components;
 import { Ionicons } from '@expo/vector-icons';
 import Head from './head';
 import styles from './styles.js';
 var CryptoJS = require('crypto-js');
-import {postingCameraPic} from '../actions/action';
+import { postingCameraPic } from '../actions/action';
 import SocketIOClient from 'socket.io-client';
 import { GiftedChat } from 'react-native-gifted-chat'
 const USER_ID = '@userId';
@@ -24,7 +24,6 @@ class OurChat extends Component{
         messages: [],
         userId: null,
         chatId: this.props.data,
-        image:null,
         uploading:false,
         counter:0,
         userNumber: 1,
@@ -64,7 +63,7 @@ class OurChat extends Component{
       console.log("this.state.messages ======", this.state.messages);
       let imageMsg = {
         _id:this._randomString(20),
-        user:{ _id: this.state.userId || -1 },
+        user:{ _id: this.state.userId || -1 , name: this.props.name},
         createdAt: currentTime,
         chatId: this.state.chatId,
         image: newPhoto
