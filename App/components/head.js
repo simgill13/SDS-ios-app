@@ -31,7 +31,7 @@ class Head extends Component {
 
 	sendGroupNotification() {
 		this.props.userPushTokens.forEach(user => {
-			this.props.dispatch(sendNotification(user, "Message!"));
+			this.props.dispatch(sendNotification(user, `Time to Stop, Drop, & Selfie!`));
 		})
 	}
 
