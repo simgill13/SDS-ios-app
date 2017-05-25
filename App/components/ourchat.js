@@ -4,72 +4,67 @@ import { config } from '../../config';
 import { StyleSheet, Image, Linking, Text, TouchableHighlight, TouchableOpacity,
   View, Navigator, AsyncStorage, ActivityIndicator, Button, Clipboard, Share,
   StatusBar } from 'react-native';
-import { Components,Constants,ImagePicker } from 'expo';
-const { LinearGradient } = Components;
-import { Ionicons } from '@expo/vector-icons';
+import { Components, Constants, ImagePicker } from 'expo';
+import { MaterialIcons } from '@expo/vector-icons';
 import Head from './head';
 import styles from './styles.js';
-var CryptoJS = require('crypto-js');
+import CryptoJS from 'crypto-js';
 import { postingCameraPic } from '../actions/action';
 import SocketIOClient from 'socket.io-client';
 import { GiftedChat } from 'react-native-gifted-chat'
-const USER_ID = '@userId';
 import update from 'immutability-helper';
+const { LinearGradient } = Components;
+const USER_ID = '@userId';
 
-class OurChat extends Component{
-
+class OurChat extends Component {
   constructor(props){
-    super(props)
-      this.state = {
-        messages: [],
-        userId: null,
-        chatId: this.props.data,
-        uploading:false,
-        counter:0,
-        userNumber: 1,
-        animating:false,
+    super(props);
+    this.state = {
+      messages: [],
+      userId: null,
+      chatId: this.props.data,
+      uploading: false,
+      counter: 0,
+      userNumber: 1,
+      animating: false,
     };
-
     this.determineUser = this.determineUser.bind(this);
     this.onReceivedMessage = this.onReceivedMessage.bind(this);
     this.onSend = this.onSend.bind(this);
     this.upload = this.upload.bind(this);
     this._storeMessages = this._storeMessages.bind(this);
+    this._randomString = this._randomString.bind(this);
+    this.renderActions = this.renderActions.bind(this);
     const chatId = this.state.chatId;
     this.socket = SocketIOClient('https://sdsserver.herokuapp.com/');
     this.socket.on('message', this.onReceivedMessage,chatId );
     this.determineUser();
-    this._randomString = this._randomString.bind(this);
   }
 
-  upload(pickeruri){
-
+  upload(pickeruri) {
     let timestamp = (Date.now() / 1000 | 0).toString();
-    let api_key = config.api_key
-    let api_secret = config.api_secret
-    let cloud = 'sds-images'
-    let hash_string = 'timestamp=' + timestamp + api_secret
+    let api_key = config.api_key;
+    let api_secret = config.api_secret;
+    let cloud = 'sds-images';
+    let hash_string = `timestamp=${timestamp}${api_secret}`;
     let signature = CryptoJS.SHA1(hash_string).toString();
-    let upload_url = 'https://api.cloudinary.com/v1_1/' + cloud + '/image/upload'
-
+    let upload_url = `https://api.cloudinary.com/v1_1/${cloud}/image/upload`;
     let xhr = new XMLHttpRequest();
     let newPhoto;
     xhr.open('POST', upload_url);
     xhr.onload = () => {
       let data = JSON.parse(xhr.responseText);
       newPhoto = data.secure_url;
-
       let currentTime = Date.now();
-      console.log("this.state.messages ======", this.state.messages);
       let imageMsg = {
         _id:this._randomString(20),
         user:{ _id: this.state.userId || -1 , name: this.props.name},
         createdAt: currentTime,
         chatId: this.state.chatId,
-        image: newPhoto
+        image: newPhoto,
       };
       const updatedMsgs = update(this.state.messages, {
-        $splice: [[0, 0, imageMsg]]
+        $splice: [[0, 0, imageMsg]],
       });
       this.setState({messages: updatedMsgs});
       this.socket.emit('message', imageMsg, this.state.chatId);
@@ -85,8 +80,8 @@ class OurChat extends Component{
   _randomString = length => {
     let text = "";
     const possible = "abcdefghijklmnopqrstuvwxyz0123456789";
-    for(let i = 0; i < length; i++) {
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    for (let i = 0; i < length; i++) {
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
     }
     return text;
   }
@@ -94,67 +89,40 @@ class OurChat extends Component{
   _takePhoto = async () => {
     let pickerResult = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
-      aspect: [4,3]
+      aspect: [4,3],
     });
     if (!pickerResult.cancelled){
       this.upload(pickerResult.uri);
     }
   }
 
-
-
   determineUser() {
     AsyncStorage.getItem(USER_ID)
-      .then((userId) => {
-       // If there isn't a stored userId, then fetch one from the server.
-        const chatId = this.state.chatId;
-        if (!userId) {
-         this.socket.emit('userJoined', null, chatId);
-         this.socket.on('userJoined', (userId, chatId) => {
-           AsyncStorage.setItem(USER_ID, userId);
-           this.setState({ userId });
-         });
-       } else {
-         this.socket.emit('userJoined', userId, chatId);
-         this.setState({ userId });
-       }
+    .then((userId) => {
+    // If there isn't a stored userId, then fetch one from the server.
+      const chatId = this.state.chatId;
+      if (!userId) {
+        this.socket.emit('userJoined', null, chatId);
+        this.socket.on('userJoined', (userId, chatId) => {
+          AsyncStorage.setItem(USER_ID, userId);
+          this.setState({ userId });
+        });
+      } else {
+        this.socket.emit('userJoined', userId, chatId);
+        this.setState({ userId });
+      }
     })
     .catch((e) => alert(e));
   }
 
   onReceivedMessage(messages) {
-   this._storeMessages(messages);
+    this._storeMessages(messages);
   }
+
   onSend(messages=[]) {
     this.socket.emit('message', messages[0], this.state.chatId);
     this._storeMessages(messages);
   }
-
- render(){
-   var user = {_id: this.state.userId || -1, name: this.props.name};
-   return (
-   <View style={styles.container}>
-   <Head
-     navigator={this.props.navigator}
-     title="Our Chat"
-     backID='tab'
-     color='#444444' />
-   <GiftedChat
-     messages={this.state.messages}
-     onSend={this.onSend}
-     user={user}
-     renderAvatarOnTop={true}
-     />
-     <View >
-        <Button
-          onPress={this._takePhoto}
-          title="Take a photo"
-        />
-        <StatusBar barStyle="default" />
-      </View>
-   </View>
-   );
- }
 
   _storeMessages(messages) {
     this.setState((previousState) => {
@@ -162,6 +130,35 @@ class OurChat extends Component{
         messages: GiftedChat.append(previousState.messages, messages),
       };
     });
+  }
+
+  renderActions(){
+    return (
+      <TouchableHighlight onPress={this._takePhoto} style={styles.cameraIcon} underlayColor="transparent">
+        <MaterialIcons name="photo-camera" size={30} color={'#b0b0b0'} />
+      </TouchableHighlight>
+    )
+  }
+
+  render(){
+    const user = {_id: this.state.userId || -1, name: this.props.name};
+    return (
+      <View style={styles.container}>
+        <Head
+          navigator={this.props.navigator}
+          title="Our Chat"
+          backID='tab'
+          color='#444444'
+          inChat={true} />
+        <GiftedChat
+          messages={this.state.messages}
+          onSend={this.onSend}
+          user={user}
+          renderAvatarOnTop={true}
+          renderActions={this.renderActions} />
+        <StatusBar barStyle="default" />
+      </View>
+    );
   }
 }
 
