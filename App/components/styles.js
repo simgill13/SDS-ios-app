@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -9,13 +8,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   header: {
-      marginTop: 20,
-      flexDirection: 'row',
-      alignItems: 'center',
-      paddingLeft: 15,
-      paddingRight: 15,
-      height: 50
-    },
+    marginTop: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingLeft: 15,
+    paddingRight: 15,
+    height: 50,
+  },
   back: {
     color: '#444444',
     marginLeft: 10,
@@ -24,19 +23,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 50
+    height: 50,
   },
-  title:{
+  title: {
     color: "#444444",
     fontSize: 20,
     fontWeight:'200',
   },
-  inputWrap:{
+  inputWrap: {
     flexDirection: 'row',
     marginVertical: 10,
-    height:60,
+    height: 60,
     backgroundColor: 'transparent',
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
   },
   textInput: {
     flex:1,
@@ -52,23 +51,26 @@ const styles = StyleSheet.create({
   label: {
     margin: 10,
     flex: 1,
-    color: '#60b7e2'
+    color: '#60b7e2',
   },
-  button:{
+  button: {
     backgroundColor: "rgba(255,255,255,.3)",
-    flex:1,
+    flex: 1,
     borderColor: '#ffffff',
     margin: 5,
     borderRadius: 12,
     borderColor: "rgba(255,255,255,.8)",
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 20
+    padding: 20,
   },
-  buttonText:{
-    fontSize:20,
+  buttonText: {
+    fontSize: 20,
     fontWeight: "bold",
-    color: "#ffffff"
+    color: "#ffffff",
+  },
+  cameraIcon: {
+    margin: 7.5,
   }
 });
 

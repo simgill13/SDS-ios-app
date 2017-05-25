@@ -134,8 +134,8 @@ class OurChat extends Component {
 
   renderActions(){
     return (
-      <TouchableHighlight onPress={this._takePhoto}>
-        <MaterialIcons name="photo-camera" size={30} />
+      <TouchableHighlight onPress={this._takePhoto} style={styles.cameraIcon}>
+        <MaterialIcons name="photo-camera" size={30} color={'#b0b0b0'} />
       </TouchableHighlight>
     )
   }
