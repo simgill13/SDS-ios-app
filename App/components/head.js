@@ -35,6 +35,22 @@ class Head extends Component {
 		this.props.dispatch(sendNotification("ExponentPushToken[MQWAdWFMGCf9SFCY9PjOeK]", "Message!"));
 	}
 
+	_renderNotificationSender() {
+		if (this.props.inChat){
+			return (
+				<TouchableHighlight
+					style={styles.headerRight}
+					onPress={() => {this.sendGroupNotification()}}
+					underlayColor="transparent"
+					activeOpacity={0.7}>
+					<Entypo name="paper-plane" size={30} color={'#b0b0b0'} />
+				</TouchableHighlight>
+			)
+		} else {
+			return (<View style={styles.headerRight} />);
+		}
+	}
+
   render() {
     return (
 			<View style={styles.header}>
@@ -69,13 +85,7 @@ class Head extends Component {
 							justifyContent: 'center',
 						}}> {this.props.title} </Text>
         </View>
-				<TouchableHighlight
-					style={styles.headerRight}
-					onPress={() => {this.sendGroupNotification()}}
-					underlayColor="transparent"
-	        activeOpacity={0.7}>
-					<Entypo name="paper-plane" size={30} color={'#b0b0b0'} />
-				</TouchableHighlight>
+				{this._renderNotificationSender()}
       </View>
     )
   }

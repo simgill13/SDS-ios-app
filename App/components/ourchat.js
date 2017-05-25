@@ -148,7 +148,8 @@ class OurChat extends Component {
           navigator={this.props.navigator}
           title="Our Chat"
           backID='tab'
-          color='#444444' />
+          color='#444444'
+          inChat={true} />
         <GiftedChat
           messages={this.state.messages}
           onSend={this.onSend}
