@@ -42,6 +42,8 @@ class UserRooms extends Component{
 		})
 	}
 
+  _keyExtractor = (item, index) => index;
+
   myRenderItem(item){
     return (
     <TouchableWithoutFeedback onPress={() => this.chatroom(item._id)}>
@@ -69,6 +71,7 @@ class UserRooms extends Component{
           <FlatList
             data={this.props.rooms}
             renderItem={({item}) => this.myRenderItem(item)}
+            keyExtractor={this._keyExtractor}
           />
         </View>
       </LinearGradient>
