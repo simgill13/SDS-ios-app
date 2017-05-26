@@ -35,10 +35,6 @@ class NewRoomForm extends Component{
     })
   }
 
-  // formSubmit(){
-  //   this.onSubmit();
-  // }
-
 	onSubmit(){
     this.props.dispatch(createRoom(this.state.roomName, this.props.data, this.props.userId, this.props.navigator));
     this.props.navigator.push({
