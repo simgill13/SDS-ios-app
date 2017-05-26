@@ -16,10 +16,6 @@ class User extends Component {
           featured
           email={this.props.email}
         >
-    // <View style={{flex: 1, flexDirection: 'row', alignItems:'flex-end', justifyContent: 'space-between', marginTop:0}}>
-    //   <Text style={{ fontSize:20 }}>The Guth</Text>
-    //   <Text style={{ fontSize:14, color: '#cccccc' }}>james@gmail.com</Text>
-    // </View>
   </Tile>
     );
   }
