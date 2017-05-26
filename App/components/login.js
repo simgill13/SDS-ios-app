@@ -63,7 +63,7 @@ class Login extends Component{
 
         <View style={styles.row} />
 
-        <Text>{error}</Text>
+        <Text style={styles.errorText}>{error}</Text>
 
         <View style={styles.inputWrap}>
           <TextInput
@@ -184,6 +184,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     color: "#ffffff",
+  },
+  errorText:{
+    textAlign: 'center',
   },
 });
 
