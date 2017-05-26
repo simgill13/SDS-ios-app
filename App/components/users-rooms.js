@@ -18,7 +18,7 @@ import { Ionicons, Entypo } from '@expo/vector-icons';
 class UserRooms extends Component{
   constructor(props) {
     super(props);
-    this.chatroom=this.chatroom.bind(this)
+    this.chatroom=this.chatroom.bind(this);
   }
 
   convertChatId(chatId){
@@ -37,7 +37,7 @@ class UserRooms extends Component{
 	chatroom(chatId){
     let numChatId = this.convertChatId(chatId)
 		this.props.navigator.push({
-			id:"chatroom",
+			id: "chatroom",
       data: [numChatId, chatId],
 		})
 	}
@@ -51,15 +51,9 @@ class UserRooms extends Component{
            <Ionicons  name="ios-chatbubbles-outline" size={22} paddingRight={20} color="#6F501F" /> {item.roomName}</Text>
         </View>
       </View>
-
-      </TouchableWithoutFeedback>
-
+    </TouchableWithoutFeedback>
     );
   };
-
-  _onPressItem(chatId){
-    // console.log(chatId);
-  }
 
   render(){
     return (
@@ -76,7 +70,6 @@ class UserRooms extends Component{
           <FlatList
             data={this.props.rooms}
             renderItem={({item}) => this.myRenderItem(item)}
-            onPressItem={({item}) => this._onPressItem(item.id)}
           />
         </View>
       </LinearGradient>
@@ -104,46 +97,45 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     marginBottom: 5,
   },
-   roomName: {
-
-   textAlign:"center",
+  roomName: {
+    textAlign: "center",
     fontSize: 22,
-    fontWeight:"100",
+    fontWeight: "100",
   },
   icon: {
-    textAlign:"center",
+    textAlign: "center",
     marginTop: 60,
-    padding:0
+    padding: 0,
   },
   text: {
-    color:"white",
-    marginTop:-10,
+    color: "white",
+    marginTop: -10,
     fontSize: 40,
-    fontWeight:"200",
-    textAlign:"center",
+    fontWeight: "200",
+    textAlign: "center",
   },
    text2: {
-    color:"white",
+    color: "white",
     fontSize: 16,
-    fontWeight:"300",
-    textAlign:"center",
+    fontWeight: "300",
+    textAlign: "center",
   },
   FlatList: {
-    flex:1
+    flex: 1
   },
-  roomContainer:{
-    flex:1,
+  roomContainer: {
+    flex: 1,
   },
-  roompic:{
-    flex:1,
-    height:40,
-    width:300,
-
-  }
-
+  roompic: {
+    flex: 1,
+    height: 40,
+    width: 300,
+  },
 });
+
 const mapStateToProps = (state) => ({
   rooms: state.rooms,
   userId: state.userId,
 });
+
 export default connect(mapStateToProps)(UserRooms);
