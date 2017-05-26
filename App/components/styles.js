@@ -71,7 +71,11 @@ const styles = StyleSheet.create({
   },
   cameraIcon: {
     margin: 7.5,
-  }
+  },
+  photoRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+  },
 });
 
 export default styles

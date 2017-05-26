@@ -24,10 +24,6 @@ class OurChat extends Component {
       userId: null,
       chatId: this.props.data[0],
       longRoomId: this.props.data[1],
-      uploading: false,
-      counter: 0,
-      userNumber: 1,
-      animating: false,
       roomUsersPushTokens: [],
     };
     this.determineUser = this.determineUser.bind(this);
@@ -94,14 +90,20 @@ class OurChat extends Component {
   }
 
   _takePhoto = async () => {
-    let pickerResult = await ImagePicker.launchCameraAsync({
-      allowsEditing: true,
-      aspect: [4,3],
-    });
+    let pickerResult = await ImagePicker.launchCameraAsync()
     if (!pickerResult.cancelled){
       this.upload(pickerResult.uri);
     }
   }
+
+  _pickImage = async () => {
+    let pickerResult = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+    });
+    if (!pickerResult.cancelled) {
+      this.upload(pickerResult.uri);
+    }
+  };
 
   determineUser() {
     AsyncStorage.getItem(USER_ID)
@@ -141,9 +143,14 @@ class OurChat extends Component {
 
   renderActions(){
     return (
-      <TouchableHighlight onPress={this._takePhoto} style={styles.cameraIcon} underlayColor="transparent">
-        <MaterialIcons name="photo-camera" size={30} color={'#b0b0b0'} />
-      </TouchableHighlight>
+      <View style={styles.photoRow}>
+        <TouchableHighlight onPress={this._pickImage} style={styles.cameraIcon} underlayColor="transparent">
+          <MaterialIcons name="photo-library" size={30} color={'#b0b0b0'} />
+        </TouchableHighlight>
+        <TouchableHighlight onPress={this._takePhoto} style={styles.cameraIcon} underlayColor="transparent">
+          <MaterialIcons name="photo-camera" size={30} color={'#b0b0b0'} />
+        </TouchableHighlight>
+      </View>
     )
   }
 
