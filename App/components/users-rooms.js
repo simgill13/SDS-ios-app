@@ -61,7 +61,6 @@ class UserRooms extends Component{
         style={styles.container}
         colors={['#37dbcd', '#0072e4']}>
         <View style={styles.header}>
-          {/* <Ionicons style={styles.icon} name="ios-trophy-outline" size={102} padding={0} color="#FEAE44" /> */}
           <Entypo style={styles.icon} name="emoji-flirt" size={102} padding={0} color="#FEAE44" />
           <Text style={styles.text} > Welcome </Text>
           <Text style={styles.text2}> Create or Select a Room to begin </Text>
