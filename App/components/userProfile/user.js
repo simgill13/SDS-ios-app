@@ -12,10 +12,9 @@ class User extends Component {
         <Tile
           imageSrc={{ uri: "https://www.maxim.com/.image/c_limit%2Ccs_srgb%2Cq_80%2Cw_640/MTQ0MzkzMDc1NDEyNzA2OTcw/magnum-pijpg.jpg"}}
           overlayContainerStyle={{ paddingBottom:0, justifyContent:'flex-end'}}
-          title="The Guth"
-           featured
-           caption="james@gmail.com"
-           titleStyle={{}}
+          title={this.props.name}
+          featured
+          email={this.props.email}
         >
     // <View style={{flex: 1, flexDirection: 'row', alignItems:'flex-end', justifyContent: 'space-between', marginTop:0}}>
     //   <Text style={{ fontSize:20 }}>The Guth</Text>

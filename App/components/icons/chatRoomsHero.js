@@ -13,6 +13,7 @@ export default class ChatRoomsHero extends Component {
     return (
       <View style={{
       flex:1,
+      padding:20,
       alignItems: 'center',
       justifyContent: 'center'}}>
       <Svg  width="126" height="120" viewBox="0 0 126 120">
