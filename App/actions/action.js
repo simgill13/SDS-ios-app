@@ -211,6 +211,7 @@ export const searchedUsers = (data) => ({
 })
 
 export const searchUsers = (query) => dispatch => {
+  dispatch(spinnerOn());
   fetch('https://sdsserver.herokuapp.com/api/search', {
     method: 'POST',
     headers: {
@@ -224,7 +225,8 @@ export const searchUsers = (query) => dispatch => {
     return response.json();
   })
   .then(data => {
-    dispatch(searchedUsers(data))
+    dispatch(searchedUsers(data));
+    dispatch(spinnerOff());
   })
   .catch(err => {
     console.log(err);

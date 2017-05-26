@@ -8,7 +8,8 @@ import {
   TouchableHighlight,
   Navigator,
   TextInput,
-  ScrollView
+  ScrollView,
+  ActivityIndicator,
  } from 'react-native';
 import { List, ListItem } from 'react-native-elements'
 import {searchUsers, addFriend} from '../actions/action';
@@ -125,12 +126,18 @@ class SearchUsers extends Component{
             style={styles.textInput}>
           </TextInput>
         </View>
-          <Btn
-            title="Add more friends"
-            onPress={() => this.onPressSearch(this.state.query)}
-            paddingHorizontal={10}
-            fontSize={16}
-            />
+        <Btn
+          title="Search"
+          onPress={() => this.onPressSearch(this.state.query)}
+          paddingHorizontal={10}
+          fontSize={16}
+        />
+        <ActivityIndicator
+          animating={this.props.spinner}
+          style={[styles.centering, {height: 80}]}
+          size="large"
+          color="#FEAE44"
+        />
         <ScrollView>
           {this.renderSearchList()}
         </ScrollView>
@@ -194,11 +201,11 @@ const styles = StyleSheet.create({
   },
 });
 
-
 const mapStateToProps = (state) => ({
   userId: state.userId,
   searchedUsers: state.searchedUsers,
-  friendsList: state.friendsList
+  friendsList: state.friendsList,
+  spinner: state.spinner,
 });
 
 export default connect(mapStateToProps)(SearchUsers);

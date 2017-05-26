@@ -98,6 +98,7 @@ class Login extends Component{
           animating={this.props.spinner}
           style={[styles.centering, {height: 80}]}
           size="large"
+          color="#FEAE44"
         />
 
         <View style={styles.container} />

@@ -10,6 +10,7 @@ import {
   TouchableHighlight,
   TouchableOpacity,
   View,
+  ActivityIndicator,
 } from 'react-native';
 import { List, ListItem } from 'react-native-elements'
 import { Components } from 'expo';
@@ -34,9 +35,9 @@ class NewRoomForm extends Component{
     })
   }
 
-  formSubmit(){
-    this.onSubmit();
-  }
+  // formSubmit(){
+  //   this.onSubmit();
+  // }
 
 	onSubmit(){
     this.props.dispatch(createRoom(this.state.roomName, this.props.data, this.props.userId, this.props.navigator));
@@ -95,7 +96,7 @@ class NewRoomForm extends Component{
           <View style={styles.inputWrap}>
             <TouchableHighlight
               style={styles.button}
-              onPress={(c) => {this.formSubmit(c)}}
+              onPress={(c) => {this.onSubmit(c)}}
               underlayColor="transparent"
               activeOpacity={0.7}>
                 <View >
@@ -104,6 +105,13 @@ class NewRoomForm extends Component{
             </TouchableHighlight>
           </View>
 
+          <ActivityIndicator
+            animating={this.props.spinner}
+            style={[styles.centering, {height: 80}]}
+            size="large"
+            color="#FEAE44"
+          />
+
           <View style={styles.container} />
       </LinearGradient>
     );
@@ -111,7 +119,8 @@ class NewRoomForm extends Component{
 }
 
 const mapStateToProps = (state) => ({
-  userId: state.userId
+  userId: state.userId,
+  spinner: state.spinner,
 });
 
 const styles = StyleSheet.create({
