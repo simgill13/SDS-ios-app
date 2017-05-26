@@ -14,6 +14,8 @@ import {
 import { Components } from 'expo';
 const { LinearGradient } = Components;
 import { Ionicons, Entypo } from '@expo/vector-icons';
+import ChatRoomsHero from './icons/chatRoomsHero.js';
+
 
 class UserRooms extends Component{
   constructor(props) {
@@ -63,7 +65,9 @@ class UserRooms extends Component{
         style={styles.container}
         colors={['#37dbcd', '#0072e4']}>
         <View style={styles.header}>
-          <Entypo style={styles.icon} name="emoji-flirt" size={102} padding={0} color="#FEAE44" />
+          <View style={{height:100,padding: 50, marginVertical: 20,}}>
+            <ChatRoomsHero />
+          </View>
           <Text style={styles.text} > Welcome </Text>
           <Text style={styles.text2}> Create or Select a Room to begin </Text>
         </View>
@@ -97,7 +101,9 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     backgroundColor: 'transparent',
-    marginBottom: 5,
+    marginVertical: 20,
+    justifyContent:'center',
+    alignItems:'center'
   },
   roomName: {
     textAlign: "center",

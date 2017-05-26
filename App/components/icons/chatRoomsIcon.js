@@ -7,7 +7,7 @@ const {
   Path,
   Stop } = Svg;
 
-export default class ChatRooms extends Component {
+export default class ChatRoomsIcon extends Component {
   render() {
     return (
       <View style={{flex: 1,

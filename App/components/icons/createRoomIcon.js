@@ -7,7 +7,7 @@ const {
   Path,
   Stop } = Svg;
 
-export default class CreateRoom extends Component {
+export default class CreateRoomIcon extends Component {
   render() {
     return (
       <View style={{flex: 1,

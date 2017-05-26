@@ -16,10 +16,11 @@ import { TabViewAnimated, TabBar } from 'react-native-tab-view';
 import { Constants, Svg } from 'expo';
 import UserRooms from './users-rooms';
 import Head from './head';
-import ChatRooms from './icons/chatrooms';
-import CreateRoom from './icons/createRoom';
+import ChatRoomsIcon from './icons/chatRoomsIcon';
 import ProfileIcon from './icons/profileIcon.js';
+import CreateRoomIcon from './icons/createRoomIcon';
 import UserProfile from './userProfile/userProfile';
+import CreateRoom from './create-room/createRoom';
 import type { NavigationState } from 'react-native-tab-view/types';
 
 type Route = {
@@ -70,11 +71,11 @@ export default class Tab extends Component {
     switch (route.key) {
       case '1':
         return (
-          <ChatRooms style={styles.icon} />
+          <ChatRoomsIcon style={styles.icon} />
         );
       case '2':
         return (
-          <CreateRoom style={styles.icon} />
+          <CreateRoomIcon style={styles.icon} />
         );
       case '3':
         return (
