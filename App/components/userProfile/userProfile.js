@@ -5,14 +5,13 @@ import UserFriends from './userFriends';
 import User from './user';
 import SearchUsers from '../search';
 import Btn from '../btn';
-
 import { Components } from 'expo';
 const { LinearGradient } = Components;
 
 class UserProfile extends Component {
   constructor(props) {
     super(props);
-    this.search=this.search.bind(this)
+    this.search=this.search.bind(this);
   }
 
   search(){
@@ -22,7 +21,7 @@ class UserProfile extends Component {
   }
 
   render() {
-    return(
+    return (
       <LinearGradient colors={['#37dbcd', '#0072e4']} style={styles.linearGradient}>
         <User/>
         <View style={{ backgroundColor: 'rgba(26,83,178,.35)', alignItems:'flex-start'}}>
@@ -39,6 +38,7 @@ class UserProfile extends Component {
     )
   }
 }
+
 export default UserProfile;
 
 const styles = StyleSheet.create({
@@ -49,6 +49,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   linearGradient: {
-    flex: 1
-    },
+    flex: 1,
+  },
 });

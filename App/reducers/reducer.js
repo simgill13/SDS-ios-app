@@ -51,9 +51,9 @@ export default (state = initialState, action) => {
     case EMAIL_IN_DB_OFF:
       return {...state, emailInDb: false}
     case INCORRECT_EMAIL_PASSWORD:
-      return {...state, incorrectEmailOrPassword: true }
+      return {...state, incorrectEmailOrPassword: true}
 		case NEW_USER_CREATED:
-      return {...state, newUserCreated: true }
+      return {...state, newUserCreated: true}
     case USER_LOGIN:
       return {...state,
         userLogin: true,
@@ -62,7 +62,7 @@ export default (state = initialState, action) => {
         friendsList: action.userObj.friendsList,
         userId: action.userObj.id,
         deviceToken: action.userObj.deviceToken,
-        rooms: action.userObj.rooms
+        rooms: action.userObj.rooms,
       }
     case UPDATE_ROOMS:
       return {...state, rooms: [...state.rooms, action.data.rooms[action.data.rooms.length - 1]]}

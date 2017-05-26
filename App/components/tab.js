@@ -7,26 +7,21 @@ import {
   TouchableHighlight,
   TouchableOpacity,
   Navigator,
-  Button
- } from 'react-native';
+  Button,
+} from 'react-native';
 import { Components } from 'expo';
 const { LinearGradient } = Components;
 import { Ionicons } from '@expo/vector-icons';
 import { TabViewAnimated, TabBar } from 'react-native-tab-view';
 import { Constants, Svg } from 'expo';
-import UserRooms from './users-rooms'
+import UserRooms from './users-rooms';
 import Head from './head';
-
 import ChatsIcon from './icons/chatsIcon';
 import ProfileIcon from './icons/profileIcon.js';
 import SDSicon from './icons/sdsicon';
-
 import UserProfile from './userProfile/userProfile';
-
 import CreateRoom from './create-room/createRoom';
-
 import type { NavigationState } from 'react-native-tab-view/types';
-
 
 type Route = {
   key: string,
@@ -35,7 +30,6 @@ type Route = {
 };
 
 type State = NavigationState<Route>;
-
 
 export default class Tab extends Component {
 
@@ -54,11 +48,6 @@ export default class Tab extends Component {
     ],
   };
 
-
-
-
-
-
   _handleChangeTab = index => {
     this.setState({
       index,
@@ -67,7 +56,6 @@ export default class Tab extends Component {
 
   _renderIndicator = props => {
     const { width, position } = props;
-
     const translateX = Animated.multiply(position, width);
 
     return (
@@ -82,26 +70,24 @@ export default class Tab extends Component {
   _renderIcon = ({ route }) => {
     switch (route.key) {
       case '1':
-      return (
-        <ChatsIcon style={styles.icon} />
-      );
+        return (
+          <ChatsIcon style={styles.icon} />
+        );
       case '2':
-      return (
-        <SDSicon style={styles.icon} />
-      );
+        return (
+          <SDSicon style={styles.icon} />
+        );
       case '3':
-      return (
-        <ProfileIcon style={styles.icon}/>
-    );
+        return (
+          <ProfileIcon style={styles.icon}/>
+        );
       default:
         return null;
     }
   };
 
-
   _renderFooter = props => {
     return (
-
       <TabBar
         {...props}
         renderIcon={this._renderIcon}
@@ -110,14 +96,13 @@ export default class Tab extends Component {
         style={styles.tabbar}
         tabStyle={styles.tab}
       />
-
     );
   };
 
 //removed head component here
   _renderHeader = props => {
-      return(
-        <View>
+    return(
+      <View>
 
       </View>
     );
@@ -135,17 +120,17 @@ export default class Tab extends Component {
       case '2':
         return (
           <CreateRoom
-          state={this.state}
-          navigator={this.props.navigator}
+            state={this.state}
+            navigator={this.props.navigator}
           />
         );
       case '3':
         return (
           <UserProfile
-          state={this.state}
-          navigator={this.props.navigator}
-        />
-    );
+            state={this.state}
+            navigator={this.props.navigator}
+          />
+        );
       default:
         return null;
     }
@@ -174,15 +159,15 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'column',
     height: 200,
-    },
-  headlineWrap:{
+  },
+  headlineWrap: {
 		alignItems: 'center',
 		flexDirection: 'column',
-		padding: 10
+		padding: 10,
 	},
-  headline:{
+  headline: {
     color: "#ffffff",
-    fontSize:44,
+    fontSize: 44,
     fontWeight:'100',
   },
   tabbar: {
@@ -194,7 +179,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     width: 44,
-    height:44
+    height: 44,
   },
   indicator: {
     flex: 1,
@@ -219,31 +204,30 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: -2,
   },
-
-row: {
-  flexDirection: 'row',
-  justifyContent: 'center',
-  alignItems: 'center',
-},
-buttonWrap:{
-  marginVertical: 10,
-  height:54,
-  paddingHorizontal: 100
-},
-button:{
-  backgroundColor: "#D3574A",
-  flex:1,
-  borderColor: '#ffffff',
-  margin: 5,
-  borderRadius: 22,
-  borderColor: "rgba(255,255,255,.8)",
-  alignItems: 'center',
-  justifyContent: 'center',
-  padding: 10
-},
-buttonText:{
-  fontSize:18,
-  fontWeight: "300",
-  color: "#ffffff"
-}
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonWrap: {
+    marginVertical: 10,
+    height: 54,
+    paddingHorizontal: 100,
+  },
+  button: {
+    backgroundColor: "#D3574A",
+    flex: 1,
+    borderColor: '#ffffff',
+    margin: 5,
+    borderRadius: 22,
+    borderColor: "rgba(255,255,255,.8)",
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 10,
+  },
+  buttonText: {
+    fontSize: 18,
+    fontWeight: "300",
+    color: "#ffffff",
+  },
 });

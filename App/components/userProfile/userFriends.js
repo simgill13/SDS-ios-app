@@ -1,14 +1,13 @@
 
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import {
   Text,
   View,
   ScrollView,
-  StyleSheet
+  StyleSheet,
 } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
-
 
 class UserFriends extends Component {
   onPressList(friend) {
@@ -38,11 +37,11 @@ class UserFriends extends Component {
   }
 }
 
-
 const mapStateToProps = (state) => ({
   friendsList: state.friendsList,
   userId: state.userId,
 });
+
 export default connect(mapStateToProps)(UserFriends);
 
 const styles = StyleSheet.create({
@@ -59,29 +58,29 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 50
+    height: 50,
   },
-	headlineWrap:{
+	headlineWrap: {
 		alignItems: 'center',
 		flexDirection: 'column',
 		marginVertical: 20,
 		backgroundColor: 'transparent',
 	},
-	small:{
+	small: {
 		color: "#FFF",
 		fontSize: 25,
 		fontWeight:'300',
 		marginVertical: 1,
 	},
-  subhead:{
+  subhead: {
     color: "#FFF",
     fontSize: 42,
     fontWeight:'200',
   },
-  headline:{
+  headline: {
 		marginVertical: -5,
     color: "#FFF",
-    fontSize:64,
+    fontSize: 64,
     fontWeight:'100',
   },
   listContainer: {
@@ -89,8 +88,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0,
     borderColor: 'rgba(255,255,255,.5)',
     backgroundColor: 'transparent',
-    paddingHorizontal:10,
-    marginVertical:0,
+    paddingHorizontal: 10,
+    marginVertical: 0,
   },
   listItem: {
     borderBottomWidth: 1,

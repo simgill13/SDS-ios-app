@@ -6,16 +6,10 @@ import { AppRegistry,
 	TouchableHighlight,
 	StyleSheet,
 	Image,
-	Button } from 'react-native';
+	Button, } from 'react-native';
 import { Components } from 'expo';
 import { Ionicons, Entypo } from '@expo/vector-icons';
 import { sendNotification } from '../actions/action';
-
-/*
-emoji-flirt
-megaphone
-paper-plane
-*/
 
 class Head extends Component {
 	constructor(props) {

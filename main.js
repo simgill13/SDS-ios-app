@@ -1,8 +1,8 @@
 import Expo from 'expo';
 import React from 'react';
 import store from './App/store';
-import {Provider} from 'react-redux';
-import {AppRegistry,Text,View,Navigator} from 'react-native';
+import { Provider } from 'react-redux';
+import { AppRegistry, Text, View, Navigator } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { Components } from 'expo';
 const { LinearGradient } = Components;
@@ -22,7 +22,6 @@ import SearchUsers from './App/components/search';
 import UserProfile from './App/components/userProfile/userProfile';
 
 class App extends React.Component {
-
   renderScene(route, navigator){
     switch(route.id){
       case 'home':
@@ -58,12 +57,9 @@ class App extends React.Component {
           initialRoute={{id: 'home'}}
           renderScene= {this.renderScene}
         />
-        </Provider>
+      </Provider>
     )
   }
-
 }
-
-
 
 Expo.registerRootComponent(App);

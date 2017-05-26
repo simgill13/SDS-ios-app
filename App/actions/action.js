@@ -4,7 +4,7 @@ import { Permissions, Notifications } from 'expo';
 export const USER_DATA = 'USER_DATA';
 export const userData = (userObj) => ({
   type: USER_DATA,
-  userObj
+  userObj,
 })
 
 export const EMAIL_IN_DB_ON = 'EMAIL_IN_DB_ON';
@@ -30,7 +30,7 @@ export const incorrectEmailOrPassword = () => ({
 export const USER_LOGIN = 'USER_LOGIN';
 export const userLogin = (userObj) => ({
   type: USER_LOGIN,
-  userObj
+  userObj,
 })
 
 export const SPINNER_ON = 'SPINNER_ON';
@@ -52,8 +52,6 @@ export const LOGIN_ERROR_FALSE = 'LOGIN_ERROR_FALSE';
 export const LoginErrorFalse = () => ({
   type: LOGIN_ERROR_FALSE,
 })
-
-// creating an async action to post a new user
 
 export const loginUser = (email, password, navigator) => dispatch => {
   const encodedLoginInfo = base64.encode(`${email.toLowerCase()}:${password}`)
@@ -129,7 +127,6 @@ export const registerForPushNotificationsAsync = () => dispatch => {
   })
 }
 
-
 export const sendNotification = (deviceId, message) => dispatch => {
   dispatch(spinnerOn());
   fetch('https://sdsserver.herokuapp.com/api/notification/', {
@@ -140,7 +137,6 @@ export const sendNotification = (deviceId, message) => dispatch => {
     body: JSON.stringify({deviceId, message})
   })
   .then(response => {
-    console.log(response);
     return response.json();
   })
   .catch(err => {
@@ -197,7 +193,7 @@ export const addUserToRoom = (roomId, userId) => dispatch => {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      currentUserId: userId
+      currentUserId: userId,
     })
   })
   .then((response) => {
@@ -211,7 +207,7 @@ export const addUserToRoom = (roomId, userId) => dispatch => {
 export const SEARCHED_USERS = 'SEARCHED_USERS';
 export const searchedUsers = (data) => ({
   type: SEARCHED_USERS,
-  data
+  data,
 })
 
 export const searchUsers = (query) => dispatch => {
@@ -242,7 +238,6 @@ export const addedFriend = (data) => ({
 })
 
 export const addFriend = (userId, friendId) => dispatch => {
-
   fetch(`https://sdsserver.herokuapp.com/api/${friendId}/friends/${userId}`, (req, res) => {
     method: 'POST'
   })
@@ -250,7 +245,6 @@ export const addFriend = (userId, friendId) => dispatch => {
     method: 'POST'
   })
   .then(response => {
-    console.log(response);
     return response.json();
   })
   .then(data => {

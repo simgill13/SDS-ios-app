@@ -11,17 +11,13 @@ import {
 import { List, ListItem } from 'react-native-elements'
 import { Components } from 'expo';
 
-import ChatRoom from './chatroom';
-
-
 class FriendsList extends Component{
   constructor(props) {
     super(props);
     this.chatroom = this.chatroom.bind(this)
   }
 
-
-	chatroom(){
+	chatroom() {
 		this.props.navigator.push({
 			id:"chatroom",
 		})
@@ -31,24 +27,22 @@ class FriendsList extends Component{
     console.log(friend);
   }
 
-
-
   render(){
     if (this.props.friendsList !== []) {
       return (
-      <List containerStyle={{marginBottom: 20}}>
-        {
-          this.props.friendsList.map((friend, i) => (
-            <ListItem
-              key={i}
-              title={friend.name}
-              onPress={() => {this.onPressList(friend)}}
-              hideChevron={true}
-            />
-          ))
-        }
-      </List>
-    );
+        <List containerStyle={{marginBottom: 20}}>
+          {
+            this.props.friendsList.map((friend, i) => (
+              <ListItem
+                key={i}
+                title={friend.name}
+                onPress={() => {this.onPressList(friend)}}
+                hideChevron={true}
+              />
+            ))
+          }
+        </List>
+      );
     } else {
       return (
         <View>
@@ -59,9 +53,9 @@ class FriendsList extends Component{
   }
 }
 
-
 const mapStateToProps = (state) => ({
   friendsList: state.friendsList,
   userId: state.userId,
 });
+
 export default connect(mapStateToProps)(FriendsList);

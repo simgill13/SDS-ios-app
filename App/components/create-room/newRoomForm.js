@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import SocialLogin from 'react-social-login';
-
 import {
   StyleSheet,
   Linking,
@@ -19,7 +17,6 @@ const { LinearGradient } = Components;
 import { Ionicons } from '@expo/vector-icons';
 import { createRoom } from '../../actions/action';
 import Btn from '../btn';
-
 
 class NewRoomForm extends Component{
 

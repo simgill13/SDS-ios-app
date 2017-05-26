@@ -11,15 +11,12 @@ import {
 import { List, ListItem, Button } from 'react-native-elements';
 import { Components } from 'expo';
 const { LinearGradient } = Components;
-
-import ChatRoom from '../chatroom';
 import Btn from '../btn';
 
 class CreateRoom extends Component{
   constructor(props) {
     super(props);
     this.chatroom = this.chatroom.bind(this)
-
     this.state = {
       addedFriends: [],
     };
@@ -49,7 +46,7 @@ class CreateRoom extends Component{
   nextButton() {
     this.props.navigator.push({
       id:"newRoomForm",
-      data: this.state.addedFriends
+      data: this.state.addedFriends,
     })
   }
 
@@ -74,36 +71,34 @@ class CreateRoom extends Component{
             <Text style={styles.headline}>Selfie</Text>
           </View>
 
-
-      <View style={styles.container}>
-        <List style={styles.listContainer}>
-          {
-            this.props.friendsList.map((friend, i) => (
-              <ListItem
-                containerStyle={styles.listItem}
-                key={i}
-                title={friend.name}
-                titleStyle={{color:"#FFF"}}
-                onPress={() => {this.onPressList(friend)}}
-                hideChevron={true}
-                switchButton={true}
-                switched={this.switchedCheck(friend)}
-                onSwitch={() => this.onPressList(friend)}
-              />
-            ))
-          }
-        </List>
-      </View>
-      <Btn
-        title="Next"
-        onPress={() => {this.nextButton()}}/>
-      </View>
-    </LinearGradient>
-    );
+        <View style={styles.container}>
+          <List style={styles.listContainer}>
+            {
+              this.props.friendsList.map((friend, i) => (
+                <ListItem
+                  containerStyle={styles.listItem}
+                  key={i}
+                  title={friend.name}
+                  titleStyle={{color:"#FFF"}}
+                  onPress={() => {this.onPressList(friend)}}
+                  hideChevron={true}
+                  switchButton={true}
+                  switched={this.switchedCheck(friend)}
+                  onSwitch={() => this.onPressList(friend)}
+                />
+              ))
+            }
+          </List>
+        </View>
+        <Btn
+          title="Next"
+          onPress={() => {this.nextButton()}}/>
+        </View>
+      </LinearGradient>
+      );
     } else {
       return (
         <LinearGradient style={{flex:1}} colors={['#37dbcd', '#189fda']}>
-
           <Text>Add Some Friends</Text>
         </LinearGradient>
       );
@@ -115,8 +110,8 @@ const mapStateToProps = (state) => ({
   friendsList: state.friendsList,
   userId: state.userId,
 });
-export default connect(mapStateToProps)(CreateRoom);
 
+export default connect(mapStateToProps)(CreateRoom);
 
 const styles = StyleSheet.create({
 	container: {
@@ -132,30 +127,30 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 50
+    height: 50,
   },
-	headlineWrap:{
+	headlineWrap: {
 		alignItems: 'center',
 		flexDirection: 'column',
 		marginVertical: 20,
 		backgroundColor: 'transparent',
 	},
-	small:{
+	small: {
 		color: "#FFF",
 		fontSize: 25,
 		fontWeight:'300',
 		marginVertical: 1,
 	},
-  subhead:{
+  subhead: {
     color: "#FFF",
     fontSize: 42,
     fontWeight:'200',
   },
-  headline:{
+  headline: {
 		marginVertical: -5,
     color: "#FFF",
-    fontSize:64,
-    fontWeight:'100',
+    fontSize: 64,
+    fontWeight: '100',
   },
   listContainer: {
     borderTopWidth: 0,

@@ -9,15 +9,11 @@ import {
   Navigator,
   FlatList,
   TouchableWithoutFeedback,
-  Image
- } from 'react-native';
- import { Components } from 'expo';
- const { LinearGradient } = Components;
-import { Ionicons } from '@expo/vector-icons';
-
-
-import ChatRoom from './chatroom';
-
+  Image,
+} from 'react-native';
+import { Components } from 'expo';
+const { LinearGradient } = Components;
+import { Ionicons, Entypo } from '@expo/vector-icons';
 
 class UserRooms extends Component{
   constructor(props) {
@@ -46,12 +42,6 @@ class UserRooms extends Component{
 		})
 	}
 
-  createRoom(){
-    this.props.navigator.push({
-      id:"newRoom",
-    })
-  }
-
   myRenderItem(item){
     return (
     <TouchableWithoutFeedback onPress={() => this.chatroom(item._id)}>
@@ -71,16 +61,16 @@ class UserRooms extends Component{
     // console.log(chatId);
   }
 
-
   render(){
     return (
       <LinearGradient
         style={styles.container}
         colors={['#37dbcd', '#0072e4']}>
         <View style={styles.header}>
-        <Ionicons style={styles.icon} name="ios-trophy-outline" size={102} padding={0} color="#FEAE44" />
+          {/* <Ionicons style={styles.icon} name="ios-trophy-outline" size={102} padding={0} color="#FEAE44" /> */}
+          <Entypo style={styles.icon} name="emoji-flirt" size={102} padding={0} color="#FEAE44" />
           <Text style={styles.text} > Welcome </Text>
-          <Text onPress={() => this.createRoom()} style={styles.text2}> Create or Select a Room to begin </Text>
+          <Text style={styles.text2}> Create or Select a Room to begin </Text>
         </View>
         <View style={styles.FlatList}>
           <FlatList
@@ -90,7 +80,6 @@ class UserRooms extends Component{
           />
         </View>
       </LinearGradient>
-
     );
   }
 }

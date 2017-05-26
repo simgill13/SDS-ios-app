@@ -12,10 +12,8 @@ import {
  } from 'react-native';
 import { List, ListItem } from 'react-native-elements'
 import {searchUsers, addFriend} from '../actions/action';
-import ChatRoom from './chatroom';
 import Head from './head';
 import Btn from './btn';
-
 import { Components } from 'expo';
 const { LinearGradient } = Components;
 
